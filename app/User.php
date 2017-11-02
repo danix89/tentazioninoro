@@ -38,4 +38,8 @@ class User extends Authenticatable {
         return $this->hasMany('Tentazioninoro\AttoDiVendita')->withTimestamps();
     }
 
+    public function riparazioni() {
+        return $this->hasMany('Tentazioninoro\Riparazione')->withTimestamps();
+    }
+
 }
