@@ -149,11 +149,11 @@ return [
 	/*
 	 * Application Service Providers...
 	 */
-	App\Providers\AppServiceProvider::class,
-	App\Providers\AuthServiceProvider::class,
-	// App\Providers\BroadcastServiceProvider::class,
-	App\Providers\EventServiceProvider::class,
-	App\Providers\RouteServiceProvider::class,
+	Tentazioninoro\Providers\AppServiceProvider::class,
+	Tentazioninoro\Providers\AuthServiceProvider::class,
+	// Tentazioninoro\Providers\BroadcastServiceProvider::class,
+	Tentazioninoro\Providers\EventServiceProvider::class,
+	Tentazioninoro\Providers\RouteServiceProvider::class,
     ],
     /*
       |--------------------------------------------------------------------------

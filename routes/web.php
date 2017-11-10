@@ -11,6 +11,17 @@
 |
 */
 
+Route::resource('user', 'UserController');
+Route::resource('customer', 'CustomerController');
+Route::resource('identity-document', 'IdentityDocumentController');
+Route::resource('jewel', 'JewelController');
+Route::resource('fixing', 'FixingController');
+Route::resource('sale-act', 'SaleActController');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
