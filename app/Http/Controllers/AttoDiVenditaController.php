@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Tentazioninoro\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Tentazioninoro\Http\Requests;
+use Tentazioninoro\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AttoDiVenditaController extends Controller {

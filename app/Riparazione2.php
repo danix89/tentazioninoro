@@ -6,7 +6,7 @@
  * @author Daniele Iannone <diannone3@gmail.com>
  */
 
-namespace App;
+namespace Tentazioninoro;
 
 use Illuminate\Database\Eloquent\Model;
 

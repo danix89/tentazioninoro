@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Tentazioninoro\Http\Controllers;
 
 class HomeController extends Controller {
     /*

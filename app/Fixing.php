@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace Tentazioninoro;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AttoDiVendita extends Model {
+class Fixing extends Model {
 
     public function user() {
         return $this->belongsTo('Tentazioninoro\User')->withTimestamps();
     }
 
-    public function clienti() {
-        return $this->hasMany('Tentazioninoro\Cliente')->withTimestamps();
+    public function customers() {
+        return $this->hasMany('Tentazioninoro\Customer')->withTimestamps();
     }
 
 }

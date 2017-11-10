@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Tentazioninoro;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,12 +30,16 @@ class User extends Authenticatable {
         'password', 'remember_token',
     ];
 
-    public function clienti() {
-        return $this->hasMany('Tentazioninoro\Cliente')->withTimestamps();
+    public function customers() {
+        return $this->hasMany('Tentazioninoro\Customer')->withTimestamps();
     }
 
-    public function attiDiVendita() {
-        return $this->hasMany('Tentazioninoro\AttoDiVendita')->withTimestamps();
+    public function salesActs() {
+        return $this->hasMany('Tentazioninoro\SaleAct')->withTimestamps();
+    }
+
+    public function fixings() {
+        return $this->hasMany('Tentazioninoro\Fixing')->withTimestamps();
     }
 
     public function riparazioni() {
