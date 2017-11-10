@@ -23,5 +23,5 @@ Route::resource('sale-act', 'SaleActController');
 //});
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
