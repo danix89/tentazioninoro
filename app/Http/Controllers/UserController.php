@@ -3,6 +3,11 @@
 namespace Tentazioninoro\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Tentazioninoro\User;
+use Tentazioninoro\Http\Controllers\Controller;
+use View;
+use Redirect;
+use DB;
 
 class UserController extends Controller {
 
@@ -12,7 +17,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-	$userList = User::orderBy('firstname', 'asc')->get();
+	$userList = User::orderBy('name', 'asc')->get();
 	return View::make('user/index')->with('userList', $userList);
     }
 
