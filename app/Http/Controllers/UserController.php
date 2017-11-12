@@ -8,7 +8,8 @@ use Tentazioninoro\Http\Controllers\Controller;
 use View;
 use Redirect;
 use DB;
-
+use Debugbar;
+use Tentazioninoro\Customer;
 class UserController extends Controller {
 
     /**
@@ -17,7 +18,11 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+//	$users = User::get();
 	$userList = User::orderBy('name', 'asc')->get();
+	Debugbar::info($userList);
+	$customer = Customer::get();
+	Debugbar::info($customer);
 	return View::make('user/index')->with('userList', $userList);
     }
 
