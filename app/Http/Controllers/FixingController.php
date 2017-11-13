@@ -3,7 +3,12 @@
 namespace Tentazioninoro\Http\Controllers;
 
 use Tentazioninoro\Fixing;
+use Tentazioninoro\Customer;
+use View;
+use Redirect;
+use DB;
 use Illuminate\Http\Request;
+use Debugbar;
 
 class FixingController extends Controller {
 
@@ -12,11 +17,8 @@ class FixingController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($userId) {
-//	$fixingList = User::where('user_id', $userId)->orderBy('customer_id', 'asc')->get();
-//	Debugbar::info($fixingList);
-//	return View::make('fixing/create')->with('fixingList', $fixingList);
-	return View::make('fixing/create');
+    public function index() {
+	
     }
 
     /**
@@ -44,8 +46,10 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function show(Fixing $fixing) {
-	//
+    public function show($user) {
+	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+	Debugbar::info($fixingList);
+	return View::make('fixing/create', ['user' => $user]);
     }
 
     /**

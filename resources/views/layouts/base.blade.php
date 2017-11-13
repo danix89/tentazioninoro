@@ -33,8 +33,7 @@
 		@section('navbar-ul')
                 <ul class="nav navbar-nav">
 		    @section('navbar-li-left')
-		    <li class="active"><a href="{{ route('user.index', ['user' => $user->id]) }}">Home</a></li>
-                    <li><a href="{{ route('fixing.index', ['user' => $user->id]) }}">Nuova riparazione</a></li>
+		    <li class="active"><a href="{{ route('home') }}">Home</a></li>
                     <!--<li><a href="#">Cerca riparazione</a></li>-->
 		    @show
                 </ul>

@@ -4,12 +4,13 @@ namespace Tentazioninoro\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Tentazioninoro\User;
+use Tentazioninoro\Customer;
 use Tentazioninoro\Http\Controllers\Controller;
 use View;
 use Redirect;
 use DB;
 use Debugbar;
-use Tentazioninoro\Customer;
+
 class UserController extends Controller {
 
     /**
