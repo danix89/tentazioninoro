@@ -21,8 +21,6 @@ class UserController extends Controller {
 //	$users = User::get();
 	$userList = User::orderBy('name', 'asc')->get();
 	Debugbar::info($userList);
-	$customer = Customer::get();
-	Debugbar::info($customer);
 	return View::make('user/index')->with('userList', $userList);
     }
 

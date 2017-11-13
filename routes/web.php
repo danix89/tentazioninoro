@@ -22,6 +22,12 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
+use Tentazioninoro\User;
+use Tentazioninoro\Customer;
 Route::get('/', function () {
+    $users = User::get();
+    $customer = Customer::get();
+    Debugbar::info($users);
+    Debugbar::info($customer);
     return view('welcome');
 });
