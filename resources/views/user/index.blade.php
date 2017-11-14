@@ -1,11 +1,13 @@
 @extends('layouts.base')
 
-{{--
+
 @section('navbar-li-left')
-<li class="active"><a href="home.php">Home</a></li>
 @parent
+
+@section('home_active', 'active')
+<li class=""><a href="{{ route('fixing') }}">Nuova Riparazione</a></li>
 @endsection
---}}
+
 @section('content')
 <p>
     <a href="{{ route('user.create') }}">Create new user</a>
