@@ -15,7 +15,8 @@ class CreateFixingsTable extends Migration {
         Schema::create('fixings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->string('customer_id', 16);
+            $table->bigInteger('customer_id')->unsigned();
+//            $table->string('customer_id', 16);
             $table->bigInteger('jewel_id')->unsigned();
             $table->text('description');
             $table->float('deposit');
@@ -30,7 +31,7 @@ class CreateFixingsTable extends Migration {
                     ->references('id')->on('users')
                     ->onDelete('cascade');
             $table->foreign('customer_id')
-                    ->references('fiscal_code')->on('customers')
+                    ->references('id')->on('customers')
                     ->onDelete('cascade');
             $table->foreign('jewel_id')
                     ->references('id')->on('jewels')

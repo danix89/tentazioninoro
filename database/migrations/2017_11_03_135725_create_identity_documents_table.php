@@ -14,7 +14,8 @@ class CreateIdentityDocumentsTable extends Migration {
     public function up() {
 	Schema::create('identity_documents', function (Blueprint $table) {
 	    $table->increments('id');
-	    $table->string('customer_id', 16);
+	    $table->bigInteger('customer_id')->unsigned();
+//	    $table->string('customer_id', 16);
 	    $table->date('release_date');
 	    $table->string('name');
 	    $table->string('surname');
@@ -29,7 +30,7 @@ class CreateIdentityDocumentsTable extends Migration {
         
         Schema::table('identity_documents', function (Blueprint $table) {
             $table->foreign('customer_id')
-                    ->references('fiscal_code')->on('customers')
+                    ->references('id')->on('customers')
                     ->onDelete('cascade');
         });
     }

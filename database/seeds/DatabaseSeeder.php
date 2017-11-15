@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder {
 	    function($customer) {
 		factory(Tentazioninoro\IdentityDocument::class, 1)->create(
 			[
-			    'customer_id' => $customer->fiscal_code,
+			    'customer_id' => $customer->id,
 			]);
 	    }
 	);
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder {
 	    function($jewel) {
 		$customers = Tentazioninoro\Customer::get();
 		foreach ($customers as $customer) {
-		    $customerFiscalCode = $customer->fiscal_code;
+		    $customerId = $customer->id;
 
 		    $users = Tentazioninoro\User::get();
 		    foreach ($users as $user) {
@@ -34,13 +34,13 @@ class DatabaseSeeder extends Seeder {
 			factory(Tentazioninoro\Fixing::class, 1)->create(
 				[
 				    'user_id' => $user->id,
-				    'customer_id' => $customerFiscalCode,
+				    'customer_id' => $customerId,
 				    'jewel_id' => $jewel->id,
 				]);
 			factory(Tentazioninoro\SaleAct::class, 2)->create(
 				[
 				    'user_id' => $user->id,
-				    'customer_id' => $customerFiscalCode,
+				    'customer_id' => $customerId,
 				]);
 		    }
 		}

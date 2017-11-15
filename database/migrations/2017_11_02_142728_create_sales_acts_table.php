@@ -16,7 +16,8 @@ class CreateSalesActsTable extends Migration
         Schema::create('sales_acts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->string('customer_id', 16);
+            $table->bigInteger('customer_id')->unsigned();
+//            $table->string('customer_id', 16);
             $table->string('path_photo');
             $table->timestamps();
         });
@@ -26,7 +27,7 @@ class CreateSalesActsTable extends Migration
                     ->references('id')->on('users')
                     ->onDelete('cascade');
             $table->foreign('customer_id')
-                    ->references('fiscal_code')->on('customers')
+                    ->references('id')->on('customers')
                     ->onDelete('cascade');
         });
     }
