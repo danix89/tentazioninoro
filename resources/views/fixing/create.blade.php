@@ -19,9 +19,13 @@ $user = $data["user"];
 
 @section('modal-id', 'add-customer')
 @section('modal-title', 'Dati riparazione')
-@section('modal-body')
+
+@section('modal-form-start')
+{!! Form::model($customer, ['route' => ['customer.store'], 'class' => 'form-horizontal']) !!}
 <!--<form class="form-horizontal" action="" method="post">-->
-{!! Form::model($customer, ['route' => ['customer.store', $fixing->id], 'class' => 'form-horizontal']) !!}
+@endsection
+
+@section('modal-body')
     <div class="form-group">
         {!! Form::label('fiscalcode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
@@ -78,6 +82,9 @@ $user = $data["user"];
             <!--<textarea type="text" class="form-control" id="customer-description" placeholder="" name="customer-description"></textarea>-->
         </div>
     </div>
+@endsection
+
+@section('modal-form-stop')
 {!! Form::close() !!}
 <!--</form>-->
 @endsection

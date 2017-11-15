@@ -49,7 +49,8 @@
 	<!-- Modal -->
 	<div id="@yield('modal-id')-modal" class="modal fade" role="dialog">
 	    <div class="modal-dialog">
-
+                @section('modal-form-start')
+                @show
 		<!-- Modal content-->
 		<div class="modal-content">
 		    <div class="modal-header">
@@ -130,12 +131,13 @@
 		    </div>
 		    <div class="modal-footer">
 			@section('modal-footer')
-			<button type="button" id="save-{@yield('id-modal')}-btn" class="btn btn-primary" data-dismiss="modal">@yield('modal-save-btn', 'Salva')</button>
-			<button type="button" id="cancel-{@yield('id-modal')}-btn" class="btn btn-warning" data-dismiss="modal">@yield('modal-cancel-btn', 'Annula')</button>
+			<button type="button" id="save-@yield('modal-id')-btn" class="btn btn-primary" data-dismiss="modal">@yield('modal-save-btn', 'Salva')</button>
+			<button type="button" id="cancel-@yield('modal-id')-btn" class="btn btn-warning" data-dismiss="modal">@yield('modal-cancel-btn', 'Annula')</button>
 			@show
 		    </div>
 		</div>
-
+                @section('modal-form-stop')
+                @show
 	    </div>
 	</div>
 
