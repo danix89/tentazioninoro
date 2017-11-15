@@ -65,7 +65,8 @@ class UserController extends Controller {
      */
     public function edit($id) {
 	$user = User::findOrFail($id);
-	return View::make('user/form')->with('user', $user);
+        return View::make('fixing/create', ['user' => $user]);
+//	return View::make('user/form')->with('user', $user);
     }
 
     /**

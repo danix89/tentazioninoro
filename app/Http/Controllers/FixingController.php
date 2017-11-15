@@ -26,8 +26,10 @@ class FixingController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-	//
+    public function create($user) {
+	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+	Debugbar::info($fixingList);
+	return View::make('fixing/create', ['user' => $user]);
     }
 
     /**
@@ -46,10 +48,10 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function show($user) {
-	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-	Debugbar::info($fixingList);
-	return View::make('fixing/create', ['user' => $user]);
+    public function show(Fixing $fixing) {
+//	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+//	Debugbar::info($fixingList);
+	return View::make('fixing/show', ['fixing' => $fixing]);
     }
 
     /**
@@ -59,7 +61,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Fixing $fixing) {
-	//
+//	return View::make('fixing/create', ['user' => $user]);
     }
 
     /**

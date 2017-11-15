@@ -11,6 +11,10 @@ class User extends Authenticatable {
 
 //    protected $table = 'name_of_the_users_table';
 //    $timestamps = false;
+
+    public static $rules = [
+	'firstname' => 'required|min:3|max:40',
+    ];
     
     /**
      * The attributes that are mass assignable.
@@ -19,10 +23,6 @@ class User extends Authenticatable {
      */
     protected $fillable = [
         'name', 'email', 'password',
-    ];
-
-    public static $rules = [
-	'firstname' => 'required|min:3|max:40',
     ];
 
     /**

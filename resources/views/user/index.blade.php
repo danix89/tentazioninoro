@@ -1,14 +1,13 @@
 @extends('layouts.base')
 
-
 @section('navbar-li-left')
 @parent
-
-@section('home_active', 'active')
-<li class=""><a href="{{ route('fixing') }}">Nuova Riparazione</a></li>
+@section('home_class', 'active')
+<li class=""><a href="{{ route('newfixing', ['userId' => 1]) }}">Nuova Riparazione</a></li>
 @endsection
 
 @section('content')
+
 <p>
     <a href="{{ route('user.create') }}">Create new user</a>
 </p>

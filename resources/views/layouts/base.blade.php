@@ -33,7 +33,7 @@
 		@section('navbar-ul')
                 <ul class="nav navbar-nav">
 		    @section('navbar-li-left')
-		    <li class="@yield('home_active')"><a href="{{ route('home') }}">Home</a></li>
+		    <li class="@yield('home_class')"><a href="{{ route('home') }}">Home</a></li>
                     <!--<li><a href="#">Cerca riparazione</a></li>-->
 		    @show
                 </ul>
@@ -47,7 +47,7 @@
         </nav>
 
 	<!-- Modal -->
-	<div id="{@yield('modal-id')}-modal" class="modal fade" role="dialog">
+	<div id="@yield('modal-id')-modal" class="modal fade" role="dialog">
 	    <div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -62,66 +62,66 @@
 			    <fieldset>
 				<legend class="fieldset-border">Dati cliente</legend>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="cliente">Cliente:</label>
+				    <label class="control-label col-md-4" for="customer">Cliente:</label>
 				    <div class="col-md-4">
-					<input type="text" class="form-control" id="cliente" placeholder="" name="cliente" autofocus required>
+					<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>
 				    </div>
 				</div>
 			    </fieldset>
 			    <fieldset>
 				<legend class="fieldset-border">Dati gioiello</legend>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="tipologia">Tipologia:</label>
+				    <label class="control-label col-md-4" for="typology">Tipologia:</label>
 				    <div class="col-md-5">          
-					<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>
+					<input type="text" class="form-control" id="typology" placeholder="" name="typology" required>
 				    </div>
 				</div>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="peso">Peso:</label>
+				    <label class="control-label col-md-4" for="wheight">Peso:</label>
 				    <div class="col-md-5">          
-					<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>
+					<input type="text" class="form-control" id="wheight" placeholder="" name="wheight" required>
 				    </div>
 				</div>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="metallo">Metallo:</label>
+				    <label class="control-label col-md-4" for="metal">Metallo:</label>
 				    <div class="col-md-5">          
-					<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>
+					<input type="text" class="form-control" id="metal" placeholder="" name="metal" required>
 				    </div>
 				</div>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="foto">Foto:</label>
+				    <label class="control-label col-md-4" for="path-photo">Foto:</label>
 				    <div class="col-md-5">
-					<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">
+					<input type="file" class="form-control-file" id="path-photo" name="path-photo" aria-describedby="fileHelp">
 				    </div>
 				</div>
 			    </fieldset>
 			    <fieldset>
 				<legend class="fieldset-border">Dettagli guasto</legend>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="appunti">Descrizione:</label>
+				    <label class="control-label col-md-4" for="fault-description">Descrizione:</label>
 				    <div class="col-md-5">
-					<textarea class="form-control" id="descrizione-guasto" rows="3" name="descrizione-guasto"></textarea>
+					<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>
 				    </div>
 				</div>
 			    </fieldset>
 			    <fieldset>
 				<legend class="fieldset-border">Dettagli pagamento</legend>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="acconto">Acconto:</label>
+				    <label class="control-label col-md-4" for="deposit">Acconto:</label>
 				    <div class="col-md-5">          
-					<input type="text" class="form-control" id="acconto" placeholder="" name="acconto" required>
+					<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>
 				    </div>
 				</div>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="preventivo">Preventivo:</label>
+				    <label class="control-label col-md-4" for="estimate">Preventivo:</label>
 				    <div class="col-md-5">          
-					<input type="text" class="form-control" id="preventivo" placeholder="" name="preventivo" required>
+					<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>
 				    </div>
 				</div>
 				<div class="form-group">
-				    <label class="control-label col-md-4" for="appunti">Appunti:</label>
+				    <label class="control-label col-md-4" for="notes">Appunti:</label>
 				    <div class="col-md-5">
-					<textarea class="form-control" id="appunti" rows="3" name="appunti"></textarea>
+					<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
 				    </div>
 				</div>
 			    </fieldset>
@@ -130,8 +130,8 @@
 		    </div>
 		    <div class="modal-footer">
 			@section('modal-footer')
-			<button type="button" id="save-{@yield('id-modal')}-btn" class="btn btn-default" data-dismiss="modal">@yield('modal-save-btn', 'Salva')</button>
-			<button type="button" id="cancel-{@yield('id-modal')}-btn" class="btn btn-default" data-dismiss="modal">@yield('modal-cancel-btn', 'Annula')</button>
+			<button type="button" id="save-{@yield('id-modal')}-btn" class="btn btn-primary" data-dismiss="modal">@yield('modal-save-btn', 'Salva')</button>
+			<button type="button" id="cancel-{@yield('id-modal')}-btn" class="btn btn-warning" data-dismiss="modal">@yield('modal-cancel-btn', 'Annula')</button>
 			@show
 		    </div>
 		</div>
