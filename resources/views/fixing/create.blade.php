@@ -21,7 +21,7 @@ $user = $data["user"];
 @section('modal-title', 'Dati riparazione')
 @section('modal-body')
 <!--<form class="form-horizontal" action="" method="post">-->
-{!! Form::model($customer, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal']) !!}
+{!! Form::model($customer, ['route' => ['customer.store', $fixing->id], 'class' => 'form-horizontal']) !!}
     <div class="form-group">
         {!! Form::label('fiscalcode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
@@ -47,7 +47,7 @@ $user = $data["user"];
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('phone_number', ':', ['class' => 'control-label col-md-4']) !!}
+        {!! Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="customer-phonenumber">Telefono:</label>-->
         <div class="col-md-5">
             {!! Form::text('phone_number', '', ['class' => 'form-control', 'required' => true]) !!}
@@ -100,57 +100,73 @@ $user = $data["user"];
 <fieldset>
     <legend class="fieldset-border">Dati gioiello</legend>
     <div class="form-group">
-        <label class="control-label col-md-4" for="tipologia">Tipologia:</label>
-        <div class="col-md-5">          
-            <input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-4" for="peso">Peso:</label>
-        <div class="col-md-5">          
-            <input type="text" class="form-control" id="peso" placeholder="" name="peso" required>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-4" for="metallo">Metallo:</label>
-        <div class="col-md-5">          
-            <input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-4" for="foto">Foto:</label>
+        {!! Form::label('typology', 'Tipologia:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="tipologia">Tipologia:</label>-->
         <div class="col-md-5">
-            <input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">
+            {!! Form::text('typology', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>-->
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('wheight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="peso">Peso:</label>-->
+        <div class="col-md-5">
+            {!! Form::text('wheight', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>-->
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('metal', 'Metallo:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="metallo">Metallo:</label>-->
+        <div class="col-md-5">
+            {!! Form::text('metal', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>-->
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('photo_url', 'Foto:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
+        <div class="col-md-5">
+            {!! Form::text('photo_url', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">-->
         </div>
     </div>
 </fieldset>
 <fieldset>
     <legend class="fieldset-border">Dettagli guasto</legend>
     <div class="form-group">
-        <label class="control-label col-md-4" for="fault-description">Descrizione:</label>
+        {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
         <div class="col-md-5">
-            <textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>
+            {!! Form::textarea('description', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
         </div>
     </div>
 </fieldset>
 <fieldset>
     <legend class="fieldset-border">Dettagli pagamento</legend>
     <div class="form-group">
-        <label class="control-label col-md-4" for="deposit">Acconto:</label>
-        <div class="col-md-5">          
-            <input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-4" for="estimate">Preventivo:</label>
-        <div class="col-md-5">          
-            <input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-4" for="notes">Appunti:</label>
+        {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="deposit">Acconto:</label>-->
         <div class="col-md-5">
-            <textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
+            {!! Form::text('deposit', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>-->
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="estimate">Preventivo:</label>-->
+        <div class="col-md-5">
+            {!! Form::text('estimate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>-->
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
+        <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
+        <div class="col-md-5">
+            {!! Form::textarea('notes', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
         </div>
     </div>
 </fieldset>
