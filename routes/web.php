@@ -26,13 +26,16 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
-Route::get('/', ['as' => 'home', function () { //nomino la rotta 'home'
-        $users = User::get();
-        $customer = Customer::get();
-        Debugbar::info($users);
-        Debugbar::info($customer);
-        return view('welcome');
-    }]);
+Route::get('/riparazioni/{userId}', ['as' => 'showList', 'uses' => 'FixingController@showList'])->name('showList');
+
+Route::get('/', ['as' => 'home', function () {
+//        $userList = User::orderBy('name', 'asc')->get();
+//        Debugbar::info($userList);
+        return redirect(route('showList', 1));
+//        return View::make('fixing/index')->with('userId', 1);
+    }
+]);
+
 
 Route::get('/home', function () {
     return redirect(route('home'));
@@ -45,15 +48,15 @@ Route::get('/home', function () {
 //    }]
 //);
 
-Route::get('/fixing/create/{userId}/{customerId?}', ['as' => 'newfixing', function ($userId) { //nomino la rotta 'home'
+Route::get('/fixing/create/{userId}/{customerId?}', ['as' => 'newfixing', function ($userId, $customerId) { //nomino la rotta 'home'
         $user = User::where('id', $userId)->get()[0];
-        if(isset($customerId)) {
+        if (isset($customerId)) {
             $customer = Customer::where('id', $customerId)->get()[0];
         } else {
             $customer = new Customer;
         }
 //        $fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-        
+
         $fixing = new Fixing;
 //        Debugbar::info($user);
 //        Debugbar::info($fixing);

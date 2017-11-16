@@ -18,7 +18,9 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-	
+	$fixingList = Fixing::where('user_id', 1)->get();
+	Debugbar::info($fixingList);
+	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 
     /**
@@ -48,10 +50,26 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function show(Fixing $fixing) {
+    public function show($userId) {
 //	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
 //	Debugbar::info($fixingList);
-	return View::make('fixing/show', ['fixing' => $fixing]);
+	$fixingList = Fixing::where('user_id', $userId)->get();
+	Debugbar::info($userId);
+	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Tentazioninoro\Fixing  $fixing
+     * @return \Illuminate\Http\Response
+     */
+    public function showList($userId) {
+//	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+//	Debugbar::info($fixingList);
+	$fixingList = Fixing::where('user_id', $userId)->get();
+	Debugbar::info($userId);
+	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 
     /**
