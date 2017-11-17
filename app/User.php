@@ -35,19 +35,15 @@ class User extends Authenticatable {
     ];
 
     public function customers() {
-        return $this->hasMany('Tentazioninoro\Customer')->withTimestamps();
+        return $this->hasMany('Tentazioninoro\Customer');
     }
 
     public function salesActs() {
-        return $this->hasMany('Tentazioninoro\SaleAct')->withTimestamps();
+        return $this->hasMany('Tentazioninoro\SaleAct');
     }
 
     public function fixings() {
-        return $this->hasMany('Tentazioninoro\Fixing')->withTimestamps();
-    }
-
-    public function riparazioni() {
-        return $this->hasMany('Tentazioninoro\Riparazione')->withTimestamps();
+        return $this->hasMany('Tentazioninoro\Fixing');
     }
 
 }

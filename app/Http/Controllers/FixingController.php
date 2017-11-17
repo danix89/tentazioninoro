@@ -41,7 +41,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        var_dump($request);
     }
 
     /**
@@ -64,11 +64,19 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function showList($userId, $customerId) {
-        $fixingList = Fixing::where([
+    public function showList($userId, $customerId=NULL) {
+        
+        if(isset($customerId)) {
+            $whereArray = [
                     'user_id' => $userId,
-                    'customer_id' => $customerId
-                ])->get();
+                    'customer_id' => $customerId,
+                ];
+        } else {
+            $whereArray = [
+                'user_id' => $userId,
+                ];
+        }
+        $fixingList = Fixing::where($whereArray)->get();
         return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 

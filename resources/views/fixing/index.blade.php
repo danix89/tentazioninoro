@@ -6,6 +6,8 @@
 
 @extends('layouts.base')
 
+@section('title', 'Lista riparazioni')
+
 @section('navbar-li-left')
 @parent
 @section('home_class', 'active')

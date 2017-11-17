@@ -1,4 +1,5 @@
 <?php
+$customerList = $data["customerList"];
 $customer = $data["customer"];
 $fixing = $data["fixing"];
 $user = $data["user"];
@@ -8,6 +9,7 @@ $user = $data["user"];
 
 @section('title', 'Nuova riparazione')
 
+{{-- Debugbar::info($customerList) --}}
 {{ Debugbar::info($fixing) }}
 {{ Debugbar::info($user) }}
 
@@ -97,7 +99,8 @@ $user = $data["user"];
         {!! Form::label('customer', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
         <div class="col-md-5">
             <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-            {!! Form::text('customer', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {{--{!! Form::text('customer', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}--}}
+            {!! Form::select('customer', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
         </div>
         <div class="col-md-1">
             <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
