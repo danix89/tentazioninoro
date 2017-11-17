@@ -18,9 +18,9 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-	$fixingList = Fixing::where('user_id', 1)->get();
-	Debugbar::info($fixingList);
-	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+        $fixingList = Fixing::where('user_id', 1)->get();
+        Debugbar::info($fixingList);
+        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 
     /**
@@ -29,9 +29,9 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create($user) {
-	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-	Debugbar::info($fixingList);
-	return View::make('fixing/create', ['user' => $user]);
+        $fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+        Debugbar::info($fixingList);
+        return View::make('fixing/create', ['user' => $user]);
     }
 
     /**
@@ -41,7 +41,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-	//
+        //
     }
 
     /**
@@ -53,9 +53,9 @@ class FixingController extends Controller {
     public function show($userId) {
 //	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
 //	Debugbar::info($fixingList);
-	$fixingList = Fixing::where('user_id', $userId)->get();
-	Debugbar::info($userId);
-	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+        $fixingList = Fixing::where('user_id', $userId)->get();
+        Debugbar::info($userId);
+        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 
     /**
@@ -64,12 +64,12 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function showList($userId) {
-//	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-//	Debugbar::info($fixingList);
-	$fixingList = Fixing::where('user_id', $userId)->get();
-	Debugbar::info($userId);
-	return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+    public function showList($userId, $customerId) {
+        $fixingList = Fixing::where([
+                    'user_id' => $userId,
+                    'customer_id' => $customerId
+                ])->get();
+        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
     }
 
     /**
@@ -90,7 +90,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Fixing $fixing) {
-	//
+        //
     }
 
     /**
@@ -100,7 +100,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Fixing $fixing) {
-	//
+        //
     }
 
 }
