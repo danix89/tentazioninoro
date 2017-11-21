@@ -3,11 +3,12 @@
 namespace Tentazioninoro\Http\Controllers;
 
 use Auth;
-use View;
-use Redirect;
+use Config;
 use DB;
-use Illuminate\Http\Request;
 use Debugbar;
+use Redirect;
+use View;
+use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
 use Tentazioninoro\Fixing;
 use Tentazioninoro\Jewel;
@@ -64,6 +65,7 @@ class FixingController extends Controller {
             "deposit" => $fixing["deposit"],
             "estimate" => $fixing["estimate"],
             "notes" => $fixing["notes"],
+            "state" => Config::get('constants.fixing.state.not_yet_started'),
         );
 //        var_dump($jewel);
 //        echo "<br>";

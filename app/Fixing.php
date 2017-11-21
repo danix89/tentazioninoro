@@ -10,7 +10,7 @@ class Fixing extends Model {
 //        'firstname' => 'required|min:3|max:40',
     ];
     
-    protected $fillable = ['user_id' ,'customer_id', 'jewel_id', 'description', 'deposit', 'estimate', 'notes', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id' ,'customer_id', 'jewel_id', 'description', 'deposit', 'estimate', 'notes', 'state', 'created_at', 'updated_at'];
 
     
     
