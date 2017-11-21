@@ -27,14 +27,14 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
-Route::get('/', ['as' => 'home', function () {
-        return redirect(route('showList', 1, 1));
-    }
-]);
-
-Route::get('/home', function () {
-    return redirect(route('home'));
-});
+//Route::get('/', ['as' => 'home', function () {
+//        return redirect(route('showList', 1, 1));
+//    }
+//]);
+//
+//Route::get('/home', function () {
+//    return redirect(route('home'));
+//});
 
 Route::get('/riparazioni/user/{userId}/cliente/{customerId?}', ['as' => 'showList', 'uses' => 'FixingController@showList']);
 
@@ -69,3 +69,7 @@ Route::get('/nuova-riparazione/user/{userId}/cliente/{customerId?}', ['as' => 'n
         return View::make('fixing/create')->with('data', $data);
     }]
 );
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

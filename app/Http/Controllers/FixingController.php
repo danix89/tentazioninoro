@@ -2,13 +2,15 @@
 
 namespace Tentazioninoro\Http\Controllers;
 
-use Tentazioninoro\Fixing;
-use Tentazioninoro\Customer;
+use Auth;
 use View;
 use Redirect;
 use DB;
 use Illuminate\Http\Request;
 use Debugbar;
+use Tentazioninoro\Customer;
+use Tentazioninoro\Fixing;
+use Tentazioninoro\Jewel;
 
 class FixingController extends Controller {
 
@@ -41,7 +43,34 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        var_dump($request);
+        $this->validate($request, Fixing::$rules);
+        
+        $fixing = $request->all();
+        $id = Auth::id();
+        
+        $jewelData = array(
+            "typology" => $fixing["typology"],
+            "wheight" => $fixing["wheight"],
+            "metal" => $fixing["metal"],
+            "path_photo" => $fixing["path_photo"],
+        );
+        $jewel = Jewel::create($jewelData);
+        
+        $fixingData = array(
+            "user_id" => $id,
+            "customer_id" => $fixing["customer_id"],
+            "jewel_id" => $jewel->id,
+            "description" => $fixing["description"],
+            "deposit" => $fixing["deposit"],
+            "estimate" => $fixing["estimate"],
+            "notes" => $fixing["notes"],
+        );
+//        var_dump($jewel);
+//        echo "<br>";
+//        echo $jewel->id;
+//        echo "<br>";
+        Fixing::create($fixingData);
+        return Redirect::to(route('fixing.index'));
     }
 
     /**
@@ -64,17 +93,17 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function showList($userId, $customerId=NULL) {
-        
-        if(isset($customerId)) {
+    public function showList($userId, $customerId = NULL) {
+
+        if (isset($customerId)) {
             $whereArray = [
-                    'user_id' => $userId,
-                    'customer_id' => $customerId,
-                ];
+                'user_id' => $userId,
+                'customer_id' => $customerId,
+            ];
         } else {
             $whereArray = [
                 'user_id' => $userId,
-                ];
+            ];
         }
         $fixingList = Fixing::where($whereArray)->get();
         return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);

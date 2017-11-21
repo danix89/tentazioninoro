@@ -96,11 +96,11 @@ $user = $data["user"];
 <fieldset>
     <legend class="fieldset-border">Dati cliente</legend>
     <div class="form-group">
-        {!! Form::label('customer', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
+        {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
         <div class="col-md-5">
             <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-            {{--{!! Form::text('customer', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}--}}
-            {!! Form::select('customer', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
+            {{--{!! Form::text('customer_id', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}--}}
+            {!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
         </div>
         <div class="col-md-1">
             <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
@@ -134,10 +134,10 @@ $user = $data["user"];
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('photo_url', 'Foto:', ['class' => 'control-label col-md-4']) !!}
+        {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
         <div class="col-md-5">
-            {!! Form::text('photo_url', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('path_photo', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">-->
         </div>
     </div>
