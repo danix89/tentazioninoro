@@ -21,9 +21,10 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $fixingList = Fixing::where('user_id', 1)->get();
-        Debugbar::info($fixingList);
-        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+	$userId = Auth::id();
+	$fixingList = Fixing::where('user_id', $userId)->get();
+	Debugbar::info($fixingList);
+	return View::make('fixing/index')->with('fixingList', $fixingList);
     }
 
     /**
@@ -31,10 +32,11 @@ class FixingController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($user) {
-        $fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-        Debugbar::info($fixingList);
-        return View::make('fixing/create', ['user' => $user]);
+    public function create() {
+	$user = Auth::user();
+	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
+	Debugbar::info($fixingList);
+	return View::make('fixing/create', ['user' => $user]);
     }
 
     /**
@@ -44,35 +46,35 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request, Fixing::$rules);
-        
-        $fixing = $request->all();
-        $id = Auth::id();
-        
-        $jewelData = array(
-            "typology" => $fixing["typology"],
-            "wheight" => $fixing["wheight"],
-            "metal" => $fixing["metal"],
-            "path_photo" => $fixing["path_photo"],
-        );
-        $jewel = Jewel::create($jewelData);
-        
-        $fixingData = array(
-            "user_id" => $id,
-            "customer_id" => $fixing["customer_id"],
-            "jewel_id" => $jewel->id,
-            "description" => $fixing["description"],
-            "deposit" => $fixing["deposit"],
-            "estimate" => $fixing["estimate"],
-            "notes" => $fixing["notes"],
-            "state" => Config::get('constants.fixing.state.not_yet_started'),
-        );
+	$this->validate($request, Fixing::$rules);
+
+	$fixing = $request->all();
+	$id = Auth::id();
+
+	$jewelData = array(
+	    "typology" => $fixing["typology"],
+	    "wheight" => $fixing["wheight"],
+	    "metal" => $fixing["metal"],
+	    "path_photo" => $fixing["path_photo"],
+	);
+	$jewel = Jewel::create($jewelData);
+
+	$fixingData = array(
+	    "user_id" => $id,
+	    "customer_id" => $fixing["customer_id"],
+	    "jewel_id" => $jewel->id,
+	    "description" => $fixing["description"],
+	    "deposit" => $fixing["deposit"],
+	    "estimate" => $fixing["estimate"],
+	    "notes" => $fixing["notes"],
+	    "state" => Config::get('constants.fixing.state.not_yet_started'),
+	);
 //        var_dump($jewel);
 //        echo "<br>";
 //        echo $jewel->id;
 //        echo "<br>";
-        Fixing::create($fixingData);
-        return Redirect::to(route('fixing.index'));
+	Fixing::create($fixingData);
+	return Redirect::to(route('fixing.index'));
     }
 
     /**
@@ -81,12 +83,13 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function show($userId) {
+    public function show() {
+	$userId = Auth::id();
 //	$fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
 //	Debugbar::info($fixingList);
-        $fixingList = Fixing::where('user_id', $userId)->get();
-        Debugbar::info($userId);
-        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+	$fixingList = Fixing::where('user_id', $userId)->get();
+	Debugbar::info($userId);
+	return View::make('fixing/index')->with('fixingList', $fixingList);
     }
 
     /**
@@ -95,20 +98,23 @@ class FixingController extends Controller {
      * @param  \Tentazioninoro\Fixing  $fixing
      * @return \Illuminate\Http\Response
      */
-    public function showList($userId, $customerId = NULL) {
-
-        if (isset($customerId)) {
-            $whereArray = [
-                'user_id' => $userId,
-                'customer_id' => $customerId,
-            ];
-        } else {
-            $whereArray = [
-                'user_id' => $userId,
-            ];
-        }
-        $fixingList = Fixing::where($whereArray)->get();
-        return View::make('fixing/index')->with('userId', $userId)->with('fixingList', $fixingList);
+    public function showList($customerId = NULL) {
+	$user = Auth::user();
+        $userId = Auth::id();
+	
+	if (isset($customerId)) {
+	    $whereArray = [
+		'user_id' => $userId,
+		'customer_id' => $customerId,
+	    ];
+	} else {
+	    $whereArray = [
+		'user_id' => $userId,
+	    ];
+	}
+	$fixingList = Fixing::where($whereArray)->get();
+	DebugBar::info($fixingList);
+	return View::make('fixing/index')->with('fixingList', $fixingList);
     }
 
     /**
@@ -129,7 +135,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Fixing $fixing) {
-        //
+	//
     }
 
     /**
@@ -139,7 +145,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Fixing $fixing) {
-        //
+	//
     }
 
 }

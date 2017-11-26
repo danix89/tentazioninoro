@@ -22,10 +22,10 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $user = Auth::user();
-        $id = Auth::id();
+//        $user = Auth::user();
+//        $id = Auth::id();
 //        return view('home');
-        return redirect(route('showList', $id));
+        return redirect(route('showList'));
     }
 
 }
