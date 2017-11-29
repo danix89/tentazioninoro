@@ -26,10 +26,11 @@ Route::resource('sale-act', 'SaleActController');
 //Route::get('/', function () {
 //    return view('welcome');
 //});
-//Route::get('/', ['as' => 'home', function () {
-//        return redirect(route('showList', 1, 1));
-//    }
-//]);
+
+Route::get('/', [function () {
+        return redirect(route('home'));
+    }
+]);
 //
 //Route::get('/home', function () {
 //    return redirect(route('home'));
