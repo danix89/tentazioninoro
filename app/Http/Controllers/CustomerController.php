@@ -5,6 +5,7 @@ namespace Tentazioninoro\Http\Controllers;
 use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
 use Tentazioninoro\IdentityDocument;
+use Tentazioninoro\UserController;
 
 class CustomerController extends Controller {
 
@@ -57,6 +58,11 @@ class CustomerController extends Controller {
             'street_number' => "",
         );
         IdentityDocument::create($identityDocumentData);
+        
+        UserController::create(array(
+            'user_id' => Auth::id(),
+            'customer_id' => $customer->id,
+        ));
         
         return back();
     }
