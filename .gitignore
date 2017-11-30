@@ -1,3 +1,4 @@
 /QOProjects
 /vendor/
 /nbproject
+/database/factories/UserFactory.php
