@@ -39,36 +39,40 @@ Route::get('/', [function () {
 Route::get('/riparazioni/cliente/{customerId?}', ['as' => 'showList', 'uses' => 'FixingController@showList']);
 
 Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
-	$user = Auth::user();
-	$userId = Auth::id();
-	$user = User::where('id', $userId)->get()[0];
-	$fixingList = User::find(1)->fixings()->get()->groupBy('customer_id');
-	$customerList = array();
-	foreach ($fixingList as $fixing) {
-	    $identityDocument = Customer::find($fixing[0]->customer_id)->identityDocument;
-	    $customerList[$fixing[0]->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
-//            $customerList[] = $identityDocument;
-	}
-//        $customerList = [1,2,43];
-	Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
-	Debugbar::info($customerList);
-	if (isset($customerId)) {
-	    $customer = Customer::where('id', $customerId)->get()[0];
-	} else {
-	    $customer = new Customer;
-	}
+        if(Auth::check()) {
+            $user = Auth::user();
+            $userId = Auth::id();
+            $user = User::where('id', $userId)->get()[0];
+            $fixingList = User::find(1)->fixings()->get()->groupBy('customer_id');
+            $customerList = array();
+            foreach ($fixingList as $fixing) {
+                $identityDocument = Customer::find($fixing[0]->customer_id)->identityDocument;
+                $customerList[$fixing[0]->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
+    //            $customerList[] = $identityDocument;
+            }
+    //        $customerList = [1,2,43];
+            Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
+            Debugbar::info($customerList);
+            if (isset($customerId)) {
+                $customer = Customer::where('id', $customerId)->get()[0];
+            } else {
+                $customer = new Customer;
+            }
 
-	$fixing = new Fixing;
-//        Debugbar::info($user);
-//        Debugbar::info($fixing);
+            $fixing = new Fixing;
+    //        Debugbar::info($user);
+    //        Debugbar::info($fixing);
 
-	$data = array(
-	    'customerList' => $customerList,
-	    'customer' => $customer,
-	    'fixing' => $fixing,
-	    'user' => $user,
-	);
-	return View::make('fixing/create')->with('data', $data);
+            $data = array(
+                'customerList' => $customerList,
+                'customer' => $customer,
+                'fixing' => $fixing,
+                'user' => $user,
+            );
+            return View::make('fixing/create')->with('data', $data);
+        } else {
+            return redirect(route('home'));
+        }
     }]
 );
 
