@@ -4,6 +4,7 @@ namespace Tentazioninoro\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
+use Tentazioninoro\IdentityDocument;
 
 class CustomerController extends Controller {
 
@@ -33,8 +34,31 @@ class CustomerController extends Controller {
      */
     public function store(Request $request) {
 //        $this->validate($request, Customer::$rules);
-        Customer::create($request->all());
-        return Redirect::to(route('customer.index'));
+        $data = $request->all();
+        $customerData = array(
+            'fiscal_code' => $data["fiscal_code"], 
+            'phone_number' => $data["phone_number"], 
+            'mobile_phone' => $data["mobile_phone"], 
+            'email' => $data["email"], 
+            'description' => $data["description"],
+        );
+        $customer = Customer::create($customerData);
+        
+        $identityDocumentData = array(
+            'customer_id' => $customer->id,
+            'release_date' => "1989-09-25",
+            'name' => $data["name"], 
+            'surname' => $data["surname"],
+            'birth_residence' => "",
+            'birth_province' => "",
+            'birth_date' => "1985-08-16",
+            'residence' => "",
+            'street' => "",
+            'street_number' => "",
+        );
+        IdentityDocument::create($identityDocumentData);
+        
+        return back();
     }
 
     /**

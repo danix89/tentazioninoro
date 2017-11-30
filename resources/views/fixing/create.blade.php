@@ -29,11 +29,11 @@ $user = $data["user"];
 
 @section('modal-body')
     <div class="form-group">
-        {!! Form::label('fiscalcode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
+        {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
         <div class="col-md-4">
-            {!! Form::text('fiscalcode', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
-            <!--<input type="text" class="form-control" id="customer-fiscalcode" placeholder="" name="customer-fiscalcode" autofocus required>-->
+            {!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            <!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
         </div>
     </div>
     <div class="form-group">
@@ -80,7 +80,7 @@ $user = $data["user"];
         {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="customer-description">Descrizione:</label>-->
         <div class="col-md-5">
-            {!! Form::textarea('description', '', ['class' => 'form-control', 'required' => true]) !!}
+            {!! Form::textarea('description', '', ['class' => 'form-control', 'required' => false]) !!}
             <!--<textarea type="text" class="form-control" id="customer-description" placeholder="" name="customer-description"></textarea>-->
         </div>
     </div>
@@ -92,7 +92,7 @@ $user = $data["user"];
 @endsection
 
 @section('content')
-{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal']) !!}
+{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal', 'files' => true]) !!}
 <fieldset>
     <legend class="fieldset-border">Dati cliente</legend>
     <div class="form-group">
@@ -137,7 +137,7 @@ $user = $data["user"];
         {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
         <div class="col-md-5">
-            {!! Form::text('path_photo', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'accept' => 'image/x-png,image/jpeg']) !!}
             <!--<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">-->
         </div>
     </div>

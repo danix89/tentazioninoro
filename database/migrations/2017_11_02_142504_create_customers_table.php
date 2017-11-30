@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration {
             $table->string('mobile_phone');
             $table->string('phone_number');
             $table->string('email')->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

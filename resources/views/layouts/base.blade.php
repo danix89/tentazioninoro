@@ -156,7 +156,7 @@
 			</div>
 			<div class="modal-footer">
 			    @section('modal-footer')
-			    <button type="button" id="save-@yield('modal-id')-btn" class="btn btn-primary" data-dismiss="modal">@yield('modal-save-btn', 'Salva')</button>
+			    <button type="submit" id="save-@yield('modal-id')-btn" class="btn btn-primary" >@yield('modal-save-btn', 'Salva')</button>
 			    <button type="button" id="cancel-@yield('modal-id')-btn" class="btn btn-warning" data-dismiss="modal">@yield('modal-cancel-btn', 'Annula')</button>
 			    @show
 			</div>
