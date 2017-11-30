@@ -25,8 +25,8 @@ class Customer extends Model {
         return $this->hasOne('Tentazioninoro\IdentityDocument');
     }
 
-    public function user() {
-        return $this->belongsTo('Tentazioninoro\User');
+    public function users() {
+        return $this->hasMany('Tentazioninoro\UserCustomer');
     }
 
     public function salesActs() {

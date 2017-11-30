@@ -35,7 +35,7 @@ class User extends Authenticatable {
     ];
 
     public function customers() {
-        return $this->hasMany('Tentazioninoro\Customer');
+        return $this->hasMany('Tentazioninoro\UserCustomer');
     }
 
     public function salesActs() {

@@ -43,30 +43,32 @@ Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
             $user = Auth::user();
             $userId = Auth::id();
             $user = User::where('id', $userId)->get()[0];
-            $fixingList = User::find(1)->fixings()->get()->groupBy('customer_id');
+            $customersIds = User::find(1)->customers()->get(); //->groupBy('customer_id');
+            Debugbar::info($customersIds);
             $customerList = array();
-            foreach ($fixingList as $fixing) {
-                $identityDocument = Customer::find($fixing[0]->customer_id)->identityDocument;
-                $customerList[$fixing[0]->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
+            foreach ($customersIds as $customerId) {
+                Debugbar::info("customerId - start", $customerId, "customerId - end");
+                $identityDocument = Customer::find($customerId->customer_id)->identityDocument;
+                $customerList[$customerId->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
     //            $customerList[] = $identityDocument;
             }
     //        $customerList = [1,2,43];
-            Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
-            Debugbar::info($customerList);
+//            Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
+//            Debugbar::info($customerList);
             if (isset($customerId)) {
-                $customer = Customer::where('id', $customerId)->get()[0];
+                $customer = Customer::where('id', $customerId)->get();
             } else {
                 $customer = new Customer;
             }
 
-            $fixing = new Fixing;
+            $customerId = new Fixing;
     //        Debugbar::info($user);
     //        Debugbar::info($fixing);
 
             $data = array(
                 'customerList' => $customerList,
                 'customer' => $customer,
-                'fixing' => $fixing,
+                'fixing' => $customerId,
                 'user' => $user,
             );
             return View::make('fixing/create')->with('data', $data);

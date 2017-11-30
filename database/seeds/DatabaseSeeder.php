@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder {
@@ -19,6 +20,14 @@ class DatabaseSeeder extends Seeder {
 			[
 			    'customer_id' => $customer->id,
 			]);
+                
+                $users = DB::table('users')->get();
+                DB::table('users_customers')->insert(
+                        [
+                            'user_id' => $users[0]->id, 
+                            'customer_id' => $customer->id,
+                        ]
+                );
 	    }
 	);
 	
