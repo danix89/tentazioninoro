@@ -18,10 +18,10 @@ class CreateFixingsTable extends Migration {
             $table->bigInteger('customer_id')->unsigned();
 //            $table->string('customer_id', 16);
             $table->bigInteger('jewel_id')->unsigned();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->float('deposit');
             $table->float('estimate');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->string('state');
             $table->timestamps();
         });

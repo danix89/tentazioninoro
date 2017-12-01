@@ -6,6 +6,7 @@ use Auth;
 use Config;
 use DB;
 use Debugbar;
+use \Input as Input;
 use Redirect;
 use View;
 use Illuminate\Http\Request;
@@ -50,30 +51,36 @@ class FixingController extends Controller {
 
 	$fixing = $request->all();
 	$id = Auth::id();
+	if (Input::hasFile('path_photo')) {
+	    $uploadDirectory = "uploads";
+	    $file = Input::file('path_photo');
+	    $file->move($uploadDirectory, $file->getClientOriginalName());
+	    $jewelData = array(
+		"typology" => $fixing["typology"],
+		"wheight" => $fixing["wheight"],
+		"metal" => $fixing["metal"],
+		"path_photo" => public_path($uploadDirectory . "\\" . $file->getClientOriginalName()),
+	    );
+	    $jewel = Jewel::create($jewelData);
 
-	$jewelData = array(
-	    "typology" => $fixing["typology"],
-	    "wheight" => $fixing["wheight"],
-	    "metal" => $fixing["metal"],
-	    "path_photo" => $fixing["path_photo"],
-	);
-	$jewel = Jewel::create($jewelData);
+	    $fixingData = array(
+		"user_id" => $id,
+		"customer_id" => $fixing["customer_id"],
+		"jewel_id" => $jewel->id,
+		"description" => $fixing["description"],
+		"deposit" => $fixing["deposit"],
+		"estimate" => $fixing["estimate"],
+		"notes" => $fixing["notes"],
+		"state" => Config::get('constants.fixing.state.not_yet_started'),
+	    );
 
-	$fixingData = array(
-	    "user_id" => $id,
-	    "customer_id" => $fixing["customer_id"],
-	    "jewel_id" => $jewel->id,
-	    "description" => $fixing["description"],
-	    "deposit" => $fixing["deposit"],
-	    "estimate" => $fixing["estimate"],
-	    "notes" => $fixing["notes"],
-	    "state" => Config::get('constants.fixing.state.not_yet_started'),
-	);
-//        var_dump($jewel);
-//        echo "<br>";
-//        echo $jewel->id;
-//        echo "<br>";
-	Fixing::create($fixingData);
+    //        var_dump($jewel);
+    //        echo "<br>";
+    //        echo $jewel->id;
+    //        echo "<br>";
+	    Fixing::create($fixingData);
+	}
+	
 	return Redirect::to(route('fixing.index'));
     }
 
@@ -100,8 +107,8 @@ class FixingController extends Controller {
      */
     public function showList($customerId = NULL) {
 	$user = Auth::user();
-        $userId = Auth::id();
-	
+	$userId = Auth::id();
+
 	if (isset($customerId)) {
 	    $whereArray = [
 		'user_id' => $userId,

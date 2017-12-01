@@ -148,7 +148,7 @@ $user = $data["user"];
         {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
         <div class="col-md-5">
-            {!! Form::textarea('description', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::textarea('description', '', ['class' => 'form-control', 'autofocus' => true, 'false' => true]) !!}
             <!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
         </div>
     </div>
@@ -175,7 +175,7 @@ $user = $data["user"];
         {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
         <div class="col-md-5">
-            {!! Form::textarea('notes', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::textarea('notes', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
             <!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
         </div>
     </div>
