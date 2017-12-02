@@ -8,6 +8,10 @@ class SaleAct extends Model {
 
     protected $table = 'sales_acts';
 
+    protected $fillable = [
+        'user_id', 'customer_id', 'path_photo',
+    ];
+    
     public function user() {
 	return $this->belongsTo('Tentazioninoro\User');
     }

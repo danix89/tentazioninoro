@@ -33,7 +33,7 @@
 		    @section('navbar-ul')
 		    <ul class="nav navbar-nav">
 			@section('navbar-li-left')
-			<li class="@yield('home_class')"><a href="{{ route('home', ["userId" => 1]) }}">Home</a></li>
+			<li class="@yield('home_class')"><a href="{{ route('home') }}">Home</a></li>
 			<!--<li><a href="#">Cerca riparazione</a></li>-->
 			@show
 		    </ul>

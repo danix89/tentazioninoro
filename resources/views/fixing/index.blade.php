@@ -65,7 +65,7 @@ $fixingList = json_decode($fixingList, TRUE);
 	@endif
 
 	<script>
-	    initialize_grid("#grid-basic");
+	    initializeGrid("#grid-basic", "{{ route('showFixing', ['fixingId' => '']) }}");
     //	$("#grid-basic").bootgrid();
 	</script>
     @endsection

@@ -13,8 +13,6 @@ class Fixing extends Model {
     protected $guarded = ['id'];
     protected $fillable = ['user_id' ,'customer_id', 'jewel_id', 'description', 'deposit', 'estimate', 'notes', 'state', 'created_at', 'updated_at'];
 
-    
-    
     public function user() {
         return $this->belongsTo('Tentazioninoro\User');
     }

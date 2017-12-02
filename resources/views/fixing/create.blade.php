@@ -1,8 +1,31 @@
 <?php
-$customerList = $data["customerList"];
+$showCustomerList = $data["showCustomerList"];
 $customer = $data["customer"];
 $fixing = $data["fixing"];
 $user = $data["user"];
+if($showCustomerList) {
+    $customerList = $data["customerList"];
+    $typology = "";
+    $weight = "";
+    $metal = "";
+    $path_photo = "";
+    $description = "";
+    $deposit = "";
+    $estimate = "";
+    $notes = "";
+} else {
+    //$typology = $jewel->typology;
+    $typology = "Orologio";
+    $weight = "0.22";
+    $metal = "Argento";
+    $path_photo = asset('uploads\304321_186595584744375_5665368_n.jpg');
+//    $description = $fixing->description;
+    $description = "";
+    $deposit = "20";
+    $estimate = "120";
+    $notes = "Questi sono degli appunti";
+}
+
 ?>
 
 @extends('layouts.base')
@@ -16,7 +39,7 @@ $user = $data["user"];
 @section('navbar-li-left')
 @parent
 @section('home_class', '')
-<li class="active"><a href="{{ route('newfixing', $user->id) }}">Nuova Riparazione</a></li>
+<li class="active"><a href="{{ route('newfixing') }}">Nuova Riparazione</a></li>
 @endsection
 
 @section('modal-id', 'add-customer')
@@ -97,14 +120,17 @@ $user = $data["user"];
     <legend class="fieldset-border">Dati cliente</legend>
     <div class="form-group">
         {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
-        <div class="col-md-5">
-            <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-            {{--{!! Form::text('customer_id', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}--}}
-            {!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
-        </div>
-        <div class="col-md-1">
-            <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
-        </div>
+	@if($showCustomerList)
+	    <div class="col-md-5">
+		<!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
+		{!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
+	    </div>
+	    <div class="col-md-1">
+		<input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
+	    </div>
+	@else
+	    {{--{!! Form::text('customer_id', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}--}}
+	@endif
     </div>
 </fieldset>
 <fieldset>
@@ -113,15 +139,15 @@ $user = $data["user"];
         {!! Form::label('typology', 'Tipologia:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="tipologia">Tipologia:</label>-->
         <div class="col-md-5">
-            {!! Form::text('typology', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('typology', $typology, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>-->
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('wheight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
+        {!! Form::label('weight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="peso">Peso:</label>-->
         <div class="col-md-5">
-            {!! Form::text('wheight', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>-->
         </div>
     </div>
@@ -129,7 +155,7 @@ $user = $data["user"];
         {!! Form::label('metal', 'Metallo:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="metallo">Metallo:</label>-->
         <div class="col-md-5">
-            {!! Form::text('metal', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('metal', $metal, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>-->
         </div>
     </div>
@@ -139,6 +165,9 @@ $user = $data["user"];
         <div class="col-md-5">
             {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'accept' => 'image/x-png,image/jpeg']) !!}
             <!--<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">-->
+	    @if(isset($path_photo) && $path_photo != "")
+		<img src="{{ $path_photo }}" />
+	    @endif
         </div>
     </div>
 </fieldset>
@@ -148,7 +177,7 @@ $user = $data["user"];
         {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
         <div class="col-md-5">
-            {!! Form::textarea('description', '', ['class' => 'form-control', 'autofocus' => true, 'false' => true]) !!}
+            {!! Form::textarea('description', $description, ['class' => 'form-control', 'autofocus' => true, 'false' => true]) !!}
             <!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
         </div>
     </div>
@@ -159,7 +188,7 @@ $user = $data["user"];
         {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="deposit">Acconto:</label>-->
         <div class="col-md-5">
-            {!! Form::text('deposit', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>-->
         </div>
     </div>
@@ -167,7 +196,7 @@ $user = $data["user"];
         {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="estimate">Preventivo:</label>-->
         <div class="col-md-5">
-            {!! Form::text('estimate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            {!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             <!--<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>-->
         </div>
     </div>
@@ -175,7 +204,7 @@ $user = $data["user"];
         {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
         <div class="col-md-5">
-            {!! Form::textarea('notes', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
+            {!! Form::textarea('notes', $notes, ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
             <!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
         </div>
     </div>

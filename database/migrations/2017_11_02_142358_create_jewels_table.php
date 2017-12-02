@@ -15,7 +15,7 @@ class CreateJewelsTable extends Migration {
         Schema::create('jewels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('typology');
-            $table->float('wheight');
+            $table->float('weight');
             $table->string('metal');
             $table->string('path_photo');
             $table->timestamps();

@@ -6,39 +6,36 @@ jQuery(document).ready(function ($) {
 	logout();
     });
 
-    $('#modify-riparazione').click(function () {
-
-	$('#riparazioneModal').modal('show');
+    $('#modify-fixing').click(function () {
+	
     });
 });
 
-function initialize_grid(grid_id) {
-    var grid = $(grid_id).bootgrid({
+function initializeGrid(gridId, routeBaseUrl) {
+    var grid = $(gridId).bootgrid({
 	selection: true,
 	multiSelect: true,
 	formatters: {
 	    "commands": function (column, row) {
 //		console.log(row);
-		return "<button id=\"modify-fixing\" type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></button> " +
-			"<button id=\"delete-fixing\" type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-trash\"></span></button>";
+		return "<a href=\"" + routeBaseUrl + "/" + row.fixing_id + "\"]) }}\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " +
+			"<button id=\"delete-fixing\" type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.fixingId + "\"><span class=\"glyphicon glyphicon-trash\"></span></button>";
 	    }
 	}
     }).on("selected.rs.jquery.bootgrid", function (e, rows) {
 	var rowIds = [];
 	for (var i = 0; i < rows.length; i++) {
-	    rowIds.push(rows[i].fixing_id);
+	    rowIds.push(rows[i].fixingId);
 	}
-	alert("Select: " + rowIds.join(","));
+	console.log("Select: " + rowIds.join(","));
     }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 	var rowIds = [];
 	for (var i = 0; i < rows.length; i++) {
-	    rowIds.push(rows[i].fixing_id);
+	    rowIds.push(rows[i].fixingId);
 	}
-	alert("Deselect: " + rowIds.join(","));
+	console.log("Deselect: " + rowIds.join(","));
     }).on("loaded.rs.jquery.bootgrid", function (e, rows) {
-	console.log($("#delete-all-btn"));
 	if($("#delete-all-btn").length === 0) {
-	    console.log($(".actions.btn-group .dropdown.btn-group").last());
 	    $(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-btn" class="dropdown btn-group"><button class="btn btn-default dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
 	}
     });

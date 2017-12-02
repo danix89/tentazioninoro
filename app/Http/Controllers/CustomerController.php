@@ -2,10 +2,11 @@
 
 namespace Tentazioninoro\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
 use Tentazioninoro\IdentityDocument;
-use Tentazioninoro\UserController;
+use Tentazioninoro\UserCustomer;
 
 class CustomerController extends Controller {
 
@@ -59,7 +60,7 @@ class CustomerController extends Controller {
         );
         IdentityDocument::create($identityDocumentData);
         
-        UserController::create(array(
+        UserCustomer::create(array(
             'user_id' => Auth::id(),
             'customer_id' => $customer->id,
         ));

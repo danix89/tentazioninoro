@@ -14,6 +14,7 @@
 use Tentazioninoro\Customer;
 use Tentazioninoro\Fixing;
 use Tentazioninoro\IdentityDocument;
+use Tentazioninoro\Jewel;
 use Tentazioninoro\User;
 
 Route::resource('user', 'UserController');
@@ -36,14 +37,14 @@ Route::get('/', [function () {
 //    return redirect(route('home'));
 //});
 
-Route::get('/riparazioni/cliente/{customerId?}', ['as' => 'showList', 'uses' => 'FixingController@showList']);
+Route::get('/riparazioni/', ['as' => 'showList', 'uses' => 'FixingController@showList']);
 
 Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
         if(Auth::check()) {
             $user = Auth::user();
             $userId = Auth::id();
             $user = User::where('id', $userId)->get()[0];
-            $customersIds = User::find(1)->customers()->get(); //->groupBy('customer_id');
+            $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
             Debugbar::info($customersIds);
             $customerList = array();
             foreach ($customersIds as $customerId) {
@@ -66,9 +67,36 @@ Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
     //        Debugbar::info($fixing);
 
             $data = array(
+		'showCustomerList' => true,
                 'customerList' => $customerList,
                 'customer' => $customer,
                 'fixing' => $customerId,
+                'user' => $user,
+            );
+            return View::make('fixing/create')->with('data', $data);
+        } else {
+            return redirect(route('home'));
+        }
+    }]
+);
+    
+Route::get('/riparazione/{fixingId}', ['as' => 'showFixing', function ($fixingId) {
+        if(Auth::check()) {
+            $user = Auth::user();
+            $userId = Auth::id();
+            $user = User::where('id', $userId)->get()[0];
+            $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
+
+	    $customer = new Customer;
+            $fixing = Fixing::where('id', $fixingId)->get()->first();
+	    $jewel = new Jewel;
+            Debugbar::info($fixing);
+	    var_dump($fixing);
+            $data = array(
+                'showCustomerList' => false,
+                'customer' => $customer,
+                'fixing' => $fixing,
+                'jewel' => $jewel,
                 'user' => $user,
             );
             return View::make('fixing/create')->with('data', $data);
