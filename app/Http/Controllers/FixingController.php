@@ -148,11 +148,13 @@ class FixingController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Tentazioninoro\Fixing  $fixing
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fixing $fixing) {
-	//
+    public function destroy($id) {
+//	var_dump($id);
+	User::destroy($id);
+	return Redirect::to(route('fixing.index'));
     }
 
 }

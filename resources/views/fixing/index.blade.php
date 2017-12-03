@@ -65,7 +65,40 @@ $fixingList = json_decode($fixingList, TRUE);
 	@endif
 
 	<script>
-	    initializeGrid("#grid-basic", "{{ route('showFixing', ['fixingId' => '']) }}");
+	    initializeGrid("#grid-basic", "{{ route('showFixing', ['fixingId' => '']) }}", 
+		"{{ route('fixing.destroy', ['fixingId' => '']) }}");
+	    
+	    function initializeGrid(gridId, csrf_token, showFixingRouteBaseUrl, deleteFixingRouteBaseUrl) {
+		var grid = $(gridId).bootgrid({
+		    selection: true,
+		    multiSelect: true,
+		    formatters: {
+			"commands": function (column, row) {
+	    //		console.log(row);
+			    return "<a href=\"" + showFixingRouteBaseUrl + "/" + row.fixing_id + "\"]) }}\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " +
+				    '{!! Form::open(["route" => ["fixing.destroy", ' + row.fixing_id + '], "method" => "delete" ]) !!}' +
+				    '{!! Form::submit("Elimina", ["class" => "btn btn-danger"]) !!}' +
+				    '{!! Form::close() !!}';
+			}
+		    }
+		}).on("selected.rs.jquery.bootgrid", function (e, rows) {
+		    var rowIds = [];
+		    for (var i = 0; i < rows.length; i++) {
+			rowIds.push(rows[i].fixingId);
+		    }
+		    console.log("Select: " + rowIds.join(","));
+		}).on("deselected.rs.jquery.bootgrid", function (e, rows) {
+		    var rowIds = [];
+		    for (var i = 0; i < rows.length; i++) {
+			rowIds.push(rows[i].fixingId);
+		    }
+		    console.log("Deselect: " + rowIds.join(","));
+		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
+		    if($("#delete-all-btn").length === 0) {
+			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-btn" class="dropdown btn-group"><button class="btn btn-default dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+		    }
+		});
+	    }
     //	$("#grid-basic").bootgrid();
 	</script>
     @endsection
