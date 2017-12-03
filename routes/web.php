@@ -62,15 +62,15 @@ Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
                 $customer = new Customer;
             }
 
-            $customerId = new Fixing;
+            $fixing = new Fixing;
     //        Debugbar::info($user);
     //        Debugbar::info($fixing);
 
             $data = array(
 		'showCustomerList' => true,
                 'customerList' => $customerList,
+                'fixing' => $fixing,
                 'customer' => $customer,
-                'fixing' => $customerId,
                 'user' => $user,
             );
             return View::make('fixing/create')->with('data', $data);
@@ -88,17 +88,21 @@ Route::get('/riparazione/{fixingId}', ['as' => 'showFixing', function ($fixingId
             $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
 
 	    $customer = new Customer;
-            $fixing = Fixing::where('id', $fixingId)->get()->first();
 	    $jewel = new Jewel;
-            Debugbar::info($fixing);
-	    var_dump($fixing);
-            $data = array(
+            $fixing = Fixing::where('id', $fixingId)->get()->first();
+            $jewel = Jewel::where('id', $fixing->jewel_id)->get()->first();
+//            $customer = Customer::where('id', $fixing->customer_id)->get()->first();
+	    $identityDocument = Customer::find($fixing->customer_id)->identityDocument;
+
+	    $data = array(
                 'showCustomerList' => false,
-                'customer' => $customer,
                 'fixing' => $fixing,
+//                'customer' => $customer,
+                'identityDocument' => $identityDocument,
                 'jewel' => $jewel,
                 'user' => $user,
             );
+	    
             return View::make('fixing/create')->with('data', $data);
         } else {
             return redirect(route('home'));
