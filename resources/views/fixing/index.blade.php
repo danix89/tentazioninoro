@@ -65,8 +65,7 @@ $fixingList = json_decode($fixingList, TRUE);
 	@endif
 
 	<script>
-	    initializeGrid("#grid-basic", "{{ route('showFixing', ['fixingId' => '']) }}", 
-		"{{ route('fixing.destroy', ['fixingId' => '']) }}");
+	    initializeGrid("#grid-basic");
 	    
 	    function initializeGrid(gridId, csrf_token, showFixingRouteBaseUrl, deleteFixingRouteBaseUrl) {
 		var grid = $(gridId).bootgrid({
@@ -75,9 +74,11 @@ $fixingList = json_decode($fixingList, TRUE);
 		    formatters: {
 			"commands": function (column, row) {
 	    //		console.log(row);
-			    return "<a href=\"" + showFixingRouteBaseUrl + "/" + row.fixing_id + "\"]) }}\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " +
-				    '{!! Form::open(["route" => ["fixing.destroy", ' + row.fixing_id + '], "method" => "delete" ]) !!}' +
-				    '{!! Form::submit("Elimina", ["class" => "btn btn-danger"]) !!}' +
+                            $(".prova").attr("action", "{{ route('fixing.destroy', ['fixingId' => '']) }}/" + row.fixing_id);
+                            console.log($(".prova"));
+			    return "<a class=\"btn btn-default\" href=\"{{ route('showFixing', ['fixingId' => '']) }}/" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " +
+				    '{!! Form::open(["method" => "delete", "class" => "prova", "style" => "display: inline;"]) !!}' +
+				    '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
 				    '{!! Form::close() !!}';
 			}
 		    }

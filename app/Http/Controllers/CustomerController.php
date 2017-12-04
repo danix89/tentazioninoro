@@ -48,12 +48,12 @@ class CustomerController extends Controller {
         
         $identityDocumentData = array(
             'customer_id' => $customer->id,
-            'release_date' => "1989-09-25",
+            'release_date' => "1900-01-01",
             'name' => $data["name"], 
             'surname' => $data["surname"],
             'birth_residence' => "",
             'birth_province' => "",
-            'birth_date' => "1985-08-16",
+            'birth_date' => "1900-01-01",
             'residence' => "",
             'street' => "",
             'street_number' => "",

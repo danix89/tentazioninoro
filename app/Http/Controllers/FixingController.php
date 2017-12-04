@@ -153,7 +153,7 @@ class FixingController extends Controller {
      */
     public function destroy($id) {
 //	var_dump($id);
-	User::destroy($id);
+	Fixing::destroy($id);
 	return Redirect::to(route('fixing.index'));
     }
 
