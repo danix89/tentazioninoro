@@ -10,7 +10,7 @@ class Jewel extends Model {
 //        'firstname' => 'required|min:3|max:40',
     ];
     
-    protected $fillable = ['typology', 'wheight', 'metal', 'path_photo', 'created_at', 'updated_at'];
+    protected $fillable = ['typology', 'weight', 'metal', 'path_photo', 'created_at', 'updated_at'];
 
     public function fixing() {
         return $this->belongsTo('Tentazioninoro\Fixing');

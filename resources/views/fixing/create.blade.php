@@ -1,9 +1,7 @@
 <?php
 $showCustomerList = $data["showCustomerList"];
 $fixing = $data["fixing"];
-$identityDocument = $data["identityDocument"];
-$jewel = $data["jewel"];
-$user = $data["user"];
+$user = Auth::user();
 if($showCustomerList) {
     $disabled = false;
     $customer = $data["customer"];
@@ -17,6 +15,8 @@ if($showCustomerList) {
     $estimate = "";
     $notes = "";
 } else {
+    $identityDocument = $data["identityDocument"];
+    $jewel = $data["jewel"];
     $disabled = true;
     $typology = $jewel->typology;
     $weight = $jewel->weight;
@@ -167,10 +167,10 @@ if($showCustomerList) {
         {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
         <div class="col-md-5">
-            {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
-            <!--<input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">-->
 	    @if(isset($path_photo) && $path_photo != "")
 		<img src="{{ $path_photo }}" />
+            @else
+                {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
 	    @endif
         </div>
     </div>
@@ -213,11 +213,13 @@ if($showCustomerList) {
         </div>
     </div>
 </fieldset>
-<div class="form-group">        
-    <div class="col-md-offset-4 col-md-5">
-        <button type="submit" class="btn btn-primary">Salva</button>
+@if(!$disabled)
+    <div class="form-group">        
+        <div class="col-md-offset-4 col-md-5">
+            <button type="submit" class="btn btn-primary">Salva</button>
+        </div>
     </div>
-</div>
+@endif
 </fieldset>
 {!! Form::close() !!}
 

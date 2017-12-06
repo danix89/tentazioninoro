@@ -38,12 +38,11 @@ Route::get('/', [function () {
 //});
 
 Route::get('/riparazioni/', ['as' => 'showList', 'uses' => 'FixingController@showList']);
+Route::post('/fixing/delete', ['as' => 'fixing.destroyAll', 'uses' => 'FixingController@destroyFixings']);
 
 Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
         if(Auth::check()) {
-            $user = Auth::user();
             $userId = Auth::id();
-            $user = User::where('id', $userId)->get()[0];
             $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
             Debugbar::info($customersIds);
             $customerList = array();
@@ -71,7 +70,6 @@ Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
                 'customerList' => $customerList,
                 'fixing' => $fixing,
                 'customer' => $customer,
-                'user' => $user,
             );
             return View::make('fixing/create')->with('data', $data);
         } else {
@@ -82,9 +80,7 @@ Route::get('/nuova-riparazione/', ['as' => 'newfixing', function () {
     
 Route::get('/riparazione/{fixingId}', ['as' => 'showFixing', function ($fixingId) {
         if(Auth::check()) {
-            $user = Auth::user();
             $userId = Auth::id();
-            $user = User::where('id', $userId)->get()[0];
             $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
 
 	    $customer = new Customer;
@@ -93,14 +89,13 @@ Route::get('/riparazione/{fixingId}', ['as' => 'showFixing', function ($fixingId
             $jewel = Jewel::where('id', $fixing->jewel_id)->get()->first();
 //            $customer = Customer::where('id', $fixing->customer_id)->get()->first();
 	    $identityDocument = Customer::find($fixing->customer_id)->identityDocument;
-
+            
 	    $data = array(
                 'showCustomerList' => false,
                 'fixing' => $fixing,
 //                'customer' => $customer,
                 'identityDocument' => $identityDocument,
                 'jewel' => $jewel,
-                'user' => $user,
             );
 	    
             return View::make('fixing/create')->with('data', $data);

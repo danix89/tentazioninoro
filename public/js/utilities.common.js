@@ -24,13 +24,6 @@
 
 var debuggingModeValues = {};
 
-function getBaseUrl() {
-    var getUrl = window.location;
-    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-    
-    return baseUrl;
-}
-
 function $_GET(param) {
     var vars = {};
     window.location.href.replace(location.hash, "").replace(
@@ -93,33 +86,28 @@ function reloadPage(timeout) {
     }, timeout);
 }
 
-function renderIframeContent(iframe, html) {
-    iframe.contents().find("body").html(html);
-}
-
-function login(userid) {
-    Cookies.set('user-id', userid, {path: "/tentazioninoro"});
-}
-
-function logout() {
-    Cookies.remove('user-id', {path: "/tentazioninoro"});
-    reloadPage();
-}
-
 function checkIfAdblockIsActive() {
-    if( window.canRunAds === undefined ){
+    if (window.canRunAds === undefined) {
         alert("Disattiva Adblock per utilizzare il plugin correttamente.");
         document.getElementById("wpbody").innerHTML = "";
     }
 }
 window.checkIfAdblockIsActive = checkIfAdblockIsActive;
 
-function showMessageError(message, showLogFilePageUrl = "") {
-    var logAnchor = "";
-    if(showLogFilePageUrl !== "") {
-        logAnchor = '<a id = "dtx-show-log-file-anchor" href = "' + showLogFilePageUrl + '">Mostra il file di log</a>';
+function isJson(str, verbose = false) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        if(getDebuggingModeValues().verbose) {
+            console.warn("str is not a valid json string!");
+            console.warn(str);
+        }
+        
+        if(verbose) {
+            console.warn(e);
+        }
+        
+        return false;
     }
-    var html = logAnchor + "<br>" + message;
-    document.getElementById("wpbody").innerHTML = html;
+    return true;
 }
-window.checkIfAdblockIsActive = checkIfAdblockIsActive;

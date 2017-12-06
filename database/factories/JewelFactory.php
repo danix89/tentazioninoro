@@ -10,7 +10,7 @@ $factory->define(Tentazioninoro\Jewel::class, function (Faker $faker) {
     
     return [
         'typology' => $typologies[rand(0, 4)],
-        'wheight' => $faker->randomFloat(2, 0.1, 0.5),
+        'weight' => $faker->randomFloat(2, 0.1, 0.5),
         'metal' => $metals[rand(0, 2)],
         'path_photo' => $faker->url
     ];

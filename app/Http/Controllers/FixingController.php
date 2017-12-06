@@ -157,4 +157,13 @@ class FixingController extends Controller {
 	return Redirect::to(route('fixing.index'));
     }
 
+    public function destroyFixings(Request $request) {
+	var_dump($request["ids"]);
+        echo"cia";
+//        foreach ($ids as $id) {
+//            Fixing::destroy($id);
+//        }
+//	return Redirect::to(route('fixing.index'));
+    }
+
 }
