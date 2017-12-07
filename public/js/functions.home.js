@@ -17,22 +17,14 @@ jQuery(document).ready(function ($) {
     });
 
     $('#delete-all-btn').click(function () {
-//        // CSRF protection
-//        $.ajaxSetup({
-//            headers: {
-//                    'X-CSRF-Token': $('input[name="_token"]').val()
-//                }
-//        });
-        
         $.post({
             url: deleteRoute,
             data: {
                 _token: $('meta[name=csrf-token]').attr('content'),
-                newLat: 1,
-                prova: "bo",
+                ids: mm.fetchArray("toDelete"),
             },
             success: function () {
-
+                reloadPage(1000);
             }
         }).fail(function () {
             console.log("Ajax call failed!");
