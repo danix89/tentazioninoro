@@ -89,7 +89,7 @@ $fixingList = json_decode($fixingList, TRUE);
 			"commands": function (column, row) {
 	    //		console.log(row);
                             $(".deleteForm").attr("action", "{{ route('fixing.destroy', ['fixingId' => '']) }}/" + row.fixing_id);
-			    return "<a class=\"btn btn-default\" href=\"{{ route('showFixing', ['fixingId' => '']) }}/" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " +
+			    return "<a class=\"btn btn-default\" href=\"{{ route('showFixing', ['fixingId' => '']) }}/" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
 				    '{!! Form::open(["method" => "delete", "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
 				    '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
 				    '{!! Form::close() !!}';
