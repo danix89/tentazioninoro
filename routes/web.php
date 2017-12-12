@@ -32,6 +32,18 @@ Route::get('/', [function () {
         return redirect(route('home'));
     }
 ]);
+
+Route::get('/saleact/', [function () {
+        return View::make('saleact.pdf');
+    }
+]);
+
+Route::get('/pdf/', [function () {
+        $data = array();
+        Tentazioninoro\Http\Controllers\SaleActController::createPDF("prova.pdf", $data);
+    }
+]);
+
 //
 //Route::get('/home', function () {
 //    return redirect(route('home'));

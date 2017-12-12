@@ -55,13 +55,15 @@ class FixingController extends Controller {
 	    $uploadDirectory = "uploads";
 	    $file = Input::file('path_photo');
 	    $file->move($uploadDirectory, $file->getClientOriginalName());
+            $path_to_photo = $uploadDirectory . "\\" . $file->getClientOriginalName();
 	    $jewelData = array(
 		"typology" => $fixing["typology"],
 		"weight" => $fixing["weight"],
 		"metal" => $fixing["metal"],
-		"path_photo" => $uploadDirectory . "\\" . $file->getClientOriginalName(),
+		"path_photo" => $path_to_photo,
 	    );
 	    $jewel = Jewel::create($jewelData);
+            JewelController::save_photo_into_cloud($path_to_photo);
 
 	    $fixingData = array(
 		"user_id" => $id,
