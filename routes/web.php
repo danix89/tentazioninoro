@@ -33,6 +33,11 @@ Route::get('/', [function () {
     }
 ]);
 
+Route::get('/saleact/modify/', [function () {
+        return View::make('saleact.toBeFilled');
+    }
+]);
+
 Route::get('/saleact/', [function () {
         return View::make('saleact.pdf');
     }

@@ -38,7 +38,7 @@
         </div>
         <div style="position: relative; top: 0px;">
             <div id="date" style="position: absolute;">
-                <p>Data <span id="today"></span> ora <span id="hour"></span></p>
+                <p>Data <span id="date">12/12/2017</span> ora <span id="hour">15:20</span></p>
             </div>
             <div id="idNumber" style="position: absolute; right: 15px;">
                 <p>N&#176;. <span id="idNumber">1056</span></p>
@@ -53,19 +53,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Cognome <span id="surname">Iannone</span></td><td>Nome <span id="name">Daniele</span></td><td></td>
+                        <td>{!! Form::label('surname', 'Cognome', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('name', 'Nome', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>Nato/a a <span id="birthResidence">Avellino</span></td><td>Prov. <span id="birthProvince">SA</span></td><td>il <span id="birthDate">22/02/1990</span></td>
+                        <td>{!! Form::label('birthResidence', 'Nato/a a ', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('birthProvince', 'Prov.', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                     </tr>
                     <tr>
-                        <td>Residente a <span id="residence">Avellino</span></td><td>via <span id="residenceAddress">Pal</span></td><td>N&#176;. <span id="residenceStreetNumber">13</span></td>
+                        <td>{!! Form::label('residence', 'Residente a ', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('residenceAddress', 'via', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('residenceStreetNumber', 'N&#176;.', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                     </tr>
                     <tr>
-                        <td>Doc. Identit&agrave; <span id="identityDocument">Carta d'identit&agrave;</span></td><td>Ril. il <span id="releaseDate">12/12/2017</span></td><td></td>
+                        <td>{!! Form::label('identityDocument', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>Codice Fiscale <span id="fiscalCode">NNNDNL90H04058AY</span></td><td></td><td></td>
+                        <td>{!! Form::label('fiscalCode', 'Codice Fiscale ', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -84,10 +94,10 @@
                 <div id='photos'></div>
             </div>
             <div style="">
-                <p id=''>Peso materiale AU gr. <span id="weight">20</span> (750/1000)</p>
-                <p id=''>A Euro <span id="price">100</span></p>
-                <p id='' style="text-decoration: underline;">Oro e Argento nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9 <span id="gold">10</span> ARG999 <span id="silver">22</span></p>
-                <p id='' style="">Al prezzo concordato di EURO <span id="agreedPrice">100</span> modalit&agrave; di pagamento <span id="termsOfPayment">C.C.</span></p>
+                <p id=''>Peso materiale AU gr. {!! Form::label('weight', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!} (750/1000)</p>
+                <p id=''>A Euro {!! Form::label('price', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+                <p id='' style="text-decoration: underline;">Oro e Argento nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9 {!! Form::label('gold', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!} ARG999 {!! Form::label('silver', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+                <p id='' style="">Al prezzo concordato di EURO {!! Form::label('agreedPrice', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!} modalit&agrave; di pagamento {!! Form::label('termsOfPayment', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</p>
                 Destinazione Materiale:
                 <ol type="A">
                     <li>destinata alla fusione presso Azienda autorizzata nel recupero metalli preziosi.</li>
@@ -100,13 +110,14 @@
                 <hr style="position: absolute; margin-top: 70px; right: 0px; width: 30%; border-style: inset;">
             </div>
             <div style="margin-top: 100px;">
-                <p>Il/La Sottoscritto/a Nome <span id="name">Daniele</span> Cognome <span id="surname">Iannone</span></p>
+                <p>Il/La Sottoscritto/a Nome {!! Form::label('name', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!} Cognome {!! Form::label('surname', '', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}</p>
                 <p>Dichiara che tutti gli oggetti sopravenduti non sono di illecita provenienza e di essere in possesso di tutti i diritti atti alla vendita degli stessi.</p>
                 <p>La presente vale anche come ricevuta a saldo per la somma riportata "prezzo complessivo".</p>
                 <p>Garanzia dati personali: in conformit&agrave; alla legge 196/03 sulla tutela della privacy, la &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     garantisce la massima riservatezza dei dati da Lei forniti; in ogni momento potr&agrave; richiedere gratuitamente la modifica e/o l'aggiornamento degli stessi.</p>
                 <p>Dichiara inoltre che i proventi di tale operazione non finanzieranno alcuna attivit&agrave; di riciclaggio, finanziamento al terrorismo o attivit&a&agrave; criminose nel rispetto del Dlgs 90 del 24/05/2017 ed il Dlgs 92 del 25/05/2017 e saranno utilizzati a scopo privato.</p>
             </div>
+            {!! Form::close() !!}
             <div style="margin: 0 10em;">
                 <div style="position: relative;">
                     <h4 id='' style="position: absolute;"><b>Per Accettazione</b></h4>
@@ -119,19 +130,5 @@
                 </div>
             </div>
         </div>
-        
-        <script>
-            $(document).ready(function() {
-                var now = getTodayDate().split(" ");
-                var today = now[0];
-                var hourAndMinutes = now[1];
-                console.log(getTodayDate());
-                console.log(now);
-                console.log(today);
-                console.log(hourAndMinutes);
-                $("#today").text(today);
-                $("#hour").text(hourAndMinutes);
-            });
-        </script>
     </body>
 </html>
