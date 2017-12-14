@@ -1,3 +1,11 @@
+<?php
+//$customer = $data["customer"];
+//$fixing = $data["fixing"];
+//$user = $data["user"];
+$user = Auth::user();
+$fixingList = json_decode($fixingList, TRUE);
+?>
+
 <html lang="en">
     <head>
         <title>Tentazioni in Oro - @yield('title')</title>

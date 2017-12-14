@@ -15,6 +15,7 @@ use Tentazioninoro\Customer;
 use Tentazioninoro\Fixing;
 use Tentazioninoro\IdentityDocument;
 use Tentazioninoro\Jewel;
+use Tentazioninoro\SaleAct;
 use Tentazioninoro\User;
 
 Route::resource('user', 'UserController');
@@ -38,8 +39,9 @@ Route::get('/saleact/modify/', [function () {
     }
 ]);
 
-Route::get('/saleact/', [function () {
-        return View::make('saleact.pdf');
+Route::get('/saleact/{saleActId}', [function ($saleActId) {
+        $saleAct = User::find($saleActId)->customers()->get();
+        return View::make('saleact.pdf')->with('saleAct', $saleAct);
     }
 ]);
 
