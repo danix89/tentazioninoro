@@ -133,14 +133,15 @@ class MemoryManager {
         localStorage[name] = "";
     }
 
-    resetAll() {
+    resetAll(toReset) {
         var thisObj = this;
-        $.each(localStorage, function (name) {
+        $.each(toReset, function (i) {
+            var name = toReset[i];
+            console.log(name);
             thisObj.resetData(name);
         });
     }
 }
 
 var mm = MemoryManagerSingleton.getInstance();
-mm.resetAll();
 window.mm = mm;

@@ -78,10 +78,12 @@ $fixingList = json_decode($fixingList, TRUE);
 	@endif
 
 	<script>
+	    mm.resetAll(["toDelete"]);
+            
             setDeleteRoute("{{ route('fixing.destroyAll') }}");
 	    initializeGrid("#grid-basic");
 	    
-	    function initializeGrid(gridId) {
+    function initializeGrid(gridId) {
 		var grid = $(gridId).bootgrid({
 		    selection: true,
 		    multiSelect: true,
