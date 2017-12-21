@@ -12,8 +12,16 @@ class DatabaseSeeder extends Seeder {
      */
     public function run() {
 //	$this->call(UsersTableSeeder::class);
-	factory(Tentazioninoro\User::class, 1)->create();
-	
+	factory(Tentazioninoro\User::class, 1)->create([
+            'permissions' => "Fixings",
+        ]);
+        
+	factory(Tentazioninoro\User::class, 1)->create([
+            'name' => 'mik',
+            'password' => 'prova2',
+            'email' => 'prova@gmail.com',
+            'permissions' => "SalesActs",
+        ]);
 	factory(Tentazioninoro\Customer::class, 5)->create()->each(
 	    function($customer) {
 		factory(Tentazioninoro\IdentityDocument::class, 1)->create(

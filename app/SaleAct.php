@@ -16,8 +16,8 @@ class SaleAct extends Model {
 	return $this->belongsTo('Tentazioninoro\User');
     }
 
-    public function customers() {
-	return $this->hasMany('Tentazioninoro\Customer');
+    public function customer() {
+	return $this->belongsTo('Tentazioninoro\Customer');
     }
 
 }
