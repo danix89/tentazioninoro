@@ -85,7 +85,7 @@ if(isset($_COOKIE["identityDocuments"])) {
                         </tr>
                         <tr>
                             <td>{!! Form::label('identityDocument', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('identityDocument', ['' => '', 'C.C.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], null, ['class' => 'form-control', 'required' => true]); !!}</td>
-                            <td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::text('releaseDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                            <td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::date('releaseDate', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => true]) !!}</td>
                             <td></td>
                         </tr>
                         <tr>
@@ -155,25 +155,28 @@ if(isset($_COOKIE["identityDocuments"])) {
                     $("#today").text(today);
                     $("#hour").text(hourAndMinutes);
 
-                    function setInputValueAndText(elementId, value) {
-                        $(elementId).val(value);
-                        $(elementId).text(value);
+                    function setInputValueAndText(elementId, value, attr = {}) {
+                        if(value !== undefined && value !== "") {
+                            $(elementId).val(value);
+                            $(elementId).text(value);
+                            $(elementId).attr(attr);
+                        }
                     }
 
                     var customerJson = JSON.parse('<?php echo $identityDocumentsJson ?>');
                     $("#customers").on("change", function () {
                         var index = $(this).val();
-                        setInputValueAndText("#name", customerJson[index].name);
-                        setInputValueAndText("#surname", customerJson[index].surname);
-                        setInputValueAndText("#birthResidence", customerJson[index].birth_residence);
-                        setInputValueAndText("#birthProvince", customerJson[index].birth_province);
-                        setInputValueAndText("#birthDate", customerJson[index].birth_date);
-                        setInputValueAndText("#residence", customerJson[index].residence);
-                        setInputValueAndText("#street", customerJson[index].street);
-                        setInputValueAndText("#streetNumber", customerJson[index].street_number);
+                        setInputValueAndText("#name", customerJson[index].name, {"readOnly": "true"});
+                        setInputValueAndText("#surname", customerJson[index].surname, {"readOnly": "true"});
+                        setInputValueAndText("#birthResidence", customerJson[index].birth_residence, {"readOnly": "true"});
+                        setInputValueAndText("#birthProvince", customerJson[index].birth_province, {"readOnly": "true"});
+                        setInputValueAndText("#birthDate", customerJson[index].birth_date, {"readOnly": "true"});
+                        setInputValueAndText("#residence", customerJson[index].residence, {"readOnly": "true"});
+                        setInputValueAndText("#street", customerJson[index].street, {"readOnly": "true"});
+                        setInputValueAndText("#streetNumber", customerJson[index].street_number, {"readOnly": "true"});
                         setInputValueAndText("#identityDocument", customerJson[index].identity_document);
                         setInputValueAndText("#releaseDate", customerJson[index].release_date);
-                        setInputValueAndText("#fiscalCode", customerJson[index].fiscal_code);
+                        setInputValueAndText("#fiscalCode", customerJson[index].fiscal_code, {"readOnly": "true"});
                     });
                 });
             </script>
