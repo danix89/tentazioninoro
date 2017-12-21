@@ -52,13 +52,13 @@ if(isset($_COOKIE["identityDocuments"])) {
                 <h4>(decreto legislativo n92 del 25 maggio 2017)</h4>
                 <br>
             </div>
-        
-            {!! Form::open(['id' => 'pdf', 'url' => 'foo/bar', 'method' => 'post']) !!}
-<!--                <div class="" style="position: fixed; right: 15px; bottom: 15px;">
+            {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal']) !!}
+<!--                
+                <div class="" style="position: fixed; right: 15px; bottom: 15px;">
                     <button type="submit" class="btn btn-primary">Salva</button>
                     <button type="button" class="btn btn-primary">Stampa</button>
-                </div>-->
-            
+                </div>
+-->
                 <div style="position: relative; top: 0px;">
                     <div id="date" style="position: absolute;">
                         <p>Data <span id="today"></span> ora <span id="hour"></span></p>

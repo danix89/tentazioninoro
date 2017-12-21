@@ -1,19 +1,19 @@
 var options =
-[
-	{
-		icon:'<i class="fa fa-floppy-o" aria-hidden="true" style="position: relative; top: 10px;"></i>',
-		label: 'Salva',
-		callback: function() {
+        [
+            {
+                icon: '<i class="fa fa-floppy-o" aria-hidden="true" style="position: relative; top: 10px;"></i>',
+                label: 'Salva',
+                callback: function () {
                     $("#pdf").submit();
-		}
-	},
-	{
-		icon:'<i class="fa fa-print" aria-hidden="true" style="position: relative; top: 10px;"></i>',
-		label: 'Stampa',
-                callback: function() {
-                    $("#pdf").submit();
-		}
-	},
+                }
+            },
+            {
+                icon: '<i class="fa fa-print" aria-hidden="true" style="position: relative; top: 10px;"></i>',
+                label: 'Stampa',
+                callback: function () {
+                    window.print();
+                }
+            },
 //	{
 //		icon:'3',
 //		label: 'Test Element 3',
@@ -22,6 +22,6 @@ var options =
 //			background: 'red'
 //		}
 //	}
-];
+        ];
 
 var context = new Bubbler(options);
