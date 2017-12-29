@@ -5,11 +5,13 @@ use Faker\Generator as Faker;
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 
 $factory->define(Tentazioninoro\SaleAct::class, function (Faker $faker) {
-    $termsOfPayment = array('C.C.', 'Contanti');
+    $objects = array('Bracciale', 'Bracciale, orologio', 'Orologio');
+    $termsOfPayment = array('CC', 'Contanti');
     
     return [
 //        'user_id' => $faker->randomDigit,
 //        'customer_id' => str_random(16),
+        'objects' => $objects[rand(0, 2)],
         'weight' => $faker->randomFloat(2, 0, 1264),
         'price' => $faker->randomFloat(2, 0, 1264),
         'au_quotation' => $faker->randomDigit,
