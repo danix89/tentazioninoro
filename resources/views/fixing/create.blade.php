@@ -21,7 +21,7 @@ if($showCustomerList) {
     $typology = $jewel->typology;
     $weight = $jewel->weight;
     $metal = $jewel->metal;
-    $path_photo = asset($jewel->path_photo);
+    $path_photo = Storage::url($jewel->path_photo);
     $description = $fixing->description;
     $deposit = $fixing->deposit;
     $estimate = $fixing->estimate;
@@ -33,6 +33,11 @@ if($showCustomerList) {
 @extends('layouts.base')
 
 @section('title', 'Nuova riparazione')
+@section('head-stylesheet')
+@section('head-javascript')
+    @parent
+    <script src="{{ asset('js/fixing.main.js') }}"></script>
+@endsection
 
 {{-- Debugbar::info($customerList) --}}
 {{ Debugbar::info($fixing) }}

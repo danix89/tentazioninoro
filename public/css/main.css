@@ -23,5 +23,13 @@
     font-weight: bold;
 }
 
-
+@media print {
+    @page { 
+	margin: 0; 
+    }
+    body { 
+	font-size: 12px;
+	margin: 1.6cm;
+    }
+}
 

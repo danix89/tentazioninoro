@@ -14,6 +14,11 @@ $fixingList = json_decode($fixingList, TRUE);
 @endguest
 @auth
     @section('title', 'Lista riparazioni')
+    @section('head-stylesheet')
+    @section('head-javascript')
+	@parent
+	<script src="{{ asset('js/fixing.main.js') }}"></script>
+    @endsection
 
     @section('navbar-li-left')
 	@parent
@@ -76,23 +81,31 @@ $fixingList = json_decode($fixingList, TRUE);
 		</tbody>
 	    </table>
 	@endif
-
 	<script>
 	    mm.resetAll(["toDelete"]);
             
             setDeleteRoute("{{ route('fixing.destroyAll') }}");
 	    initializeGrid("#grid-basic");
-	    
-    function initializeGrid(gridId) {
+	    $(document).ready(function() {
+		$("form").submit(function(e) {
+//		    e.preventDefault();
+		    var fixingId = $(this).parents("tr").data("row-id");
+		    $(this).attr("action", '{{ route("fixing.destroy", ["fixingId" => ""]) }}/' + fixingId);
+		});
+	    });
+	    function initializeGrid(gridId) {
 		var grid = $(gridId).bootgrid({
 		    selection: true,
 		    multiSelect: true,
 		    formatters: {
 			"commands": function (column, row) {
-	    //		console.log(row);
-                            $(".deleteForm").attr("action", "{{ route('fixing.destroy', ['fixingId' => '']) }}/" + row.fixing_id);
-			    return "<a class=\"btn btn-default\" href=\"{{ route('showFixing', ['fixingId' => '']) }}/" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
-				    '{!! Form::open(["method" => "delete", "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
+//			    console.log(row.fixing_id);
+			    <?php
+				$showFixingRoute = route("showFixing", ["fixingId" => ""]);
+				$deleteFixingRoute = ["fixing.destroy", ""];
+			    ?>
+			    return "<a class=\"btn btn-default\" href=\"{{ $showFixingRoute }}/" + row.fixing_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
+				    '{!! Form::open(["method" => "delete", "route" => $deleteFixingRoute, "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
 				    '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
 				    '{!! Form::close() !!}';
 			}
@@ -103,14 +116,14 @@ $fixingList = json_decode($fixingList, TRUE);
 			rowIds.push(rows[i].fixing_id);
                         mm.saveValueToArray("toDelete", rows[i].fixing_id);
 		    }
-		    console.log("Select: " + rowIds.join(","));
+//		    console.log("Select: " + rowIds.join(","));
 		}).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 		    var rowIds = [];
 		    for (var i = 0; i < rows.length; i++) {
 			rowIds.push(rows[i].fixing_id);
                         mm.removeElementFromArray("toDelete", rows[i].fixing_id);
 		    }
-		    console.log("Deselect: " + rowIds.join(","));
+//		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
 			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-default dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');

@@ -120,11 +120,11 @@ class MemoryManager {
         var array = this.fetchArray(name);
         
         var index = array.indexOf(element);
-        console.log(array);
+//        console.log(array);
         if (index > -1) {
             array.splice(index, 1);
         }
-        console.log(array);
+//        console.log(array);
         this.saveArray(name, array);
         return array;
     }
@@ -137,7 +137,7 @@ class MemoryManager {
         var thisObj = this;
         $.each(toReset, function (i) {
             var name = toReset[i];
-            console.log(name);
+//            console.log(name);
             thisObj.resetData(name);
         });
     }

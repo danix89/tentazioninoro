@@ -5,21 +5,24 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+	
+	@section('head-stylesheet')
+	    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/3.3.7/css/bootstrap.min.css') }}">
+	    <link rel="stylesheet" href="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.css') }}">
 
-        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/3.3.7/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.css') }}">
+	    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	@show
+	
+	@section('head-javascript')
+	    <script src="{{ asset('vendor/jquery/3.2.1/jquery.min.js') }}"></script>
+	    <script src="{{ asset('vendor/bootstrap/3.3.7/js/bootstrap.min.js') }}"></script>
+	    <script src="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.js') }}"></script>
+	    <script src="{{ asset('vendor/jquery-cookie/2.1.4/js.cookie.js') }}"></script>
 
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-
-        <script src="{{ asset('vendor/jquery/3.2.1/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/3.3.7/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.js') }}"></script>
-        <script src="{{ asset('vendor/jquery-cookie/2.1.4/js.cookie.js') }}"></script>
-
-        <script src="{{ asset('js/manager.memory.js') }}"></script>
-        <script src="{{ asset('js/utilities.common.js') }}"></script>
-        <script src="{{ asset('js/functions.home.js') }}"></script>
-
+	    <script src="{{ asset('js/manager.memory.js') }}"></script>
+	    <script src="{{ asset('js/utilities.common.js') }}"></script>
+	    <script src="{{ asset('js/all.main.js') }}"></script>
+	@show
     </head>
     <body>
 	@auth
@@ -182,4 +185,6 @@
 	    @show
 	@endguest
     </body>
+    @section('footer-javascript')
+    @show
 </html>
