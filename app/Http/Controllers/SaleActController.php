@@ -52,7 +52,7 @@ class SaleActController extends Controller {
 	if ($this->isAllowedAccess()) {
 	    $userId = Auth::id();
 	    $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
-	    Debugbar::info($customersIds);
+//	    Debugbar::info($customersIds);
 	    $identityDocuments = array([]);
 	    $customerList = array();
 	    foreach ($customersIds as $customerId) {

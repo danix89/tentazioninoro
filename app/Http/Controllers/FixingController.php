@@ -52,17 +52,17 @@ class FixingController extends Controller {
 
 	    $userId = Auth::id();
 	    $customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
-	    Debugbar::info($customersIds);
+//	    Debugbar::info($customersIds);
 	    $customerList = array();
 	    foreach ($customersIds as $customerId) {
 		Debugbar::info("customerId - start", $customerId, "customerId - end");
 		$identityDocument = Customer::find($customerId->customer_id)->identityDocument;
 		$customerList[$customerId->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
-		//            $customerList[] = $identityDocument;
+//		$customerList[] = $identityDocument;
 	    }
-	    //        $customerList = [1,2,43];
-	    //            Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
-	    //            Debugbar::info($customerList);
+//	    $customerList = [1, 2, 43];
+//	    Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
+//	    Debugbar::info($customerList);
 	    if (isset($customerId)) {
 		$customer = Customer::where('id', $customerId)->get();
 	    } else {
@@ -70,8 +70,8 @@ class FixingController extends Controller {
 	    }
 
 	    $fixing = new Fixing;
-	    //        Debugbar::info($user);
-	    //        Debugbar::info($fixing);
+//	    Debugbar::info($user);
+//	    Debugbar::info($fixing);
 
 	    $data = array(
 		'showCustomerList' => true,
@@ -99,7 +99,14 @@ class FixingController extends Controller {
 //		$file = Input::file('path_photo');
 //		$file->move($uploadDirectory, $file->getClientOriginalName());
 //		$path_to_photo = $uploadDirectory . "\\" . $file->getClientOriginalName();
-		$path = $request->file('path_photo')->store('fixings');
+//		var_dump($request->file('path_photo'));
+		$path = "";
+		foreach ($request->path_photo as $photo) {
+		    $path .= $photo->store(Config::get('constants.folders.FIXINGS')) . "~";
+		}
+//		echo $path;
+//		$path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
+
 		$jewelData = array(
 		    "typology" => $fixing["typology"],
 		    "weight" => $fixing["weight"],
@@ -107,7 +114,6 @@ class FixingController extends Controller {
 		    "path_photo" => $path,
 		);
 		$jewel = Jewel::create($jewelData);
-		//            JewelController::save_photo_into_cloud($path_to_photo);
 
 		$fixingData = array(
 		    "user_id" => $id,
@@ -119,11 +125,6 @@ class FixingController extends Controller {
 		    "notes" => $fixing["notes"],
 		    "state" => Config::get('constants.fixing.state.NOT_YET_STARTED'),
 		);
-
-		//        var_dump($jewel);
-		//        echo "<br>";
-		//        echo $jewel->id;
-		//        echo "<br>";
 		Fixing::create($fixingData);
 	    }
 

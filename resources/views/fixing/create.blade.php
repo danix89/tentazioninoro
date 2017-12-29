@@ -9,7 +9,7 @@ if($showCustomerList) {
     $typology = "";
     $weight = "";
     $metal = "";
-    $path_photo = "";
+    $path_photos = "";
     $description = "";
     $deposit = "";
     $estimate = "";
@@ -21,7 +21,8 @@ if($showCustomerList) {
     $typology = $jewel->typology;
     $weight = $jewel->weight;
     $metal = $jewel->metal;
-    $path_photo = Storage::url($jewel->path_photo);
+    $path_photos = explode("~", $jewel->path_photo);
+//    $path_photos = explode("~", Storage::url($jewel->path_photo));
     $description = $fixing->description;
     $deposit = $fixing->deposit;
     $estimate = $fixing->estimate;
@@ -122,7 +123,7 @@ if($showCustomerList) {
     @endsection
 @endif
 @section('content')
-{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal', 'files' => true]) !!}
+{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
 <fieldset>
     <legend class="fieldset-border">Dati cliente</legend>
     <div class="form-group">
@@ -172,10 +173,14 @@ if($showCustomerList) {
         {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
         <div class="col-md-5">
-	    @if(isset($path_photo) && $path_photo != "")
-		<img src="{{ $path_photo }}" />
+	    @if(isset($path_photos) && $path_photos > 0)
+		@foreach($path_photos as $path_photo)
+		    @if(!empty($path_photo))
+			<img class='photo' src="{{ Storage::url($path_photo) }}" />
+		    @endif
+		@endforeach
             @else
-                {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
+                {!! Form::file('path_photo[]', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
 		<div id="preview" style="margin-top: 15px;">
 		    <img id="photo" hidden src="#">
 		</div>

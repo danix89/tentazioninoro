@@ -23,7 +23,7 @@ $fixingList = json_decode($fixingList, TRUE);
     @section('navbar-li-left')
 	@parent
 	@section('home_class', 'active')
-	<li class=""><a href="{{ route('newfixing', $user? $user->id : "") }}">Nuova Riparazione</a></li>
+	<li class=""><a href="{{ route('newfixing') }}">Nuova Riparazione</a></li>
     @endsection
 
     @section('content')
