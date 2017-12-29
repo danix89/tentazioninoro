@@ -3,9 +3,17 @@
 return [
     'fixing' => [
         'state' => [
-            'completed' => 'Completed',
-            'in_progress' => 'In progress',
-            'not_yet_started' => 'Not yet started',
+            'COMPLETED' => 'Completed',
+            'IN_PROGRESS' => 'In progress',
+            'NOT_YET_STARTED' => 'Not yet started',
         ]
-    ]
+    ],
+    'permission' => [
+	'FIXINGS' => 'Fixings',
+	'SALES_ACTS' => 'SalesActs',
+    ],
+    'folders' => [
+	'FIXINGS' => 'fixings',
+	'SALES_ACTS' => 'sales_acts',
+    ],
 ];
