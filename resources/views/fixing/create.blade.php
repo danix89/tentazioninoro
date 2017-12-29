@@ -175,7 +175,10 @@ if($showCustomerList) {
 	    @if(isset($path_photo) && $path_photo != "")
 		<img src="{{ $path_photo }}" />
             @else
-                {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
+                {!! Form::file('path_photo', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
+		<div id="preview" style="margin-top: 15px;">
+		    <img id="photo" hidden src="#">
+		</div>
 	    @endif
         </div>
     </div>

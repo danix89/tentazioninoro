@@ -18,6 +18,18 @@
     height: 100px;
 }
 
+#preview {
+    max-width: 100%;
+}
+
+.photo {
+    margin: 15px 0px;
+    max-width: 460px;
+    max-height: 190px;
+    width: auto;
+    height: auto;
+}
+
 .modal-body legend {
     font-size: 16px;
     font-weight: bold;

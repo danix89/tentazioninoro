@@ -109,7 +109,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 
 			<div id='photos' class="">
 			    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-			    {!! Form::file('path_photo', ['class' => 'form-control', 'required' => false, 'accept' => 'image/x-png,image/jpeg']) !!}
+			    {!! Form::file('path_photo', ['class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
 			    <div id="preview" style="margin-top: 15px;">
 				<img id="photo" hidden src="#">
 			    </div>
@@ -176,23 +176,6 @@ if (isset($_COOKIE["identityDocuments"])) {
 		    });
 		}
 		
-		function showPhotoPreview(input) {
-		    if (input.files && input.files[0]) {
-			var reader = new FileReader();
-
-			reader.onload = function (e) {
-			    $('#photo').attr('src', e.target.result);
-			    $('#photo').show();
-			}
-
-			reader.readAsDataURL(input.files[0]);
-		    }
-		}
-
-		$("#path_photo").change(function(){
-		    showPhotoPreview(this);
-		});
-
 	    });
 	</script>
     @else
