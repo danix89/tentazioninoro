@@ -27,5 +27,8 @@ class HomeController extends Controller {
 //        return view('home');
         return redirect(route('showList'));
     }
-
+    
+    function showAccessNotAllowedPage() {
+	return view('/access-not-allowed');
+    }
 }
