@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder {
                 $users = DB::table('users')->get();
                 DB::table('users_customers')->insert(
                         [
-                            'user_id' => $users[0]->id, 
+                            'user_id' => $users[rand(0, 1)]->id, 
                             'customer_id' => $customer->id,
                         ]
                 );
