@@ -16,15 +16,16 @@ class CreateIdentityDocumentsTable extends Migration {
 	    $table->increments('id');
 	    $table->bigInteger('customer_id')->unsigned();
 //	    $table->string('customer_id', 16);
-	    $table->date('release_date');
+	    $table->string('type')->nullable();
+	    $table->date('release_date')->nullable();
 	    $table->string('name');
 	    $table->string('surname');
-	    $table->string('birth_residence');
-	    $table->string('birth_province');
-	    $table->date('birth_date');
-	    $table->string('residence');
-	    $table->string('street');
-	    $table->string('street_number');
+	    $table->string('birth_residence')->nullable();
+	    $table->string('birth_province')->nullable();
+	    $table->date('birth_date')->nullable();
+	    $table->string('residence')->nullable();
+	    $table->string('street')->nullable();
+	    $table->string('street_number')->nullable();
 	    $table->timestamps();
 	});
         

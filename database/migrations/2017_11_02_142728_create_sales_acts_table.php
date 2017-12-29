@@ -17,13 +17,14 @@ class CreateSalesActsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
+            $table->string('objects');
             $table->float('weight');
             $table->float('price');
             $table->integer('au_quotation');
-            $table->integer('arg_quotation');
+            $table->integer('arg_quotation')->nullable();
             $table->float('agreed_price');
             $table->string('terms_of_payment');
-            $table->string('path_photo');
+            $table->string('path_photo')->nullable();
             $table->timestamps();
         });
         
