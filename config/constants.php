@@ -13,6 +13,8 @@ return [
 	'SALES_ACTS' => 'SalesActs',
     ],
     'folders' => [
+	'BASE' => 'D:\xampp\htdocs\tentazioninoro\storage\app\public\\',
+	'EXTERNAL_BACKUP' => 'F:\Backup\photos\\',
 	'FIXINGS' => 'fixings',
 	'SALES_ACTS' => 'sales_acts',
     ],

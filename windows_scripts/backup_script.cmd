@@ -1,0 +1,1 @@
+"D:\xampp\htdocs\tentazioninoro\storage\app\public" "F:\Backup\photos" /M /H /S /C /I /Z

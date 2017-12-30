@@ -34,7 +34,7 @@ Route::get('/access-not-allowed', ['as' => 'accessNotAllowed', 'uses' => 'HomeCo
 
 Route::get('/atti-vendita/', ['as' => 'showSaleActList', 'uses' => 'SaleActController@index']);
 Route::get('/atti-vendita/new/', ['as' => 'newSaleAct', 'uses' => 'SaleActController@create']);
-Route::get('/atti-vendita/{saleActId}/{toPrint?}', ['as' => 'showSaleAct', 'uses' => 'SaleActController@show']);
+Route::get('/atti-vendita/show/{saleActId}/{toPrint?}', ['as' => 'showSaleAct', 'uses' => 'SaleActController@show']);
 Route::get('/atti-vendita/photos/{saleActId}', ['as' => 'showSaleActPhotos', 'uses' => 'SaleActController@showPhotos']);
 Route::post('/atti-vendita/delete', ['as' => 'sale-act.destroyAll', 'uses' => 'SaleActController@destroySalesActs']);
 
@@ -48,3 +48,5 @@ Route::get('/riparazioni/', ['as' => 'showList', 'uses' => 'FixingController@ind
 Route::get('/riparazioni/new', ['as' => 'newfixing', 'uses' => 'FixingController@create']);
 Route::get('/riparazioni/{fixingId}', ['as' => 'showFixing', 'uses' => 'FixingController@show']);
 Route::post('/riparazioni/delete', ['as' => 'fixing.destroyAll', 'uses' => 'FixingController@destroyFixings']);
+
+Route::get('/backup/directory/{directoryName}', ['as' => 'photoBackup', 'uses' => 'PhotosBackupController@exec']);
