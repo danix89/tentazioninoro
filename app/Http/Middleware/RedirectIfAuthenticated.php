@@ -20,12 +20,8 @@ class RedirectIfAuthenticated {
 	if (Auth::guard($guard)->check()) {
 	    $user = Auth::user();
 	    
-	    if ($user->permissions === \Config::get('constants.permission.FIXINGS')) {
-		Debugbar::info(\Config::get('constants.permission.FIXINGS'));
-	    } else if ($user->permissions === \Config::get('constants.permission.SALES_ACTS')) {
-		Debugbar::info(\Config::get('constants.permission.SALES_ACTS'));
-	    }
 	} else {
+	    Debugbar::info("Non autenticato");
 	    return $next($request);
 	}
     }

@@ -22,13 +22,17 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-//        $user = Auth::user();
 //        $id = Auth::id();
 //        return view('home');
-        return redirect(route('showList'));
+	$user = Auth::user();
+	if($user->permissions === \Config::get('constants.permission.FIXINGS')) {
+	    return redirect(route('showList'));
+	} else if($user->permissions === \Config::get('constants.permission.SALES_ACTS')) {
+	    return redirect(route('showSaleActList'));
+	}
     }
     
-    function showAccessNotAllowedPage() {
+    public function showAccessNotAllowedPage() {
 	return view('/access-not-allowed');
     }
 }
