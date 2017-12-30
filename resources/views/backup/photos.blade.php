@@ -11,7 +11,7 @@
     @parent
     @section('home_class', '')
     <li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
-    <li class="active"><a href="{{ route('photoBackup', Config::get('constants.folders.SALES_ACTS')) }}">Backup</a></li>
+    <li class="active"><a href="">Backup</a></li>
 @endsection
 
 @section('content')

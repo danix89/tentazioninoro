@@ -25,6 +25,11 @@ $saleActList = json_decode($saleActList, TRUE);
 	@section('home_class', 'active')
 	<li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
     @endsection
+    
+    @section('dropdown-menu')
+	@parent
+	<li class=""><a href="{{ route('photoBackup', Config::get('constants.folders.SALES_ACTS')) }}">Backup</a></li>
+    @endsection
 
     @section('content')
 	@if (!isset($saleActList))

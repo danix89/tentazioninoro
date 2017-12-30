@@ -30,6 +30,11 @@
     height: auto;
 }
 
+.photo.big {
+    max-width: 920px;
+    max-height: 380px;
+}
+
 .modal-body legend {
     font-size: 16px;
     font-weight: bold;
