@@ -70,7 +70,7 @@ class SaleActController extends Controller {
 	    $customer = Customer::join("identity_documents", "identity_documents.customer_id", "=", "customers.id", "")
 		    ->where("customers.id", $customerId->customer_id)
 		    ->first(["identity_documents.*", "customers.fiscal_code"]);
-	    Debugbar::info('$customer - start', $customer, '$customer - end');
+//	    Debugbar::info('$customer - start', $customer, '$customer - end');
 	    $identityDocuments[] = $customer;
 	    $customerList[$customerId->customer_id] = $customer->name . " " . $customer->surname;
 	}
@@ -84,7 +84,8 @@ class SaleActController extends Controller {
 	    'customerList' => $customerList,
 	    'saleAct' => $saleAct,
 	);
-
+	Debugbar::info('$data - start', $data, '$data - end');
+	
 	return View::make('saleact.toBeFilled')->with("data", $data);
     }
 
@@ -148,11 +149,11 @@ class SaleActController extends Controller {
 	    'terms_of_payment' => $request->termsOfPayment,
 	    'path_photo' => $path,
 	);
-	
-	if(!empty($path)) {
+
+	if (!empty($path)) {
 	    file_put_contents('F:\uploads\file1.jpg', Storage::get($path));
 	}
-	
+
 	$toPrint = ($request->toPrint === 'true');
 	var_dump($toPrint);
 	$saleAct = SaleAct::create($saleActData);
@@ -200,9 +201,9 @@ class SaleActController extends Controller {
 	    $photo_paths = "";
 	}
 	return View::make('saleact.photos')->with([
-	    'id' => $saleActId,
-	    'photo_paths' => $photo_paths
-		]);
+		    'saleActId' => $saleActId,
+		    'photo_paths' => $photo_paths
+	]);
     }
 
     public function showList() {

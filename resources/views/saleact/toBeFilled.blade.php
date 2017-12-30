@@ -3,13 +3,12 @@ $user = Auth::user();
 Debugbar::info($user);
 if (isset($_COOKIE["identityDocuments"])) {
     $identityDocumentsJson = $_COOKIE["identityDocuments"];
-    $customerList = $data["customerList"];
-    $newSaleActId = $data["newSaleActId"];
-    $saleAct = $data["saleAct"];
 } else {
     $identityDocumentsJson = "";
 }
-//INSERIRE QUI IL CONTROLLO SUI PERMESSI
+$customerList = $data["customerList"];
+$newSaleActId = $data["newSaleActId"];
+$saleAct = $data["saleAct"];
 ?>
 
 {{ Debugbar::info($identityDocumentsJson) }}
@@ -33,12 +32,26 @@ if (isset($_COOKIE["identityDocuments"])) {
 	}
     </style>
 @endsection
+
 @section('head-javascript')
+    @parent
+    
+    @if(empty($identityDocumentsJson))
+	<script>
+	    window.location.replace(" {{ route('newSaleAct') }} ");
+	</script>
+    @endif
+@endsection
 
 @section('navbar-li-left')
     @parent
     @section('home_class', '')
     <li class="active"><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
+@endsection
+
+@section('dropdown-menu')
+    @parent
+    <li class=""><a href="{{ route('photoBackup', Config::get('constants.folders.SALES_ACTS')) }}">Backup</a></li>
 @endsection
 
 <!--<body style="margin: 2em 25em;">-->
