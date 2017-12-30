@@ -38,7 +38,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 @section('navbar-li-left')
     @parent
     @section('home_class', '')
-    <li class="active"><a href="{{ route('newSaleAct') }}">Nuova Riparazione</a></li>
+    <li class="active"><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
 @endsection
 
 <!--<body style="margin: 2em 25em;">-->

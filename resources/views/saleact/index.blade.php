@@ -13,7 +13,7 @@ $saleActList = json_decode($saleActList, TRUE);
     @endsection
 @endguest
 @auth
-    @section('title', 'Lista atti di vendita')
+    @section('title', 'Lista Atti di Vendita')
     @section('head-stylesheet')
     @section('head-javascript')
 	@parent
@@ -23,7 +23,7 @@ $saleActList = json_decode($saleActList, TRUE);
     @section('navbar-li-left')
 	@parent
 	@section('home_class', 'active')
-	<li class=""><a href="{{ route('newSaleAct') }}">Nuova Riparazione</a></li>
+	<li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
     @endsection
 
     @section('content')
@@ -36,47 +36,50 @@ $saleActList = json_decode($saleActList, TRUE);
 			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
 			<th data-column-id="updated_at" data-order="desc" data-width="9%">Data</th>
 			<th data-column-id="customer_id" data-width="15%">Cliente</th>
-			<th data-column-id="jewel_id" data-width="8%">Gioiello</th>
-			<th data-column-id="description" data-width="30%">Descrizione</th>
-			<th data-column-id="deposit" data-width="8%">Anticipo</th>
-			<th data-column-id="estimate" data-width="10%">Preventivo</th>
-			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="10%">Comandi</th>
+			<th data-column-id="objects_id" data-width="27%">Oggetti</th>
+			<th data-column-id="deposit" data-width="8%">Prezzo</th>
+			<th data-column-id="estimate" data-width="12%">Concordato</th>
+			<th data-column-id="estimate" data-width="13%">AU (750/1000)</th>
+			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="13%">Comandi</th>
 			<!--<th data-column-id="delete"></th>-->
 		    </tr>
 		</thead>
 		<tbody>
-		    @foreach($saleActList as $saleAct)
+		    @for ($i = 0; $i < count($saleActList); $i++)
                         <?php 
 //                        $customer = Customer::where('id', $saleAct["customer_id"])->get()->first();
-                        $identityDocument = Tentazioninoro\Customer::find($saleAct["customer_id"])->identityDocument;
-                        $date = explode(" ", $saleAct["updated_at"])[0];
+//                        $identityDocument = Tentazioninoro\Customer::find($saleActList[$i]["customer_id"])->identityDocument;
+			$customerId = $saleActList[$i]["customer_id"];
+                        $identityDocument = $identityDocumentList[1];
+			Debugbar::info('$customerId - start', $customerId, '$customerId - end');
+                        $date = explode(" ", $saleActList[$i]["updated_at"])[0];
                         $date = explode("-", $date);
                         $year = $date[0];
                         $month = $date[1];
                         $day = $date[2];
                         ?>
-			{{-- Debugbar::info($saleAct) --}}
+			{{-- Debugbar::info($saleActList[$i]) --}}
 			{{-- Debugbar::info($identityDocument) --}}
 			<tr>
-			    <td>{{ $saleAct["id"] }}</td>
+			    <td>{{ $saleActList[$i]["id"] }}</td>
 			    <td>{{ $day . "/" . $month . "/" . $year }}</td>
 			    <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
-			    <td>ciao</td>
-			    <td>{{ $saleAct["id"] }}</td>
-			    <td>{{ $saleAct["id"] }}€</td>
-			    <td>{{ $saleAct["id"] }}€</td>
+			    <td>{{ $saleActList[$i]["objects"] }}</td>
+			    <td>{{ $saleActList[$i]["price"] }}€</td>
+			    <td>{{ $saleActList[$i]["agreed_price"] }}€</td>
+			    <td>{{ $saleActList[$i]["au_quotation"] }}€</td>
     <!--			<td>
-				{{-- <a class="btn btn-default" href="{{ route('sale-act.edit', ['saleAct' => $saleAct->id]) }}">Modifica</a>--}}
+				{{-- <a class="btn btn-default" href="{{ route('sale-act.edit', ['saleAct' => $saleActList[$i]->id]) }}">Modifica</a>--}}
 			    </td>
 			    <td>
 			    {{--
-				{!! Form::open(['route' => ['sale-act.destroy', $saleAct->id], 'method' => 'delete' ]) !!}
+				{!! Form::open(['route' => ['sale-act.destroy', $saleActList[$i]->id], 'method' => 'delete' ]) !!}
 				{!! Form::submit('Elimina', ['class' => 'btn btn-danger']) !!}
 				{!! Form::close() !!}
 				--}}
 			    </td>-->
 			</tr>
-		    @endforeach
+		    @endfor
 		</tbody>
 	    </table>
 	@endif
@@ -101,9 +104,11 @@ $saleActList = json_decode($saleActList, TRUE);
 //			    console.log(row.saleAct_id);
 			    <?php
 				$showSaleActRoute = route("showSaleAct", ["saleActId" => ""]);
+				$showSaleActPhotosRoute = route("showSaleActPhotos", ["saleActId" => ""]);
 				$deleteSaleActRoute = ["sale-act.destroy", ""];
 			    ?>
 			    return "<a class=\"btn btn-default\" href=\"{{ $showSaleActRoute }}/" + row.saleAct_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
+				    "<a class=\"btn btn-default\" href=\"{{ $showSaleActPhotosRoute }}/" + row.saleAct_id + "\"><span class=\"glyphicon glyphicon-camera\"></span></a> " +
 				    '{!! Form::open(["method" => "delete", "route" => $deleteSaleActRoute, "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
 				    '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
 				    '{!! Form::close() !!}';

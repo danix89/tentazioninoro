@@ -3,6 +3,7 @@ $showCustomerList = $data["showCustomerList"];
 $fixing = $data["fixing"];
 $user = Auth::user();
 if($showCustomerList) {
+    $new = "Nuova";
     $disabled = false;
     $customer = $data["customer"];
     $customerList = $data["customerList"];
@@ -15,6 +16,7 @@ if($showCustomerList) {
     $estimate = "";
     $notes = "";
 } else {
+    $new = "";
     $identityDocument = $data["identityDocument"];
     $jewel = $data["jewel"];
     $disabled = true;
@@ -33,7 +35,11 @@ if($showCustomerList) {
 
 @extends('layouts.base')
 
-@section('title', 'Nuova riparazione')
+@if(empty($new))
+    @section('title', 'Riparazione')
+@else
+    @section('title', 'Nuova riparazione')
+@endif
 @section('head-stylesheet')
 @section('head-javascript')
     @parent
@@ -47,7 +53,7 @@ if($showCustomerList) {
 @section('navbar-li-left')
 @parent
 @section('home_class', '')
-<li class="active"><a href="{{ route('newfixing') }}">Nuova Riparazione</a></li>
+    <li class="active"><a href="{{ route('newfixing') }}">{{ $new }} Riparazione</a></li>
 @endsection
 
 @section('modal-id', 'add-customer')
