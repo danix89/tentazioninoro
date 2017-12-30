@@ -32,7 +32,7 @@ $path_photo = $saleAct->path_photo;
 
 <html>
     <head>
-        <title>Tentazioni in Oro - @yield('title')</title>
+        <title>Tentazioni in Oro - PDF Atto di Vendita</title>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,7 +42,9 @@ $path_photo = $saleAct->path_photo;
         <link rel="stylesheet" href="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-
+	
+	<link rel="stylesheet" href="{{ asset('css/bubbler.min.css') }}">
+	
         <script src="{{ asset('vendor/jquery/3.2.1/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/3.3.7/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.js') }}"></script>
@@ -74,10 +76,10 @@ $path_photo = $saleAct->path_photo;
 	    </div>
 	    <div class="row">
 		<div style="position: relative; top: 0px;">
-		    <div id="date" style="position: absolute;">
+		    <div id="date" style="position: absolute; left: -10px;">
 			<p>Data <span id="today"></span> ora <span id="hour"></span></p>
 		    </div>
-		    <div id="idNumber" style="position: absolute; right: 15px;">
+		    <div id="idNumber" style="position: absolute; right: -10px;">
 			<p>N&#176;. <span id="idNumber">{{ $saleActId }}</span></p>
 		    </div>
 		</div>
@@ -156,7 +158,7 @@ $path_photo = $saleAct->path_photo;
 			    <hr style="position: absolute; margin-top: 100px; right: 0px; width: 40%; border-style: inset;">
 			</div>
 			<div style="position: relative; top: 110px;">
-			    <p style="">Trattasi di vendita da privato fuori campo I.V.A. ai sensi degli ART. 1,2,4 e 5 D.P.R. 26.10.1972, n.633 e successive modificazioni.</p>
+			    <p class="fine-print" style="">Trattasi di vendita da privato fuori campo I.V.A. ai sensi degli ART. 1,2,4 e 5 D.P.R. 26.10.1972, n.633 e successive modificazioni.</p>
 			</div>
 		    </div>
 		</div>
@@ -177,4 +179,11 @@ $path_photo = $saleAct->path_photo;
 	    </script>
 	</div>
     </body>
+    
+    <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
+    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
+    <script src="{{ asset('js/saleact.pdf.floatBtn.js') }}"></script>
+    <script>
+	setHomeRoute("{{ route('home') }}");
+    </script>
 </html>

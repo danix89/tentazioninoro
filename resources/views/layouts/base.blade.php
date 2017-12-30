@@ -173,7 +173,7 @@
 	    </div>
 
 	    <div class="container">
-		<h1>@yield('content-title')</h1>
+		<h3>@yield('content-title')</h3>
 		@yield('content')
 	    </div>
 	@endauth

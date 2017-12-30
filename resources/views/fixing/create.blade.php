@@ -10,7 +10,7 @@ if($showCustomerList) {
     $typology = "";
     $weight = "";
     $metal = "";
-    $path_photos = "";
+    $photo_paths = "";
     $description = "";
     $deposit = "";
     $estimate = "";
@@ -23,8 +23,8 @@ if($showCustomerList) {
     $typology = $jewel->typology;
     $weight = $jewel->weight;
     $metal = $jewel->metal;
-    $path_photos = explode("~", $jewel->path_photo);
-//    $path_photos = explode("~", Storage::url($jewel->path_photo));
+    $photo_paths = explode("~", $jewel->path_photo);
+//    $photo_paths = explode("~", Storage::url($jewel->path_photo));
     $description = $fixing->description;
     $deposit = $fixing->deposit;
     $estimate = $fixing->estimate;
@@ -179,10 +179,10 @@ if($showCustomerList) {
         {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
         <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
         <div class="col-md-5">
-	    @if(isset($path_photos) && $path_photos > 0)
-		@foreach($path_photos as $path_photo)
-		    @if(!empty($path_photo))
-			<img class='photo' src="{{ Storage::url($path_photo) }}" />
+	    @if(isset($photo_paths) && count($photo_paths) > 1)
+		@foreach($photo_paths as $photo_path)
+		    @if(!empty($photo_path))
+			<img class='photo' src="{{ Storage::url($photo_path) }}" />
 		    @endif
 		@endforeach
             @else

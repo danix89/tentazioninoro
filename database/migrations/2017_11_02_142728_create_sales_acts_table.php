@@ -24,7 +24,7 @@ class CreateSalesActsTable extends Migration
             $table->integer('arg_quotation')->nullable();
             $table->float('agreed_price');
             $table->string('terms_of_payment');
-            $table->string('path_photo')->nullable();
+            $table->longText('path_photo')->nullable();
             $table->timestamps();
         });
         

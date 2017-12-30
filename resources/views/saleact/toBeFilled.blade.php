@@ -15,7 +15,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 {{ Debugbar::info($identityDocumentsJson) }}
 
 @extends('layouts.base')
-@section('title', 'Atti di vendita')
+@section('title', 'Atto di vendita n.' . $newSaleActId)
 @section('head-stylesheet')
     @parent
     <link rel="stylesheet" href="{{ asset('css/bubbler.min.css') }}">
@@ -47,7 +47,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 @section('content')
     @if(!empty($identityDocumentsJson))
 	<div class="row">
-	    {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true]) !!}
+	    {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
 		{!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
 		<!--                
 				<div class="" style="position: fixed; right: 15px; bottom: 15px;">
@@ -67,7 +67,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 		</div>-->
 		<div id="body" class="row" style="position: relative; top: 40px;">
 		    <table class='table'>
-			{!! Form::label('customer-select', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customer-select', array_merge([0 => ""], $customerList), 1, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
+			{!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', array_merge([0 => ""], $customerList), 1, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
 			<thead>
 			    <tr>
 				<th>Il/La Sottoscritto/a:</th><th></th><th></th>
@@ -109,7 +109,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 
 			<div id='photos' class="">
 			    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-			    {!! Form::file('path_photo', ['class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
+			    {!! Form::file('path_photo[]', ['class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
 			    <div id="preview" style="margin-top: 15px;">
 				<img id="photo" hidden src="#">
 			    </div>
@@ -137,7 +137,7 @@ if (isset($_COOKIE["identityDocuments"])) {
 		$("#hour").text(hourAndMinutes);
 		
 		var customerJson = JSON.parse('<?php echo $identityDocumentsJson ?>');
-		fillCustomerInputs(customerJson[$("#customer-select").val()]);
+		fillCustomerInputs(customerJson[$("#customerSelect").val()]);
 		$("#customer").on("change", function () {
 		    var index = $(this).val();
 		    if(index > 0) {
@@ -190,5 +190,5 @@ if (isset($_COOKIE["identityDocuments"])) {
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
     <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
-    <script src="{{ asset('js/saleact.floatBtn.js') }}"></script>
+    <script src="{{ asset('js/saleact.toBeFilled.floatBtn.js') }}"></script>
 @endsection

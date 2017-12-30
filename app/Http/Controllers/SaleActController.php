@@ -19,17 +19,6 @@ class SaleActController extends Controller {
 	$this->middleware('has-permissions:' . \Config::get('constants.permission.SALES_ACTS') . ',');
     }
 
-    private function isAllowedAccess() {
-//	if (Auth::check() && Auth::user()->permissions === \Config::get('constants.permission.FIXINGS')) {
-//	    return true;
-//	} else {
-////	    return redirect('/access-not-allowed');
-//	    return redirect()->route('accessNotAllowed');
-//	    return false;
-//	}
-	return true;
-    }
-
     public static function createPDF($pdfFilename, $data) {
 	$pdf = PDF::loadView('welcome', $data);
 	return $pdf->setPaper('a8')->save($pdfFilename);
@@ -109,7 +98,7 @@ class SaleActController extends Controller {
 	$data = $request->all();
 //	    var_dump($data);
 	\Debugbar::info($data);
-	$customerId = $request->customer;
+	$customerId = $request->customerSelect;
 	if ($customerId === 0) {
 	    $customerData = array(
 		'fiscal_code' => $request->fiscal_code,
@@ -139,9 +128,11 @@ class SaleActController extends Controller {
 
 	if (Input::hasFile('path_photo')) {
 //		$file = Input::file('path_photo');
-	    $path = $request->file('path_photo')->store('sales_acts');
-//		\Storage::disk('local')->move($path, 'uploads/prova.png');
-	    move_uploaded_file($path, 'D:\uploads\file1.jpg');
+	    $path = "";
+	    foreach ($request->path_photo as $photo) {
+		$path .= $photo->store(\Config::get('constants.folders.SALES_ACTS')) . "~";
+	    }
+	    var_dump($path);
 	} else {
 	    $path = null;
 	}
@@ -157,9 +148,15 @@ class SaleActController extends Controller {
 	    'terms_of_payment' => $request->termsOfPayment,
 	    'path_photo' => $path,
 	);
+	
+	if(!empty($path)) {
+	    file_put_contents('F:\uploads\file1.jpg', Storage::get($path));
+	}
+	
 	$toPrint = ($request->toPrint === 'true');
-//	    var_dump($toPrint);
+	var_dump($toPrint);
 	$saleAct = SaleAct::create($saleActData);
+//	Debugbar::info('$saleAct - start', $saleAct, '$saleAct - end');
 	return redirect()->route('showSaleAct', ['saleActId' => $saleAct->id, 'toPrint' => $request->toPrint]);
     }
 
@@ -177,7 +174,7 @@ class SaleActController extends Controller {
 //		$saleAct = $saleAct->first();
 //		Debugbar::info('$saleAct - start', $saleAct, '$saleAct - end');
 	    $customer = $saleAct->customer()->first();
-//		Debugbar::info("customer - start", $customer, "customer - end");
+//	    Debugbar::info('customer - start', $customer, 'customer - end');
 	    $identityDocument = $customer->identityDocument()->first();
 //		Debugbar::info('$identityDocument - start', $identityDocument, '$identityDocument - end');
 	} else {
@@ -195,8 +192,17 @@ class SaleActController extends Controller {
     }
 
     public function showPhotos($saleActId) {
-	$photo_paths = SaleAct::where($saleActId)->get("path_photo");
-	return View::make('saleact.photos')->with('photo_paths', $photo_paths);
+	$saleAct = SaleAct::where("id", $saleActId)->first(["id", "path_photo"]);
+	Debugbar::info('$saleAct - start', $saleAct, '$saleAct - end');
+	if (isset($saleAct)) {
+	    $photo_paths = $saleAct->path_photo;
+	} else {
+	    $photo_paths = "";
+	}
+	return View::make('saleact.photos')->with([
+	    'id' => $saleActId,
+	    'photo_paths' => $photo_paths
+		]);
     }
 
     public function showList() {

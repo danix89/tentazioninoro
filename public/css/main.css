@@ -36,12 +36,24 @@
 }
 
 @media print {
+    .bubbler-wrapper {
+	display: none !important;
+    }
+    
     @page { 
 	margin: 0; 
     }
+
     body { 
-	font-size: 12px;
-	margin: 1.6cm;
+	margin: 1.6cm 0cm;
+    }
+
+    p, span, table, ol {
+	font-size: 18px !important;
+    }
+    
+    .fine-print {
+	font-size: 12px !important;
     }
 }
 
