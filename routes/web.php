@@ -28,13 +28,14 @@ Route::get('/', [function () {
 	return redirect(route('home'));
     }
 ]);
-
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/access-not-allowed', 'HomeController@showAccessNotAllowedPage');
 
-Route::get('/atti-vendita/', ['as' => 'showSaleAct', 'uses' => 'SaleActController@index']);
+Route::get('/access-not-allowed', ['as' => 'accessNotAllowed', 'uses' => 'HomeController@showAccessNotAllowedPage']);
+
+Route::get('/atti-vendita/', ['as' => 'showSaleActList', 'uses' => 'SaleActController@index']);
 Route::get('/atti-vendita/new/', ['as' => 'newSaleAct', 'uses' => 'SaleActController@create']);
 Route::get('/atti-vendita/{saleActId}/{toPrint?}', ['as' => 'showSaleAct', 'uses' => 'SaleActController@show']);
+Route::get('/atti-vendita/photos/{saleActId}', ['as' => 'showSaleActPhotos', 'uses' => 'SaleActController@showPhotos']);
 Route::post('/atti-vendita/delete', ['as' => 'sale-act.destroyAll', 'uses' => 'SaleActController@destroySalesActs']);
 
 //Route::get('/pdf/', [function () {
