@@ -144,7 +144,7 @@ if($showCustomerList) {
 @section('content')
 
 @if(isset($stateList))
-    {!! Form::model($fixing, ['route' => ['updateStateFixing', $fixing->id], 'id' => 'update-fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($fixing, ['route' => ['updateStateFixing', $fixing->id], 'id' => 'update-fixing', 'class' => 'form-horizontal']) !!}
 	<fieldset>
 	    <legend class="fieldset-border">Stato riparazione</legend>
 	    <div class="form-group">
