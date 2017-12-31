@@ -34,6 +34,7 @@ $fixingList = json_decode($fixingList, TRUE);
 		<thead>
 		    <tr>
 			<th data-column-id="fixing_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
+			<th data-column-id="state" data-identifier="true" data-width="10%">Stato</th>
 			<th data-column-id="updated_at" data-order="desc" data-width="9%">Data</th>
 			<th data-column-id="customer_id" data-width="15%">Cliente</th>
 			<th data-column-id="jewel_id" data-width="8%">Gioiello</th>
@@ -60,6 +61,7 @@ $fixingList = json_decode($fixingList, TRUE);
 			{{-- Debugbar::info($identityDocument) --}}
 			<tr>
 			    <td>{{ $fixing["id"] }}</td>
+			    <td>{{ $fixing["state"] }}</td>
 			    <td>{{ $day . "/" . $month . "/" . $year }}</td>
 			    <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
 			    <td>{{ $jewel->typology }}</td>

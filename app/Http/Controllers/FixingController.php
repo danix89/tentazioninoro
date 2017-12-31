@@ -150,6 +150,22 @@ class FixingController extends Controller {
 	return View::make('fixing/create')->with('data', $data);
     }
 
+    public function printTicket($fixingId) {
+	$userId = Auth::id();
+	$fixing = Fixing::where('id', $fixingId)->get(["id", "customer_id", "jewel_id", "deposit", "estimate"])->first();
+	DebugBar::info($fixing);
+	$identityDocument = Customer::find($fixing->customer_id)->identityDocument()->get(["name", "surname"])->first();
+	$jewel = Jewel::find($fixing->jewel_id)->get(["typology"])->first();
+	
+	$data = array(
+	    'fixing' => $fixing,
+	    'identityDocument' => $identityDocument,
+	    'jewel' => $jewel,
+	);
+
+	return View::make('fixing/print')->with('data', $data);
+    }
+
     /**
      * Display the specified resource.
      *

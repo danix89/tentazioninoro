@@ -40,7 +40,13 @@ if($showCustomerList) {
 @else
     @section('title', 'Nuova riparazione')
 @endif
+
 @section('head-stylesheet')
+    @parent
+    
+    <link rel="stylesheet" href="{{ asset('css/bubbler.min.css') }}">
+@endsection
+
 @section('head-javascript')
     @parent
     <script src="{{ asset('js/fixing.main.js') }}"></script>
@@ -241,81 +247,15 @@ if($showCustomerList) {
 @endif
 </fieldset>
 {!! Form::close() !!}
+@endsection
 
-<!--<form class="form-horizontal" action="" method="post">
-    <fieldset>
-        <legend class="fieldset-border">Dati cliente</legend>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="customer">Cliente:</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>
-            </div>
-            <div class="col-md-1">
-                <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend class="fieldset-border">Dati gioiello</legend>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="tipologia">Tipologia:</label>
-            <div class="col-md-5">          
-                <input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="peso">Peso:</label>
-            <div class="col-md-5">          
-                <input type="text" class="form-control" id="peso" placeholder="" name="peso" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="metallo">Metallo:</label>
-            <div class="col-md-5">          
-                <input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="foto">Foto:</label>
-            <div class="col-md-5">
-                <input type="file" class="form-control-file" id="foto" name="foto" aria-describedby="fileHelp">
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend class="fieldset-border">Dettagli guasto</legend>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="fault-description">Descrizione:</label>
-            <div class="col-md-5">
-                <textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend class="fieldset-border">Dettagli pagamento</legend>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="deposit">Acconto:</label>
-            <div class="col-md-5">          
-                <input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="estimate">Preventivo:</label>
-            <div class="col-md-5">          
-                <input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4" for="notes">Appunti:</label>
-            <div class="col-md-5">
-                <textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
-            </div>
-        </div>
-    </fieldset>
-    <div class="form-group">        
-        <div class="col-md-offset-4 col-md-5">
-            <button type="submit" class="btn btn-primary">Salva</button>
-        </div>
-    </div>
-</form>-->
+@section('footer-javascript')
+    @parent
+    <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
+    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
+    <script src="{{ asset('js/fixing.create.floatBtn.js') }}"></script>
+    <script>
+	setHomeRoute("{{ route('home') }}");
+	setPrintRoute("{{ route('printFixing', $fixing->id) }}");
+    </script>
 @endsection
