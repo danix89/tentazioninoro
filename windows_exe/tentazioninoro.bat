@@ -1,1 +1,1 @@
-D:\xampp\htdocs\tentazioninoro\windows_scripts\launch.vbs
+D:\xampp\htdocs\tentazioninoro\windows_exe\launch.vbs
