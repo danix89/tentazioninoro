@@ -17,6 +17,12 @@ if($showCustomerList) {
     $notes = "";
 } else {
     $new = "";
+    $stateList = [
+	Config::get('constants.fixing.state.NOT_YET_STARTED') => Config::get('constants.fixing.state.NOT_YET_STARTED'),
+	Config::get('constants.fixing.state.IN_PROGRESS') => Config::get('constants.fixing.state.IN_PROGRESS'),
+	Config::get('constants.fixing.state.COMPLETED') => Config::get('constants.fixing.state.COMPLETED'),
+	Config::get('constants.fixing.state.DELIVERED') => Config::get('constants.fixing.state.DELIVERED')
+    ];
     $identityDocument = $data["identityDocument"];
     $jewel = $data["jewel"];
     $disabled = true;
@@ -134,118 +140,126 @@ if($showCustomerList) {
     <!--</form>-->
     @endsection
 @endif
+
 @section('content')
-{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-<fieldset>
-    <legend class="fieldset-border">Dati cliente</legend>
-    <div class="form-group">
-        {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
-	@if($showCustomerList)
-	    <div class="col-md-5">
-		<!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-		{!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Scegli un cliente...']); !!}
+
+@if(isset($stateList))
+    {!! Form::model($fixing, ['route' => ['updateStateFixing', $fixing->id], 'id' => 'update-fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+	<fieldset>
+	    <legend class="fieldset-border">Stato riparazione</legend>
+	    <div class="form-group">
+		{!! Form::label('state', 'Stato:', ['class' => 'control-label col-md-4']) !!}
+		<div class="col-md-5">
+		    {!! Form::select('state', $stateList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare uno stato...']); !!}
+		</div>
 	    </div>
-	    <div class="col-md-1">
-		<input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
-	    </div>
-	@else
-	    <div class="col-md-5">
-		{!! Form::text('customer_id', $identityDocument->name . " " . $identityDocument->surname, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-	    </div>
-	@endif
-    </div>
-</fieldset>
-<fieldset>
-    <legend class="fieldset-border">Dati gioiello</legend>
-    <div class="form-group">
-        {!! Form::label('typology', 'Tipologia:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="tipologia">Tipologia:</label>-->
-        <div class="col-md-5">
-            {!! Form::text('typology', $typology, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-            <!--<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>-->
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('weight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="peso">Peso:</label>-->
-        <div class="col-md-5">
-            {!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-            <!--<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>-->
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('metal', 'Metallo:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="metallo">Metallo:</label>-->
-        <div class="col-md-5">
-            {!! Form::text('metal', $metal, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-            <!--<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>-->
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
-        <div class="col-md-5">
-	    @if(isset($photo_paths) && count($photo_paths) > 1)
-		@foreach($photo_paths as $photo_path)
-		    @if(!empty($photo_path))
-			<img class='photo' src="{{ Storage::url($photo_path) }}" />
-		    @endif
-		@endforeach
-            @else
-                {!! Form::file('path_photo[]', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
-		<div id="preview" style="margin-top: 15px;">
-		    <img id="photo" hidden src="#">
+	</fieldset>
+    {!! Form::close() !!}
+@endif
+
+{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    <fieldset>
+	<legend class="fieldset-border">Dati cliente</legend>
+	<div class="form-group">
+	    {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
+	    @if($showCustomerList)
+		<div class="col-md-5">
+		    <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
+		    {!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
+		</div>
+		<div class="col-md-1">
+		    <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
+		</div>
+	    @else
+		<div class="col-md-5">
+		    {!! Form::text('customer_id', $identityDocument->name . " " . $identityDocument->surname, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
 		</div>
 	    @endif
-        </div>
-    </div>
-</fieldset>
-<fieldset>
-    <legend class="fieldset-border">Dettagli guasto</legend>
-    <div class="form-group">
-        {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
-        <div class="col-md-5">
-            {!! Form::textarea('description', $description, ['class' => 'form-control', 'autofocus' => true, 'disabled' => $disabled]) !!}
-            <!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
-        </div>
-    </div>
-</fieldset>
-<fieldset>
-    <legend class="fieldset-border">Dettagli pagamento</legend>
-    <div class="form-group">
-        {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="deposit">Acconto:</label>-->
-        <div class="col-md-5">
-            {!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-            <!--<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>-->
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="estimate">Preventivo:</label>-->
-        <div class="col-md-5">
-            {!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-            <!--<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>-->
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
-        <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
-        <div class="col-md-5">
-            {!! Form::textarea('notes', $notes, ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
-            <!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
-        </div>
-    </div>
-</fieldset>
-@if(!$disabled)
-    <div class="form-group">        
-        <div class="col-md-offset-4 col-md-5">
-            <button type="submit" class="btn btn-primary">Salva</button>
-        </div>
-    </div>
-@endif
-</fieldset>
+	</div>
+    </fieldset>
+    <fieldset>
+	<legend class="fieldset-border">Dati gioiello</legend>
+	<div class="form-group">
+	    {!! Form::label('typology', 'Tipologia:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="tipologia">Tipologia:</label>-->
+	    <div class="col-md-5">
+		{!! Form::text('typology', $typology, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('weight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="peso">Peso:</label>-->
+	    <div class="col-md-5">
+		{!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('metal', 'Metallo:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="metallo">Metallo:</label>-->
+	    <div class="col-md-5">
+		{!! Form::text('metal', $metal, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
+	    <div class="col-md-5">
+		@if(isset($photo_paths) && count($photo_paths) > 1)
+		    @foreach($photo_paths as $photo_path)
+			@if(!empty($photo_path))
+			    <img class='photo' src="{{ Storage::url($photo_path) }}" />
+			@endif
+		    @endforeach
+		@else
+		    {!! Form::file('path_photo[]', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
+		    <div id="preview" style="margin-top: 15px;">
+			<img id="photo" hidden src="#">
+		    </div>
+		@endif
+	    </div>
+	</div>
+    </fieldset>
+    <fieldset>
+	<legend class="fieldset-border">Dettagli guasto</legend>
+	<div class="form-group">
+	    {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
+	    <div class="col-md-5">
+		{!! Form::textarea('description', $description, ['class' => 'form-control', 'autofocus' => true, 'disabled' => $disabled]) !!}
+		<!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
+	    </div>
+	</div>
+    </fieldset>
+    <fieldset>
+	<legend class="fieldset-border">Dettagli pagamento</legend>
+	<div class="form-group">
+	    {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="deposit">Acconto:</label>-->
+	    <div class="col-md-5">
+		{!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="estimate">Preventivo:</label>-->
+	    <div class="col-md-5">
+		{!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
+	    <div class="col-md-5">
+		{!! Form::textarea('notes', $notes, ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
+		<!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
+	    </div>
+	</div>
+    </fieldset>
 {!! Form::close() !!}
 @endsection
 
@@ -257,5 +271,10 @@ if($showCustomerList) {
     <script>
 	setHomeRoute("{{ route('home') }}");
 	setPrintRoute("{{ route('printFixing', $fixing->id) }}");
+	@if(!empty($new))
+	    setSaveButton("Salva", "#fixing");
+	@else
+	    setSaveButton("Aggiorna", "#update-fixing");
+	@endif
     </script>
 @endsection

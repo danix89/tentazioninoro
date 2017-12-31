@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 
 $factory->define(Tentazioninoro\Fixing::class, function (Faker $faker) {
-    $states = array('Consegnato', 'In lavorazione', 'Completato');
+    $states = array('Evasa', 'Completata', 'In lavorazione', 'Presa in carico');
     return [
 //        'user_id' => $faker->randomDigit,
 //        'customer_id' => str_random(16),

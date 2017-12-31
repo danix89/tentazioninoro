@@ -3,9 +3,10 @@
 return [
     'fixing' => [
         'state' => [
-            'COMPLETED' => 'Completed',
-            'IN_PROGRESS' => 'In progress',
-            'NOT_YET_STARTED' => 'Not yet started',
+            'DELIVERED' => 'Evasa',
+            'COMPLETED' => 'Completata',
+            'IN_PROGRESS' => 'In lavorazione',
+            'NOT_YET_STARTED' => 'Presa in carico',
         ]
     ],
     'permission' => [

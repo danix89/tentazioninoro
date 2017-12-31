@@ -24,7 +24,7 @@
 	    <script src="{{ asset('js/all.main.js') }}"></script>
 	@show
     </head>
-    <body>
+    <body style="margin-bottom: 15px;">
 	@auth
 	    <div class="jumbotron">
 		<div class="container text-center">

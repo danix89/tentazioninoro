@@ -156,7 +156,7 @@ class FixingController extends Controller {
 	DebugBar::info($fixing);
 	$identityDocument = Customer::find($fixing->customer_id)->identityDocument()->get(["name", "surname"])->first();
 	$jewel = Jewel::find($fixing->jewel_id)->get(["typology"])->first();
-	
+
 	$data = array(
 	    'fixing' => $fixing,
 	    'identityDocument' => $identityDocument,
@@ -208,6 +208,13 @@ class FixingController extends Controller {
      */
     public function update(Request $request, Fixing $fixing) {
 	
+    }
+
+    public function updateState(Request $request, $fixingId) {
+	$fixing = Fixing::find($fixingId);
+	$fixing->state = $request->state;
+	$fixing->save();
+	return redirect(route('home'));
     }
 
     /**
