@@ -10,6 +10,7 @@ return [
         ]
     ],
     'permission' => [
+	'ADMIN' => 'Admin',
 	'FIXINGS' => 'Fixings',
 	'SALES_ACTS' => 'SalesActs',
     ],

@@ -1,6 +1,7 @@
 var homeRoute;
 var printRoute;
 var formId;
+var saveUpdateFunction;
 
 function setHomeRoute(hr) {
     homeRoute = hr;
@@ -10,10 +11,11 @@ function setPrintRoute(pr) {
     printRoute = pr;
 }
 
-function setSaveButton(btnl, fid) {
+function setSaveButton(btnl, suf) {
     $("#save-update-btn").next().children("span").text(btnl);
-    formId = fid;
+    saveUpdateFunction = suf;
 }
+
 
 var options =
 	[
@@ -23,7 +25,7 @@ var options =
 		callback: function () {
 //		    window.location = updateStateRoute;
 //		    console.log(buttonLabel);
-		    $(formId).submit();
+		    saveUpdateFunction();
 		}
 	    },
 	    {

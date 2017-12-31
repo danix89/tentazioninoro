@@ -13,6 +13,11 @@ use Debugbar;
 
 class UserController extends Controller {
 
+    public function __construct() {
+	$this->middleware('auth');
+	$this->middleware('has-permissions:' . \Config::get('constants.permission.ADMIN') . ',');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +70,7 @@ class UserController extends Controller {
      */
     public function edit($id) {
 	$user = User::findOrFail($id);
-        return View::make('fixing/create', ['user' => $user]);
+	return View::make('fixing/create', ['user' => $user]);
 //	return View::make('user/form')->with('user', $user);
     }
 

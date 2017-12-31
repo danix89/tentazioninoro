@@ -260,6 +260,9 @@ if($showCustomerList) {
 	    </div>
 	</div>
     </fieldset>
+    @if(!$disabled)
+	<button id="save-btn" type="submit" class="btn btn-primary" style="display: none;">Salva</button>
+    @endif
 {!! Form::close() !!}
 @endsection
 
@@ -272,9 +275,13 @@ if($showCustomerList) {
 	setHomeRoute("{{ route('home') }}");
 	setPrintRoute("{{ route('printFixing', $fixing->id) }}");
 	@if(!empty($new))
-	    setSaveButton("Salva", "#fixing");
+	    setSaveButton("Salva", function() {
+		$("#save-btn").click();
+	    });
 	@else
-	    setSaveButton("Aggiorna", "#update-fixing");
+	    setSaveButton("Aggiorna", function() {
+		$("#update-fixing").submit();
+	    });
 	@endif
     </script>
 @endsection
