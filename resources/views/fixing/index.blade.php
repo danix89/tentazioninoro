@@ -6,6 +6,18 @@
 //$user = $data["user"];
 $user = Auth::user();
 $fixingList = json_decode($fixingList, TRUE);
+$stateList = [
+    "" => "Tutti",
+    Config::get('constants.fixing.state.NOT_YET_STARTED') => Config::get('constants.fixing.state.NOT_YET_STARTED'),
+    Config::get('constants.fixing.state.IN_PROGRESS') => Config::get('constants.fixing.state.IN_PROGRESS'),
+    Config::get('constants.fixing.state.COMPLETED') => Config::get('constants.fixing.state.COMPLETED'),
+    Config::get('constants.fixing.state.DELIVERED') => Config::get('constants.fixing.state.DELIVERED')
+];
+
+if(!isset($state)) {
+    $state = "";
+}
+
 ?>
 @guest
     @section('redirect-to-login-page')
@@ -30,6 +42,9 @@ $fixingList = json_decode($fixingList, TRUE);
 	@if (!isset($fixingList))
 	    <p>Non ci sono riparazioni in corso.</p>
 	@else
+	    <div class="" style="width: 33%; position: relative; top: 49px; z-index: 9999;">
+		{!! Form::select('state-select', $stateList, $state, ['id' => 'state-select', 'class' => 'form-control', 'required' => true,]); !!}
+	    </div>
 	    <table id="grid-basic" class="table">
 		<thead>
 		    <tr>
@@ -93,6 +108,14 @@ $fixingList = json_decode($fixingList, TRUE);
 //		    e.preventDefault();
 		    var fixingId = $(this).parents("tr").data("row-id");
 		    $(this).attr("action", '{{ route("fixing.destroy", ["fixingId" => ""]) }}/' + fixingId);
+		});
+		
+		$("#state-select").change(function(e) {
+		    var url = "{{ route('showList') }}" + "/" + $(this).val();
+		    console.log(url);
+		    window.location = url;
+//		    $('#state-fixing').attr('action', action).submit();
+//		    $('#state-fixing').attr('action', action);
 		});
 	    });
 	    function initializeGrid(gridId) {

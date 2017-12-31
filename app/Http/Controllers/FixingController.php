@@ -25,11 +25,18 @@ class FixingController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index($state = null) {
 	$userId = Auth::id();
-	$fixingList = Fixing::where('user_id', $userId)->get();
+	if (isset($state)) {
+	    $fixingList = Fixing::where(['user_id' => $userId, 'state' => $state])->get();
+	} else {
+	    $fixingList = Fixing::where('user_id', $userId)->get();
+	}
 	Debugbar::info($fixingList);
-	return View::make('fixing/index')->with('fixingList', $fixingList);
+	return View::make('fixing/index')->with([
+		    'state' => $state,
+		    'fixingList' => $fixingList,
+	]);
     }
 
     /**

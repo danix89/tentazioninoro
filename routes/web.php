@@ -44,7 +44,7 @@ Route::post('/atti-vendita/delete', ['as' => 'sale-act.destroyAll', 'uses' => 'S
 //    }
 //]);
 
-Route::get('/riparazioni/', ['as' => 'showList', 'uses' => 'FixingController@index']);
+Route::get('/riparazioni/{state?}', ['as' => 'showList', 'uses' => 'FixingController@index']);
 Route::get('/riparazioni/new', ['as' => 'newfixing', 'uses' => 'FixingController@create']);
 Route::post('/riparazioni/updateState/{fixingId}', ['as' => 'updateStateFixing', 'uses' => 'FixingController@updateState']);
 Route::get('/riparazioni/{fixingId}', ['as' => 'showFixing', 'uses' => 'FixingController@show']);
