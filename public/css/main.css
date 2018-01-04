@@ -22,17 +22,21 @@
     max-width: 100%;
 }
 
+#grid-basic {
+    width: 100%; 
+    font-size: 13px;
+}
+
 .photo {
     margin: 15px 7px;
     max-width: 460px;
-    max-height: 190px;
     width: auto;
     height: auto;
 }
 
 .photo.big {
-    max-width: 920px;
-    max-height: 380px;
+    width:100%;
+    max-width: 600px;
 }
 
 .modal-body legend {

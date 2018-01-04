@@ -35,8 +35,11 @@ if(!isset($state)) {
     @section('navbar-li-left')
 	@parent
 	@section('home_class', 'active')
-	<li class=""><a href="{{ route('newfixing') }}">Nuova Riparazione</a></li>
+	<li class=""><a href="{{ route('newFixing') }}">Nuova Riparazione</a></li>
     @endsection
+
+    @section('anchor-backup-href', route('photoBackup', Config::get('constants.folders.FIXINGS')) )
+    @section('anchor-delete-photos-href', route('photoDelete', Config::get('constants.folders.FIXINGS')) )
 
     @section('content')
 	@if (!isset($fixingList))
@@ -151,7 +154,10 @@ if(!isset($state)) {
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
-			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-default dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+			$('form').submit(function (e) {
+			    appendIdToFormAction(e, $(this));
+			}); 
 		    }
 		});
 	    }

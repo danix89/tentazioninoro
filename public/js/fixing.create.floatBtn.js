@@ -32,7 +32,8 @@ var options =
 		icon: '<i class="fa fa-print" aria-hidden="true" style="position: relative; top: 10px;"></i>',
 		label: 'Stampa',
 		callback: function () {
-		    window.location = printRoute;
+		    $("#toPrint").val("true");
+		    $("#fixing").submit();
 		}
 	    },
 	    {

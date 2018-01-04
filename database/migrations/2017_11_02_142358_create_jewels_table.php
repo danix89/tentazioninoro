@@ -17,7 +17,8 @@ class CreateJewelsTable extends Migration {
             $table->string('typology');
             $table->float('weight');
             $table->string('metal');
-            $table->string('path_photo')->nullable();
+            $table->longText('path_photo')->nullable();
+            $table->longText('backup_path_photo')->nullable();
             $table->timestamps();
         });
     }

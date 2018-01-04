@@ -1,12 +1,6 @@
 <?php
-$user = Auth::user();
-Debugbar::info($user);
-if (isset($_COOKIE["identityDocuments"])) {
-    $identityDocumentsJson = $_COOKIE["identityDocuments"];
-} else {
-    $identityDocumentsJson = "";
-}
 $customerList = $data["customerList"];
+$identityDocumentsJson = json_encode($data["identityDocuments"]);
 $newSaleActId = $data["newSaleActId"];
 $saleAct = $data["saleAct"];
 ?>
@@ -35,12 +29,6 @@ $saleAct = $data["saleAct"];
 
 @section('head-javascript')
     @parent
-    
-    @if(empty($identityDocumentsJson))
-	<script>
-	    window.location.replace(" {{ route('newSaleAct') }} ");
-	</script>
-    @endif
 @endsection
 
 @section('navbar-li-left')
@@ -49,38 +37,18 @@ $saleAct = $data["saleAct"];
     <li class="active"><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
 @endsection
 
-@section('dropdown-menu')
-    @parent
-    <li class=""><a href="{{ route('photoBackup', Config::get('constants.folders.SALES_ACTS')) }}">Backup</a></li>
-@endsection
-
-<!--<body style="margin: 2em 25em;">-->
-<!--<body style="margin-bottom: 5em;">-->
+@section('anchor-backup-href', route('photoBackup', Config::get('constants.folders.SALES_ACTS')) )
+@section('anchor-delete-photos-href', route('photoDelete', Config::get('constants.folders.SALES_ACTS')) )
 
 @section('content')
     @if(!empty($identityDocumentsJson))
 	<div class="row">
 	    {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
 		{!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
-		<!--                
-				<div class="" style="position: fixed; right: 15px; bottom: 15px;">
-				    <button type="submit" class="btn btn-primary">Salva</button>
-				    <button type="button" class="btn btn-primary">Stampa</button>
-				</div>
-		-->
-<!--		<div class="row">
-		    <div style="position: relative; top: 0px;">
-			<div id="date" style="position: absolute;">
-			    <p>Data <span id="today"></span> ora <span id="hour"></span></p>
-			</div>
-			<div id="idNumber" style="position: absolute; right: 15px;">
-			    <p>N&#176;. <span id="idNumber">{{ $newSaleActId }}</span></p>
-			</div>
-		    </div>
-		</div>-->
+
 		<div id="body" class="row" style="position: relative; top: 40px;">
 		    <table class='table'>
-			{!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', array_merge([0 => ""], $customerList), 1, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
+			{!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', array_merge([0 => ""], $customerList), 0, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
 			<thead>
 			    <tr>
 				<th>Il/La Sottoscritto/a:</th><th></th><th></th>
@@ -95,7 +63,7 @@ $saleAct = $data["saleAct"];
 			    <tr>
 				<td>{!! Form::label('birthResidence', 'Nato/a a ', ['class' => '']) !!}{!! Form::text('birthResidence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
 				<td>{!! Form::label('birthProvince', 'Prov.', ['class' => '']) !!}{!! Form::text('birthProvince', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-				<td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::text('birthDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+				<td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::date('birthDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
 			    </tr>
 			    <tr>
 				<td>{!! Form::label('residence', 'Residente a ', ['class' => '']) !!}{!! Form::text('residence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
@@ -116,9 +84,6 @@ $saleAct = $data["saleAct"];
 		    </table>
 		    <div style="margin-bottom: 50px;">
 			<p>{!! Form::label('objects', 'Oggetti:', ['class' => 'control-label']) !!}{!! Form::text('objects', 'Bracciale', ['class' => 'form-control', 'autofocus' => true, 'required' => true,]) !!}</p>
-			<!--                        <hr style="margin-top: 50px; border-style: inset;">
-						<hr style="margin-top: 40px; border-style: inset;">
-						<hr style="margin-top: 40px; border-style: inset;">-->
 
 			<div id='photos' class="">
 			    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
@@ -129,13 +94,13 @@ $saleAct = $data["saleAct"];
 			</div>
 		    </div>
 		    <div style="">
-			<p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '20', ['class' => 'form-control', 'required' => true]) !!}</p>
-			<p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '200', ['class' => 'form-control', 'required' => true]) !!}</p>
-			<p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '5', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '', ['class' => 'form-control', 'required' => true]) !!}</p>
     <!--		    <p id=''>{!! Form::label('weight', 'ARG999', ['class' => '']) !!}{!! Form::text('silver', '2', ['class' => 'form-control', 'required' => true]) !!}</p>-->
-			<p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '250', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
 			<div></div>
-			<p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::text('termsOfPayment', 'Contanti', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::text('termsOfPayment', '', ['class' => 'form-control', 'required' => true]) !!}</p>
 		    </div>
 		</div>
 	    </div>
@@ -151,8 +116,9 @@ $saleAct = $data["saleAct"];
 		
 		var customerJson = JSON.parse('<?php echo $identityDocumentsJson ?>');
 		fillCustomerInputs(customerJson[$("#customerSelect").val()]);
-		$("#customer").on("change", function () {
+		$("#customerSelect").on("change", function () {
 		    var index = $(this).val();
+		    console.log(index);
 		    if(index > 0) {
 			fillCustomerInputs(customerJson[index]);
 		    } else {
@@ -192,9 +158,6 @@ $saleAct = $data["saleAct"];
 	    });
 	</script>
     @else
-	<script>
-	    reloadPage();
-	</script>
 	<p>Caricamento in corso...</p>
     @endif
 @endsection

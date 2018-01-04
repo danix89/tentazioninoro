@@ -10,7 +10,6 @@ if($showCustomerList) {
     $typology = "";
     $weight = "";
     $metal = "";
-    $photo_paths = "";
     $description = "";
     $deposit = "";
     $estimate = "";
@@ -65,8 +64,11 @@ if($showCustomerList) {
 @section('navbar-li-left')
 @parent
 @section('home_class', '')
-    <li class="active"><a href="{{ route('newfixing') }}">{{ $new }} Riparazione</a></li>
+    <li class="active"><a href="{{ route('newFixing') }}">{{ $new }} Riparazione</a></li>
 @endsection
+
+@section('anchor-backup-href', route('photoBackup', Config::get('constants.folders.FIXINGS')) )
+@section('anchor-delete-photos-href', route('photoDelete', Config::get('constants.folders.FIXINGS')) )
 
 @section('modal-id', 'add-customer')
 @section('modal-title', 'Dati riparazione')
@@ -158,6 +160,7 @@ if($showCustomerList) {
 @endif
 
 {!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
     <fieldset>
 	<legend class="fieldset-border">Dati cliente</legend>
 	<div class="form-group">
@@ -207,12 +210,42 @@ if($showCustomerList) {
 	    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
 	    <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
 	    <div class="col-md-5">
-		@if(isset($photo_paths) && count($photo_paths) > 1)
-		    @foreach($photo_paths as $photo_path)
-			@if(!empty($photo_path))
-			    <img class='photo' src="{{ Storage::url($photo_path) }}" />
-			@endif
-		    @endforeach
+		@if(isset($photo_paths) && count($photo_paths) > 0)
+		    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<?php $i = 0; ?>
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			    @for ($i = 1; $i < count($photo_paths); $i++)
+				<li data-target="#myCarousel" data-slide-to="{{ $i }}"></li>
+			    @endfor
+			</ol>
+			<?php $i = 0; ?>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner">
+			    @foreach($photo_paths as $photo_path)
+				@if(!empty($photo_path))
+				    @if($i === 0)
+					<div class="item active">
+				    @else
+					<div class="item">
+				    @endif
+					    <img class='photo big d-block img-fluid' style="margin: 0 auto;" src="{{ Storage::url($photo_path) }}" alt="{{ $i++ }}" />
+					</div>
+				@endif
+			    @endforeach
+			</div>
+
+			<!-- Left and right controls -->
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			    <span class="sr-only">Precedente</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">
+			    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			    <span class="sr-only">Successiva</span>
+			</a>
+		    </div>
 		@else
 		    {!! Form::file('path_photo[]', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
 		    <div id="preview" style="margin-top: 15px;">

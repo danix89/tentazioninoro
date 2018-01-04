@@ -17,8 +17,9 @@ $saleActList = json_decode($saleActList, TRUE);
     @section('head-stylesheet')
     @section('head-javascript')
 	@parent
-	<script src="{{ asset('js/saleact.main.js') }}"></script>
+	<!--<script src="{{ asset('js/saleact.main.js') }}"></script>-->
     @endsection
+    @section('footer-javascript')
 
     @section('navbar-li-left')
 	@parent
@@ -26,11 +27,9 @@ $saleActList = json_decode($saleActList, TRUE);
 	<li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
     @endsection
     
-    @section('dropdown-menu')
-	@parent
-	<li class=""><a href="{{ route('photoBackup', Config::get('constants.folders.SALES_ACTS')) }}">Backup</a></li>
-    @endsection
-
+    @section('anchor-backup-href', route('photoBackup', Config::get('constants.folders.SALES_ACTS')) )
+    @section('anchor-delete-photos-href', route('photoDelete', Config::get('constants.folders.SALES_ACTS')) )
+    
     @section('content')
 	@if (!isset($saleActList))
 	    <p>Non ci sono atti di vendita registrati.</p>
@@ -39,23 +38,24 @@ $saleActList = json_decode($saleActList, TRUE);
 		<thead>
 		    <tr>
 			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
-			<th data-column-id="updated_at" data-order="desc" data-width="9%">Data</th>
+			<th data-column-id="updated_at" data-order="desc" data-width="10%">Data</th>
 			<th data-column-id="customer_id" data-width="15%">Cliente</th>
-			<th data-column-id="objects_id" data-width="27%">Oggetti</th>
-			<th data-column-id="deposit" data-width="8%">Prezzo</th>
+			<th data-column-id="objects_id">Oggetti</th>
+			<th data-column-id="deposit">Prezzo</th>
 			<th data-column-id="estimate" data-width="12%">Concordato</th>
 			<th data-column-id="estimate" data-width="13%">AU (750/1000)</th>
-			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="13%">Comandi</th>
+			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Comandi</th>
 			<!--<th data-column-id="delete"></th>-->
 		    </tr>
 		</thead>
 		<tbody>
 		    @for ($i = 0; $i < count($saleActList); $i++)
-                        <?php 
+                        <?php
 //                        $customer = Customer::where('id', $saleAct["customer_id"])->get()->first();
 //                        $identityDocument = Tentazioninoro\Customer::find($saleActList[$i]["customer_id"])->identityDocument;
 			$customerId = $saleActList[$i]["customer_id"];
-                        $identityDocument = $identityDocumentList[1];
+			Debugbar::info('$saleActList[$i] - start', $saleActList[$i], '$saleActList[$i] - end');
+                        $identityDocument = $identityDocumentList[$customerId];
 			Debugbar::info('$customerId - start', $customerId, '$customerId - end');
                         $date = explode(" ", $saleActList[$i]["updated_at"])[0];
                         $date = explode("-", $date);
@@ -135,8 +135,16 @@ $saleActList = json_decode($saleActList, TRUE);
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
-			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-default dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
 		    }
+		    
+		    $('form').submit(function (e) {
+			appendIdToFormAction(e, $(this));
+		    }); 
+		        
+		    $('#delete-all-btn').click(function () {
+			deleteAll();
+		    });
 		});
 	    }
     //	$("#grid-basic").bootgrid();

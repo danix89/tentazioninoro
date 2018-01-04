@@ -69,6 +69,8 @@
 					{{ csrf_field() }}
 				    </form>
 				</li>
+				<li class=""><a id="anchor-backup" href="@yield('anchor-backup-href')">Backup</a></li>
+				<li class=""><a id="anchor-delete" class="delete-all-file" href="" data-href="@yield('anchor-delete-photos-href')">Cancella tutte le foto</a></li>
 				@show
 			    </ul>
 			</li>
@@ -92,74 +94,6 @@
 			</div>
 			<div class="modal-body">
 			    @section('modal-body')
-			    <form class="form-horizontal" action="" method="post">
-				<fieldset>
-				    <legend class="fieldset-border">Dati cliente</legend>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="customer">Cliente:</label>
-					<div class="col-md-4">
-					    <input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>
-					</div>
-				    </div>
-				</fieldset>
-				<fieldset>
-				    <legend class="fieldset-border">Dati gioiello</legend>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="typology">Tipologia:</label>
-					<div class="col-md-5">          
-					    <input type="text" class="form-control" id="typology" placeholder="" name="typology" required>
-					</div>
-				    </div>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="wheight">Peso:</label>
-					<div class="col-md-5">          
-					    <input type="text" class="form-control" id="wheight" placeholder="" name="wheight" required>
-					</div>
-				    </div>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="metal">Metallo:</label>
-					<div class="col-md-5">          
-					    <input type="text" class="form-control" id="metal" placeholder="" name="metal" required>
-					</div>
-				    </div>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="path-photo">Foto:</label>
-					<div class="col-md-5">
-					    <input type="file" class="form-control-file" id="path-photo" name="path-photo" aria-describedby="fileHelp">
-					</div>
-				    </div>
-				</fieldset>
-				<fieldset>
-				    <legend class="fieldset-border">Dettagli guasto</legend>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="fault-description">Descrizione:</label>
-					<div class="col-md-5">
-					    <textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>
-					</div>
-				    </div>
-				</fieldset>
-				<fieldset>
-				    <legend class="fieldset-border">Dettagli pagamento</legend>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="deposit">Acconto:</label>
-					<div class="col-md-5">          
-					    <input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>
-					</div>
-				    </div>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="estimate">Preventivo:</label>
-					<div class="col-md-5">          
-					    <input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>
-					</div>
-				    </div>
-				    <div class="form-group">
-					<label class="control-label col-md-4" for="notes">Appunti:</label>
-					<div class="col-md-5">
-					    <textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
-					</div>
-				    </div>
-				</fieldset>
-			    </form>
 			    @show
 			</div>
 			<div class="modal-footer">
@@ -188,5 +122,6 @@
 	@endguest
     </body>
     @section('footer-javascript')
+	<script src="{{ asset('vendor/bootstrap-confirmation.min.js') }}"></script>
     @show
 </html>

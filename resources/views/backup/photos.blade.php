@@ -10,7 +10,11 @@
 @section('navbar-li-left')
     @parent
     @section('home_class', '')
-    <li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
+    @if(preg_match("/Fixings/", Auth::user()->permissions))
+	<li class=""><a href="{{ route('newFixing') }}">Nuova Riparazione</a></li>
+    @elseif(preg_match("/SalesActs/", Auth::user()->permissions))
+	<li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
+    @endif
     <li class="active"><a href="">Backup</a></li>
 @endsection
 

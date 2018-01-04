@@ -22,7 +22,10 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
+app('debugbar')->disable();
+
 Auth::routes();
+Route::get('/register', 'HomeController@index')->name('register');
 
 Route::get('/', [function () {
 	return redirect(route('home'));
@@ -44,11 +47,12 @@ Route::post('/atti-vendita/delete', ['as' => 'sale-act.destroyAll', 'uses' => 'S
 //    }
 //]);
 
-Route::get('/riparazioni/{state?}', ['as' => 'showList', 'uses' => 'FixingController@index']);
-Route::get('/riparazioni/new', ['as' => 'newfixing', 'uses' => 'FixingController@create']);
+Route::get('/riparazioni/list/{state?}', ['as' => 'showList', 'uses' => 'FixingController@index']);
+Route::get('/riparazioni/new', ['as' => 'newFixing', 'uses' => 'FixingController@create']);
 Route::post('/riparazioni/updateState/{fixingId}', ['as' => 'updateStateFixing', 'uses' => 'FixingController@updateState']);
-Route::get('/riparazioni/{fixingId}', ['as' => 'showFixing', 'uses' => 'FixingController@show']);
+Route::get('/riparazioni/show/{fixingId}', ['as' => 'showFixing', 'uses' => 'FixingController@show']);
 Route::get('/riparazioni/print/{fixingId}/', ['as' => 'printFixing', 'uses' => 'FixingController@printTicket']);
 Route::post('/riparazioni/delete', ['as' => 'fixing.destroyAll', 'uses' => 'FixingController@destroyFixings']);
 
 Route::get('/backup/directory/{directoryName}', ['as' => 'photoBackup', 'uses' => 'PhotosBackupController@exec']);
+Route::get('/delete/directory/{directoryName}', ['as' => 'photoDelete', 'uses' => 'PhotosBackupController@delete']);

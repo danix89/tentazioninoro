@@ -18,6 +18,7 @@ class FixingController extends Controller {
     public function __construct() {
 	$this->middleware('auth');
 	$this->middleware('has-permissions:' . \Config::get('constants.permission.FIXINGS') . ',');
+	app('debugbar')->disable();
     }
 
     /**
@@ -45,24 +46,15 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-//	    $user = Auth::user();
-//	    $fixingList = Fixing::where('user_id', $user->id)->orderBy('customer_id', 'asc')->get();
-//	    Debugbar::info($fixingList);
-//	    return View::make('fixing/create', ['user' => $user]);
-
 	$userId = Auth::id();
 	$customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
-//	    Debugbar::info($customersIds);
+//	Debugbar::info($customersIds);
 	$customerList = array();
 	foreach ($customersIds as $customerId) {
 	    Debugbar::info("customerId - start", $customerId, "customerId - end");
 	    $identityDocument = Customer::find($customerId->customer_id)->identityDocument;
 	    $customerList[$customerId->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
-//		$customerList[] = $identityDocument;
 	}
-//	    $customerList = [1, 2, 43];
-//	    Debugbar::info("fixingList - start", $fixingList, "fixingList - end");
-//	    Debugbar::info($customerList);
 	if (isset($customerId)) {
 	    $customer = Customer::where('id', $customerId)->get();
 	} else {
@@ -70,8 +62,7 @@ class FixingController extends Controller {
 	}
 
 	$fixing = new Fixing;
-//	    Debugbar::info($user);
-//	    Debugbar::info($fixing);
+//	Debugbar::info($fixing);
 
 	$data = array(
 	    'showCustomerList' => true,
@@ -92,18 +83,30 @@ class FixingController extends Controller {
 	$this->validate($request, Fixing::$rules);
 	$fixing = $request->all();
 	$id = Auth::id();
-	if (Input::hasFile('path_photo')) {
-//		$uploadDirectory = "uploads";
-//		$file = Input::file('path_photo');
-//		$file->move($uploadDirectory, $file->getClientOriginalName());
-//		$path_to_photo = $uploadDirectory . "\\" . $file->getClientOriginalName();
-//		var_dump($request->file('path_photo'));
+	if ($fixing["customer_id"] > 0) {
+	    $customer = Customer::find($fixing["customer_id"]);
+	    $identityDocument = $customer->identityDocument()->get(['name', 'surname'])[0];
+	    Debugbar::info($identityDocument);
 	    $path = "";
-	    foreach ($request->path_photo as $photo) {
-		$path .= $photo->store(Config::get('constants.folders.FIXINGS')) . "~";
+	    if (Input::hasFile('path_photo')) {
+		$fixings = Fixing::orderBy('id', 'desc')->get(["id"]);
+		if (isset($fixings)) {
+		    $fixingId = $fixings->take(1)->first()->id + 1;
+		} else {
+		    $fixingId = 1;
+		}
+		$i = 1;
+		foreach ($request->path_photo as $photo) {
+		    $ext = $photo->extension();
+		    $name = str_replace(" ", "", $identityDocument->name);
+		    $surname = str_replace(" ", "", $identityDocument->surname);
+		    $path .= $photo->storeAs(Config::get('constants.folders.FIXINGS'), $fixingId . "-" . $name . "_" . $surname . "-" . date("d.m.Y") . "_n." . $i++ . "." . $ext, 'public') . "~";
+		}
+		$path = substr($path, 0, strlen($path) - 1);
 	    }
-//		echo $path;
-//		$path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
+//	    echo $path;
+//	    return;
+//	    $path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
 
 	    $jewelData = array(
 		"typology" => $fixing["typology"],
@@ -123,7 +126,18 @@ class FixingController extends Controller {
 		"notes" => $fixing["notes"],
 		"state" => Config::get('constants.fixing.state.NOT_YET_STARTED'),
 	    );
-	    Fixing::create($fixingData);
+	    $fixing = Fixing::create($fixingData);
+
+	    if ($request->toPrint === 'true') {
+		$data = array(
+		    'showCustomerList' => false,
+		    'fixing' => $fixing,
+		    'identityDocument' => $identityDocument,
+		    'jewel' => $jewel,
+		);
+
+		return $this->printTicket($fixing->id);
+	    }
 	}
 
 	return redirect(route('fixing.index'));
@@ -231,7 +245,7 @@ class FixingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-//	var_dump($id);
+	var_dump($id);
 	Fixing::destroy($id);
 	return redirect(route('fixing.index'));
     }

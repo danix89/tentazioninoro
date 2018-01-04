@@ -3,7 +3,7 @@
 @section('navbar-li-left')
 @parent
 @section('home_class', 'active')
-<li class=""><a href="{{ route('newfixing', ['userId' => 1]) }}">Nuova Riparazione</a></li>
+<li class=""><a href="{{ route('newFixing', ['userId' => 1]) }}">Nuova Riparazione</a></li>
 @endsection
 
 @section('content')

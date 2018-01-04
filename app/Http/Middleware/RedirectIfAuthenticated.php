@@ -18,12 +18,14 @@ class RedirectIfAuthenticated {
      */
     public function handle($request, Closure $next, $guard = null) {
 	if (Auth::guard($guard)->check()) {
-	    $user = Auth::user();
-	    
+//	    $user = Auth::user();
+	    Debugbar::info("Autenticato");
+	    return redirect(route('home'));
 	} else {
 	    Debugbar::info("Non autenticato");
-	    return $next($request);
 	}
+	
+	return $next($request);
     }
 
 }

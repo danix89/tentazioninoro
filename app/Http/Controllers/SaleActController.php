@@ -11,12 +11,14 @@ use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
 use Tentazioninoro\SaleAct;
 use Tentazioninoro\User;
+use Tentazioninoro\UserCustomer;
 
 class SaleActController extends Controller {
 
     public function __construct() {
 	$this->middleware('auth');
 	$this->middleware('has-permissions:' . \Config::get('constants.permission.SALES_ACTS') . ',');
+	
     }
 
     public static function createPDF($pdfFilename, $data) {
@@ -36,12 +38,12 @@ class SaleActController extends Controller {
 	$saleActList = SaleAct::where('user_id', $userId)->get();
 	Debugbar::info($saleActList);
 
-	$customersIds = User::find($userId)->customers()->get();
+	$customersIds = $user->customers()->get();
 	$identityDocumentList = array();
-	foreach ($customersIds as $customerId) {
+	foreach ($saleActList as $saleAct) {
 	    //            Debugbar::info("customerId - start", $customerId, "customerId - end");
 	    $customer = Customer::join("identity_documents", "identity_documents.customer_id", "=", "customers.id", "")
-		    ->where("customers.id", $customerId->customer_id)
+		    ->where("customers.id", $saleAct->customer_id)
 		    ->first(["identity_documents.*", "customers.fiscal_code"]);
 //		Debugbar::info('$customer - start', $customer, '$customer - end');
 	    $identityDocumentList[$customer->customer_id] = $customer;
@@ -74,14 +76,15 @@ class SaleActController extends Controller {
 	    $identityDocuments[] = $customer;
 	    $customerList[$customerId->customer_id] = $customer->name . " " . $customer->surname;
 	}
-
-	setcookie('identityDocuments', json_encode($identityDocuments), time() + (60 * 30), "/");
+	
+//	setcookie('identityDocuments', json_encode($identityDocuments), time() + (60 * 30), "/");
 
 	$saleAct = SaleAct::orderBy('id', 'desc')->take(1)->first();
 
 	$data = array(
 	    'newSaleActId' => ++$saleAct->id,
 	    'customerList' => $customerList,
+	    'identityDocuments' => $identityDocuments,
 	    'saleAct' => $saleAct,
 	);
 	Debugbar::info('$data - start', $data, '$data - end');
@@ -100,40 +103,51 @@ class SaleActController extends Controller {
 //	    var_dump($data);
 	\Debugbar::info($data);
 	$customerId = $request->customerSelect;
-	if ($customerId === 0) {
+	if ($customerId == 0) {
 	    $customerData = array(
-		'fiscal_code' => $request->fiscal_code,
+		'fiscal_code' => $request->fiscalCode,
 	    );
 	    $customer = Customer::create($customerData);
-
+	    $customerId = $customer->id;
+	    
 	    $identityDocumentData = array(
-		'customer_id' => $customer->id,
+		'customer_id' => $customerId,
 		'type' => $request->type,
-		'release_date' => $request->release_date,
+		'release_date' => $request->releaseDate,
 		'name' => $request->name,
 		'surname' => $request->surname,
-		'birth_residence' => $request->birth_residence,
-		'birth_province' => $request->birth_province,
-		'birth_date' => $request->birth_date,
+		'birth_residence' => $request->birthResidence,
+		'birth_province' => $request->birthProvince,
+		'birth_date' => $request->birthDate,
 		'residence' => $request->residence,
 		'street' => $request->street,
-		'street_number' => $request->street_number,
+		'street_number' => $request->streetNumber,
 	    );
-	    IdentityDocument::create($identityDocumentData);
+	    \Tentazioninoro\IdentityDocument::create($identityDocumentData);
 
 	    UserCustomer::create(array(
 		'user_id' => Auth::id(),
 		'customer_id' => $customer->id,
 	    ));
 	}
-
+	
 	if (Input::hasFile('path_photo')) {
 //		$file = Input::file('path_photo');
 	    $path = "";
-	    foreach ($request->path_photo as $photo) {
-		$path .= $photo->store(\Config::get('constants.folders.SALES_ACTS')) . "~";
+	    $i = 1;
+	    $salesActs = SaleAct::orderBy('id', 'desc')->get(["id"]);
+	    if(isset($salesActs)) {
+		$saleActId = $salesActs->take(1)->first()->id + 1;
+	    } else {
+		$saleActId = 1;
 	    }
+	    foreach ($request->path_photo as $photo) {
+		$ext = $photo->extension();
+		$path .= $photo->storeAs(\Config::get('constants.folders.SALES_ACTS'), $saleActId . "-" . $request->name . "_" . $request->surname . "-" . date("d.m.Y") . "_n." . $i++ . "." . $ext) . "~";
+	    }
+	    $path = substr($path, 0, strlen($path) - 1);
 	    var_dump($path);
+	    return;
 	} else {
 	    $path = null;
 	}
@@ -150,12 +164,12 @@ class SaleActController extends Controller {
 	    'path_photo' => $path,
 	);
 
-	if (!empty($path)) {
-	    file_put_contents('F:\uploads\file1.jpg', Storage::get($path));
-	}
+//	if (!empty($path)) {
+//	    file_put_contents('F:\uploads\file1.jpg', Storage::get($path));
+//	}
 
 	$toPrint = ($request->toPrint === 'true');
-	var_dump($toPrint);
+//	var_dump($toPrint);
 	$saleAct = SaleAct::create($saleActData);
 //	Debugbar::info('$saleAct - start', $saleAct, '$saleAct - end');
 	return redirect()->route('showSaleAct', ['saleActId' => $saleAct->id, 'toPrint' => $request->toPrint]);

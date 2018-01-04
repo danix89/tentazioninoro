@@ -25,6 +25,7 @@ class CreateSalesActsTable extends Migration
             $table->float('agreed_price');
             $table->string('terms_of_payment');
             $table->longText('path_photo')->nullable();
+            $table->longText('backup_path_photo')->nullable();
             $table->timestamps();
         });
         
