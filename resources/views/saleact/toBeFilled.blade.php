@@ -87,7 +87,7 @@ $saleAct = $data["saleAct"];
 
 			<div id='photos' class="">
 			    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-			    {!! Form::file('path_photo[]', ['class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
+			    {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
 			    <div id="preview" style="margin-top: 15px;">
 				<img id="photo" hidden src="#">
 			    </div>

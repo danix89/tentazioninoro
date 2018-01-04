@@ -247,7 +247,7 @@ if($showCustomerList) {
 			</a>
 		    </div>
 		@else
-		    {!! Form::file('path_photo[]', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
+		    {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
 		    <div id="preview" style="margin-top: 15px;">
 			<img id="photo" hidden src="#">
 		    </div>
