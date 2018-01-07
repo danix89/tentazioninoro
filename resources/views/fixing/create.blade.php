@@ -83,7 +83,7 @@ if($showCustomerList) {
 	    {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
 	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
 	    <div class="col-md-4">
-		{!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		{!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
 		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
 	    </div>
 	</div>
@@ -123,7 +123,7 @@ if($showCustomerList) {
 	    {!! Form::label('email', 'Email:', ['class' => 'control-label col-md-4']) !!}
 	    <!--<label class="control-label col-md-4" for="customer-email">Email:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('email', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
+		{!! Form::text('email', '', ['class' => 'form-control', 'required' => false, 'disabled' => $disabled]) !!}
 		<!--<input type="text" class="form-control" id="customer-email" placeholder="" name="customer-email" required>-->
 	    </div>
 	</div>

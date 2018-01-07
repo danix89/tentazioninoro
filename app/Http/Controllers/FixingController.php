@@ -18,7 +18,7 @@ class FixingController extends Controller {
     public function __construct() {
 	$this->middleware('auth');
 	$this->middleware('has-permissions:' . \Config::get('constants.permission.FIXINGS') . ',');
-	app('debugbar')->disable();
+	app('debugbar')->enable();
     }
 
     /**
@@ -91,6 +91,7 @@ class FixingController extends Controller {
 	    if (Input::hasFile('path_photo')) {
 		$fixings = Fixing::orderBy('id', 'desc')->get(["id"]);
 		if (isset($fixings)) {
+		    Debugbar::info($fixings);
 		    $fixingId = $fixings->take(1)->first()->id + 1;
 		} else {
 		    $fixingId = 1;

@@ -43,11 +43,36 @@ $typology = $jewel->typology;
 	    span {
 		text-decoration: underline;
 	    }
+	    
+	    @media print {
+		@page { 
+		    margin: 0; 
+		}
+
+		body { 
+		    background-image: url("{{ asset('images/logo.jpg') }}");
+		    margin: 0.5cm 0.5cm;
+		}
+
+		p, span, table, ol {
+		    font-size: 8px !important;
+		}
+		
+		#logo {
+		    display: inline;
+		    vertical-align: middle;
+		    position: relative; 
+		    top: 0; 
+		    left: 0; 
+		    width: 50px;
+		}
+	    }
 	</style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
     <body>
 	<div class="container">
+	    <img id=logo" style="display: none;" src="{{ asset('images/logo.jpg') }}">
 	    <div class="row">
 		<div style="position: relative; top: 0px;">
 		    <div id="date" style="position: absolute; left: -10px;">

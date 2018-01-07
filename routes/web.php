@@ -22,10 +22,10 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
-app('debugbar')->disable();
+app('debugbar')->enable();
 
 Auth::routes();
-Route::get('/register', 'HomeController@index')->name('register');
+//Route::get('/register', 'HomeController@index')->name('register');
 
 Route::get('/', [function () {
 	return redirect(route('home'));
