@@ -3,19 +3,22 @@ $showCustomerList = $data["showCustomerList"];
 $fixing = $data["fixing"];
 $user = Auth::user();
 if($showCustomerList) {
+    $fixingId = $data["fixingId"];
     $new = "Nuova";
     $disabled = false;
     $customer = $data["customer"];
     $customerList = $data["customerList"];
-    $typology = "";
-    $weight = "";
-    $metal = "";
+    $typology = "Orologio";
+    $weight = "220";
+    $metal = "Acciaio";
     $description = "";
-    $deposit = "";
-    $estimate = "";
+    $deposit = "20";
+    $estimate = "200";
     $notes = "";
+    $toPrint = "true";
 } else {
     $new = "";
+    $fixingId = $fixing->id;
     $stateList = [
 	Config::get('constants.fixing.state.NOT_YET_STARTED') => Config::get('constants.fixing.state.NOT_YET_STARTED'),
 	Config::get('constants.fixing.state.IN_PROGRESS') => Config::get('constants.fixing.state.IN_PROGRESS'),
@@ -28,12 +31,17 @@ if($showCustomerList) {
     $typology = $jewel->typology;
     $weight = $jewel->weight;
     $metal = $jewel->metal;
-    $photo_paths = explode("~", $jewel->path_photo);
+    if (!empty($jewel->path_photo)) {
+        $photo_paths = explode("~", $jewel->path_photo);
+    } else {
+        $photo_paths = [];
+    }
 //    $photo_paths = explode("~", Storage::url($jewel->path_photo));
     $description = $fixing->description;
     $deposit = $fixing->deposit;
     $estimate = $fixing->estimate;
     $notes = $fixing->notes;
+    $toPrint = "false";
 }
 
 ?>
@@ -160,7 +168,9 @@ if($showCustomerList) {
 @endif
 
 {!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-    {!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
+    @if($toPrint)
+        {!! Form::hidden('toPrint', 'true', ['id' => 'toPrint']) !!}
+    @endif
     <fieldset>
 	<legend class="fieldset-border">Dati cliente</legend>
 	<div class="form-group">
@@ -168,7 +178,7 @@ if($showCustomerList) {
 	    @if($showCustomerList)
 		<div class="col-md-5">
 		    <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-		    {!! Form::select('customer_id', $customerList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
+		    {!! Form::select('customer_id', $customerList, 1, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
 		</div>
 		<div class="col-md-1">
 		    <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
@@ -306,12 +316,12 @@ if($showCustomerList) {
     <script src="{{ asset('js/fixing.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");
-	setPrintRoute("{{ route('printFixing', $fixing->id) }}");
 	@if(!empty($new))
 	    setSaveButton("Salva", function() {
 		$("#save-btn").click();
 	    });
 	@else
+            setPrintRoute("{{ route('printFixing', $fixingId) }}");
 	    setSaveButton("Aggiorna", function() {
 		$("#update-fixing").submit();
 	    });

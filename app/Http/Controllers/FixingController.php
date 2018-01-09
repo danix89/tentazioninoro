@@ -51,7 +51,7 @@ class FixingController extends Controller {
 //	Debugbar::info($customersIds);
 	$customerList = array();
 	foreach ($customersIds as $customerId) {
-	    Debugbar::info("customerId - start", $customerId, "customerId - end");
+//	    Debugbar::info("customerId - start", $customerId, "customerId - end");
 	    $identityDocument = Customer::find($customerId->customer_id)->identityDocument;
 	    $customerList[$customerId->customer_id] = $identityDocument->name . " " . $identityDocument->surname;
 	}
@@ -62,12 +62,15 @@ class FixingController extends Controller {
 	}
 
 	$fixing = new Fixing;
-//	Debugbar::info($fixing);
-
+	Debugbar::info($fixing);
+        
+        $lastFixing = Fixing::orderBy('id', 'desc')->take(1)->first();
+        
 	$data = array(
 	    'showCustomerList' => true,
 	    'customerList' => $customerList,
 	    'fixing' => $fixing,
+	    'fixingId' => ++$lastFixing->id,
 	    'customer' => $customer,
 	);
 	return View::make('fixing/create')->with('data', $data);
@@ -173,7 +176,7 @@ class FixingController extends Controller {
     }
 
     public function printTicket($fixingId) {
-	$userId = Auth::id();
+//	$userId = Auth::id();
 	$fixing = Fixing::where('id', $fixingId)->get(["id", "customer_id", "jewel_id", "deposit", "estimate"])->first();
 	DebugBar::info($fixing);
 	$identityDocument = Customer::find($fixing->customer_id)->identityDocument()->get(["name", "surname"])->first();

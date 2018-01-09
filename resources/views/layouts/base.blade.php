@@ -122,6 +122,5 @@
 	@endguest
     </body>
     @section('footer-javascript')
-	<script src="{{ asset('vendor/bootstrap-confirmation.min.js') }}"></script>
     @show
 </html>

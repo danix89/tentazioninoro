@@ -38,19 +38,17 @@ function showConfirmDialog(elem, message, action = function () {}) {
 }
 
 function deleteAll() {
-    showConfirmDialog(null, "Procedere con l'eliminazione di tutte le riparazioni?", function () {
-	$.post({
-	    url: deleteRoute,
-	    data: {
-		_token: $('meta[name=csrf-token]').attr('content'),
-		ids: mm.fetchArray("toDelete"),
-	    },
-	    success: function () {
-		reloadPage(1000);
-	    }
-	}).fail(function () {
-	    console.log("Ajax call failed!");
-	});
+    $.post({
+        url: deleteRoute,
+        data: {
+            _token: $('meta[name=csrf-token]').attr('content'),
+            ids: mm.fetchArray("toDelete"),
+        },
+        success: function () {
+            reloadPage();
+        }
+    }).fail(function () {
+        console.log("Ajax call failed!");
     });
 }
 
@@ -74,7 +72,7 @@ jQuery(document).ready(function ($) {
     });
 
     $(".btn-danger").click(function (e) {
-	showConfirmDialog(e, "L'operazione è irreversibile. Procedere comunque?");
+	showConfirmDialog(e, "L'operazione e' irreversibile. Procedere comunque?");
     });
 
     $(".delete-all-file").click(function (e) {

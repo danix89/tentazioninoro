@@ -76,7 +76,7 @@ function getDebuggingModeValues(verbose = false) {
 }
 window.getDebuggingModeValues = getDebuggingModeValues;
 
-function reloadPage(timeout) {
+function reloadPage(timeout = 0) {
     console.log("Refreshing della pagina...");
     console.log("Se questo messaggio rimane qualcosa è andato storto!!!");
 

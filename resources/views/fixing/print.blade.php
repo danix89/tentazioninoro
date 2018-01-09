@@ -34,47 +34,40 @@ $typology = $jewel->typology;
 
 	<script src="{{ asset('js/manager.memory.js') }}"></script>
 	<script src="{{ asset('js/utilities.common.js') }}"></script>
-	<script src="{{ asset('js/functions.home.js') }}"></script>
 
 	<style>
-	    p,span, table {
+	    p, span, table {
 		font-size: 14px;
 	    }
+            
 	    span {
 		text-decoration: underline;
 	    }
-	    
+            
 	    @media print {
 		@page { 
 		    margin: 0; 
 		}
 
 		body { 
-		    background-image: url("{{ asset('images/logo.jpg') }}");
 		    margin: 0.5cm 0.5cm;
 		}
 
 		p, span, table, ol {
 		    font-size: 8px !important;
 		}
-		
-		#logo {
-		    display: inline;
-		    vertical-align: middle;
-		    position: relative; 
-		    top: 0; 
-		    left: 0; 
-		    width: 50px;
-		}
+                
+                #logo {
+                    width: 1000px;
+                }
 	    }
 	</style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
-    <body>
-	<div class="container">
-	    <img id=logo" style="display: none;" src="{{ asset('images/logo.jpg') }}">
-	    <div class="row">
-		<div style="position: relative; top: 0px;">
+    <body style="">
+        <div class="container">
+	    <div class="row" style="">
+		<div style="position: relative;">
 		    <div id="date" style="position: absolute; left: -10px;">
 			<p>Data <span id="today"></span> ora <span id="hour"></span></p>
 		    </div>
@@ -85,7 +78,7 @@ $typology = $jewel->typology;
 	    </div>
 	    <div class="row">
 		<div id="body" class="row" style="position: relative; top: 40px;">
-		    <table class='table'>
+                    <table class='table' style=" z-index: 9;">
 			<tbody>
 			    <tr>
 				<td>Cognome <span id="surname">{{ $surname }}</span></td><td>Nome <span id="name">{{ $name }}</span></td>
@@ -99,6 +92,8 @@ $typology = $jewel->typology;
 		    </table>
 		</div>
 	    </div>
+            <div style="width: 100%; top: 25px; position: relative; background: white; height: 60px;"></div>
+            <img id=logo" style="width: 100px; margin: auto; margin-top: -55px; display: block;" src="{{ asset('images/logo.jpg') }}">
 	    <script>
 		$(document).ready(function () {
 		    var now = getTodayDate().split(" ");
