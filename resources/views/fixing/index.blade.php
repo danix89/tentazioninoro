@@ -1,10 +1,6 @@
 @extends('layouts.base')
 
 <?php
-//$customer = $data["customer"];
-//$fixing = $data["fixing"];
-//$user = $data["user"];
-$user = Auth::user();
 $fixingList = json_decode($fixingList, TRUE);
 $stateList = [
     "" => "Tutti",
@@ -35,6 +31,7 @@ if(!isset($state)) {
     @section('navbar-li-left')
 	@parent
 	@section('home_class', 'active')
+	<li class=""><a href="{{ route('showCustomerList') }}">Clienti</a></li>
 	<li class=""><a href="{{ route('newFixing') }}">Nuova Riparazione</a></li>
     @endsection
 
@@ -45,7 +42,7 @@ if(!isset($state)) {
 	@if (!isset($fixingList))
 	    <p>Non ci sono riparazioni in corso.</p>
 	@else
-	    <div class="" style="width: 33%; position: relative; top: 49px; z-index: 9999;">
+	    <div id="state-select-div" class="" hidden style="width: 33%; position: relative; top: 49px; z-index: 9999;">
 		{!! Form::select('state-select', $stateList, $state, ['id' => 'state-select', 'class' => 'form-control', 'required' => true,]); !!}
 	    </div>
 	    <table id="grid-basic" class="table">
@@ -67,7 +64,6 @@ if(!isset($state)) {
 		    @foreach($fixingList as $fixing)
                         <?php 
                         $jewel = Tentazioninoro\Jewel::where('id', $fixing["jewel_id"])->get()->first();
-//                        $customer = Customer::where('id', $fixing["customer_id"])->get()->first();
                         $identityDocument = Tentazioninoro\Customer::find($fixing["customer_id"])->identityDocument;
                         $date = explode(" ", $fixing["updated_at"])[0];
                         $date = explode("-", $date);
@@ -84,18 +80,8 @@ if(!isset($state)) {
 			    <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
 			    <td>{{ $jewel->typology }}</td>
 			    <td>{{ $fixing["description"] }}</td>
-			    <td>{{ $fixing["deposit"] }}€</td>
-			    <td>{{ $fixing["estimate"] }}€</td>
-    <!--			<td>
-				{{-- <a class="btn btn-default" href="{{ route('fixing.edit', ['fixing' => $fixing->id]) }}">Modifica</a>--}}
-			    </td>
-			    <td>
-			    {{--
-				{!! Form::open(['route' => ['fixing.destroy', $fixing->id], 'method' => 'delete' ]) !!}
-				{!! Form::submit('Elimina', ['class' => 'btn btn-danger']) !!}
-				{!! Form::close() !!}
-				--}}
-			    </td>-->
+			    <td>{{ $fixing["deposit"] }}&#8364;</td>
+			    <td>{{ $fixing["estimate"] }}&#8364;</td>
 			</tr>
 		    @endforeach
 		</tbody>
@@ -108,7 +94,6 @@ if(!isset($state)) {
 	    initializeGrid("#grid-basic");
 	    $(document).ready(function() {
 		$("form").submit(function(e) {
-//		    e.preventDefault();
 		    var fixingId = $(this).parents("tr").data("row-id");
 		    $(this).attr("action", '{{ route("fixing.destroy", ["fixingId" => ""]) }}/' + fixingId);
 		});
@@ -117,8 +102,6 @@ if(!isset($state)) {
 		    var url = "{{ route('showList') }}" + "/" + $(this).val();
 		    console.log(url);
 		    window.location = url;
-//		    $('#state-fixing').attr('action', action).submit();
-//		    $('#state-fixing').attr('action', action);
 		});
 	    });
 	    function initializeGrid(gridId) {
@@ -159,9 +142,9 @@ if(!isset($state)) {
 			    appendIdToFormAction(e, $(this));
 			}); 
 		    }
+                    $("#state-select-div").show();
 		});
 	    }
-    //	$("#grid-basic").bootgrid();
 	</script>
     @endsection
 @endauth

@@ -15,7 +15,7 @@ if($showCustomerList) {
     $deposit = "20";
     $estimate = "200";
     $notes = "";
-    $toPrint = "true";
+    $toPrint = "false";
 } else {
     $new = "";
     $fixingId = $fixing->id;
@@ -41,7 +41,7 @@ if($showCustomerList) {
     $deposit = $fixing->deposit;
     $estimate = $fixing->estimate;
     $notes = $fixing->notes;
-    $toPrint = "false";
+    $toPrint = "true";
 }
 
 ?>
@@ -72,6 +72,7 @@ if($showCustomerList) {
 @section('navbar-li-left')
 @parent
 @section('home_class', '')
+    <li class=""><a href="{{ route('showCustomerList') }}">Clienti</a></li>
     <li class="active"><a href="{{ route('newFixing') }}">{{ $new }} Riparazione</a></li>
 @endsection
 
@@ -168,9 +169,7 @@ if($showCustomerList) {
 @endif
 
 {!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-    @if($toPrint)
-        {!! Form::hidden('toPrint', 'true', ['id' => 'toPrint']) !!}
-    @endif
+    {!! Form::hidden('toPrint', $toPrint, ['id' => 'toPrint']) !!}
     <fieldset>
 	<legend class="fieldset-border">Dati cliente</legend>
 	<div class="form-group">
