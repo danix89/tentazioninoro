@@ -54,5 +54,10 @@ Route::get('/riparazioni/show/{fixingId}', ['as' => 'showFixing', 'uses' => 'Fix
 Route::get('/riparazioni/print/{fixingId}/', ['as' => 'printFixing', 'uses' => 'FixingController@printTicket']);
 Route::post('/riparazioni/delete', ['as' => 'fixing.destroyAll', 'uses' => 'FixingController@destroyFixings']);
 
+Route::get('/clienti/list', ['as' => 'showCustomerList', 'uses' => 'CustomerController@index']);
+Route::get('/clienti/new', ['as' => 'newCustomer', 'uses' => 'CustomerController@create']);
+Route::get('/clienti/show/{customerId}', ['as' => 'showCustomer', 'uses' => 'CustomerController@show']);
+Route::post('/clienti/delete', ['as' => 'customer.destroyAll', 'uses' => 'CustomerController@destroyCustomers']);
+
 Route::get('/backup/directory/{directoryName}', ['as' => 'photoBackup', 'uses' => 'PhotosBackupController@exec']);
 Route::get('/delete/directory/{directoryName}', ['as' => 'photoDelete', 'uses' => 'PhotosBackupController@delete']);
