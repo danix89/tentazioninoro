@@ -50,7 +50,7 @@ $typology = $jewel->typology;
 		}
 
 		body { 
-		    margin: 0.5cm 0.5cm;
+		    margin: 0.3cm 0.3cm;
 		}
 
 		p, span, table, ol {
@@ -68,16 +68,16 @@ $typology = $jewel->typology;
         <div class="container">
 	    <div class="row" style="">
 		<div style="position: relative;">
-		    <div id="date" style="position: absolute; left: -10px;">
+		    <div id="date" style="position: absolute; left: -7px;">
 			<p>Data <span id="today"></span> ora <span id="hour"></span></p>
 		    </div>
-		    <div id="idNumber" style="position: absolute; right: -10px;">
+		    <div id="idNumber" style="position: absolute; right: -7px;">
 			<p>N&#176;. <span id="idNumber">{{ $fixingId }}</span></p>
 		    </div>
 		</div>
 	    </div>
 	    <div class="row">
-		<div id="body" class="row" style="position: relative; top: 40px;">
+		<div id="body" class="row" style="position: relative; top: 15px;">
                     <table class='table' style=" z-index: 9;">
 			<tbody>
 			    <tr>
@@ -92,8 +92,8 @@ $typology = $jewel->typology;
 		    </table>
 		</div>
 	    </div>
-            <div style="width: 100%; top: 25px; position: relative; background: white; height: 60px;"></div>
-            <img id=logo" style="width: 100px; margin: auto; margin-top: -55px; display: block;" src="{{ asset('images/logo.jpg') }}">
+            <div id="logo-div" style="width: 100%; top: -5px; position: relative; background: white; height: 60px;"></div>
+		<img id=logo" style="width: 60px; margin: auto; margin-top: -75px; display: block;" src="{{ asset('images/logo.jpg') }}">
 	    <script>
 		$(document).ready(function () {
 		    var now = getTodayDate().split(" ");
