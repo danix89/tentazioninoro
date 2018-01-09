@@ -6,18 +6,16 @@ use Auth;
 use Config;
 use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
-use Tentazioninoro\Fixing;
 use Tentazioninoro\IdentityDocument;
 use Tentazioninoro\UserCustomer;
 use Debugbar;
-use \Input as Input;
 use View;
 
 class CustomerController extends Controller {
 
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('has-permissions:' . \Config::get('constants.permission.FIXINGS') . ',' . \Config::get('constants.permission.SALES_ACTS'));
+        $this->middleware('has-permissions:' . Config::get('constants.permission.FIXINGS') . ',' . Config::get('constants.permission.SALES_ACTS'));
         app('debugbar')->enable();
     }
 

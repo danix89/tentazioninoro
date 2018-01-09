@@ -81,7 +81,7 @@ $user = Auth::user();
                 multiSelect: true,
                 formatters: {
                     "commands": function (column, row) {
-			    console.log(row.customer_id);
+//                        console.log(row.customer_id);
                         <?php
                             $showCustomerRoute = route("showCustomer", ["customerId" => ""]);
                             $deleteCustomerRoute = ["customer.destroy", ""];
