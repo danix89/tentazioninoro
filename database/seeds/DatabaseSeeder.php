@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder {
             'name' => 'mik',
             'password' => '$2y$10$4f1bp5Dpwj5t8zf2p5MOVe3SZEPKRHJ1jILeQVmg/kc8MfaUOp0dC',
             'email' => 'prova@gmail.com',
-            'permissions' => "SalesActs",
+            'permissions' => \Config::get('constants.permission.SALES_ACTS'),
         ]);
 	factory(Tentazioninoro\Customer::class, 5)->create()->each(
 	    function($customer) {

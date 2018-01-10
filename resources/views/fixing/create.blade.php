@@ -89,14 +89,6 @@ if($showCustomerList) {
     @endsection
     @section('modal-body')
 	<div class="form-group">
-	    {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
-	    <div class="col-md-4">
-		{!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
-	    </div>
-	</div>
-	<div class="form-group">
 	    {!! Form::label('name', 'Nome:', ['class' => 'control-label col-md-4']) !!}
 	    <!--<label class="control-label col-md-4" for="customer-name">Nome:</label>-->
 	    <div class="col-md-4">
@@ -110,6 +102,22 @@ if($showCustomerList) {
 	    <div class="col-md-5">
 		{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
 		<!--<input type="text" class="form-control" id="customer-surname" placeholder="" name="customer-surname" required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
+	    <div class="col-md-4">
+		{!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
+	    </div>
+	</div>
+	<div class="form-group">
+	    {!! Form::label('birth_date', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
+	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
+	    <div class="col-md-4">
+		{!! Form::date('birth_date', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
+		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
 	    </div>
 	</div>
 	<div class="form-group">
@@ -302,9 +310,8 @@ if($showCustomerList) {
 	    </div>
 	</div>
     </fieldset>
-    @if(!$disabled)
-	<button id="save-btn" type="submit" class="btn btn-primary" style="display: none;">Salva</button>
-    @endif
+    <!-- Questo pulsante serve per permettere di riprodurre correttamente l'operazione di submit del form, in modo da consentire di controllare in automatico se i campi input richiesti sono vuoti. -->
+    <button id="save-btn" type="submit" class="btn btn-primary" style="display: none;">Salva</button>
 {!! Form::close() !!}
 @endsection
 
@@ -316,6 +323,7 @@ if($showCustomerList) {
     <script>
 	setHomeRoute("{{ route('home') }}");
 	@if(!empty($new))
+            //E' necessario definire qui il comportamento del pulsante "Salva", in quanto se definito direttamente in fixing.create.floatBtn.js, non viene associato correttamente.
 	    setSaveButton("Salva", function() {
 		$("#save-btn").click();
 	    });

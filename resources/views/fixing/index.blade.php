@@ -138,10 +138,12 @@ if(!isset($state)) {
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
 			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
-			$('form').submit(function (e) {
-			    appendIdToFormAction(e, $(this));
-			}); 
 		    }
+                    
+                    $('form').submit(function (e) {
+                        appendIdToFormAction(e, $(this));
+                    });
+                    
                     $("#state-select-div").show();
 		});
 	    }

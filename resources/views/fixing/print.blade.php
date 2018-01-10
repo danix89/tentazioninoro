@@ -64,7 +64,7 @@ $typology = $jewel->typology;
 	</style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
-    <body style="">
+    <body style="height: 6.2cm;">
         <div class="container">
 	    <div class="row" style="">
 		<div style="position: relative;">
