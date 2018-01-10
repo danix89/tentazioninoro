@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model {
 
     public static $rules = [
-        'fiscal_code' => 'required|min:16|max:16',
+        'fiscal_code' => 'min:16|max:16',
     ];
 
     /**
@@ -18,7 +18,7 @@ class Customer extends Model {
     protected $guarded = ['id'];
     
     protected $fillable = [
-        'fiscal_code', 'name', 'surname', 'phone_number', 'mobile_phone', 'email', 'description',
+        'fiscal_code', 'name', 'surname', 'aka', 'phone_number', 'mobile_phone', 'email', 'description',
     ];
 
     public function identityDocument() {

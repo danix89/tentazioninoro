@@ -33,8 +33,8 @@ class CustomerController extends Controller {
             $customerList[] = Customer::find($customer->customer_id);
             $identityDocumentList[] = IdentityDocument::where("customer_id", $customer->customer_id)->get(["name", "surname", "birth_date"])->first();
         }
-        Debugbar::info($customerList);
-        Debugbar::info($identityDocumentList);
+//        Debugbar::info($customerList);
+//        Debugbar::info($identityDocumentList);
         return View::make('customer/index')->with([
                     'customerList' => $customerList,
                     'identityDocumentList' => $identityDocumentList,
@@ -47,7 +47,8 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        $customer = new Customer();
+        return View::make('customer/create')->with("customer", $customer);
     }
 
     /**
@@ -60,22 +61,20 @@ class CustomerController extends Controller {
 //        $this->validate($request, Customer::$rules);
         $data = $request->all();
         $customerData = array(
-            'fiscal_code' => $data["fiscal_code"],
-            'phone_number' => $data["phone_number"],
-            'mobile_phone' => $data["mobile_phone"],
-            'email' => $data["email"],
-            'description' => $data["description"],
+            'fiscal_code' => $request->fiscalCode,
+            'aka' => $request->aka,
+            'phone_number' => $request->phoneNumber,
+            'mobile_phone' => $request->mobilePhone,
+            'email' => $request->email,
+            'description' => $request->description,
         );
         $customer = Customer::create($customerData);
 
         $identityDocumentData = array(
             'customer_id' => $customer->id,
-            'release_date' => "1900-01-01",
-            'name' => $data["name"],
-            'surname' => $data["surname"],
-            'birth_residence' => "",
-            'birth_province' => "",
-            'birth_date' => "1900-01-01",
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'birth_date' => $request->birthDate,
             'residence' => "",
             'street' => "",
             'street_number' => "",
@@ -87,7 +86,7 @@ class CustomerController extends Controller {
             'customer_id' => $customer->id,
         ));
 
-        return back();
+        return redirect(route('showCustomer', ["customerId" => $customer->id]));
     }
 
     /**
@@ -97,7 +96,7 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $customer = Customer::find($id)->get()->first();
+        $customer = Customer::where("id", $id)->first();
         $identityDocument = $customer->identityDocument;
 
         return View::make('customer/show')->with([
@@ -124,7 +123,32 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $customer = Customer::where("id", $id)->first();
+
+        $identityDocument = $customer->identityDocument;
+
+        $customerData = array(
+            'fiscal_code' => $request->fiscalCode,
+            'aka' => $request->aka,
+            'phone_number' => $request->phoneNumber,
+            'mobile_phone' => $request->mobilePhone,
+            'email' => $request->email,
+            'description' => $request->description,
+        );
+        $customer->update($customerData);
+
+        $identityDocumentData = array(
+            'customer_id' => $id,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'birth_date' => $request->birthDate,
+            'residence' => "",
+            'street' => "",
+            'street_number' => "",
+        );
+        $identityDocument->update($identityDocumentData);
+
+        return redirect(route('showCustomer', ["customerId" => $id]));
     }
 
     /**
@@ -134,7 +158,18 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        var_dump($id);
+        Customer::destroy($id);
+        return redirect(route('customer.index'));
+    }
+
+    public function destroyCustomers(Request $request) {
+        $ids = $request->input('ids');
+        foreach ($ids as $id) {
+            print_r($id);
+            Customer::destroy($id);
+        }
+        return redirect(route('customer.index'));
     }
 
 }

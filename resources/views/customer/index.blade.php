@@ -28,13 +28,14 @@ $user = Auth::user();
         <table id="grid-basic" class="table">
             <thead>
                 <tr>
-                    <th data-column-id="customer_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
+                    <th data-column-id="customer_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="4%">Id</th>
                     <th data-column-id="name" data-identifier="true" data-width="10%">Nome</th>
                     <th data-column-id="surname" data-identifier="true" data-width="10%">Cognome</th>
-                    <th data-column-id="birth_date" data-order="desc" data-width="8%">Data nascita</th>
+                    <th data-column-id="aka" data-identifier="true" data-width="9%">Soprannome</th>
+                    <th data-column-id="birth_date" data-order="desc" data-width="9%">Data nascita</th>
                     <th data-column-id="phone_number" data-width="10%">Telefono</th>
                     <th data-column-id="mobile_phone" data-width="10%">Cellulare</th>
-                    <th data-column-id="email" data-width="15%">E-mail</th>
+                    <th data-column-id="email" data-width="14%">E-mail</th>
                     <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="10%">Comandi</th>
                     <!--<th data-column-id="delete"></th>-->
                 </tr>
@@ -52,6 +53,7 @@ $user = Auth::user();
                         <td>{{ $customerList[$i]["id"] }}</td>
                         <td>{{ $identityDocumentList[$i]->name }}</td>
                         <td>{{ $identityDocumentList[$i]->surname }}</td>
+                        <td>{{ $customerList[$i]["aka"] }}</td>
                         <td>{{ $day . "/" . $month . "/" . $year }}</td>
                         <td>{{ $customerList[$i]["phone_number"] }}</td>
                         <td>{{ $customerList[$i]["mobile_phone"] }}</td>
@@ -72,6 +74,11 @@ $user = Auth::user();
 //		    e.preventDefault();
                 var customerId = $(this).parents("tr").data("row-id");
                 $(this).attr("action", '{{ route("customer.destroy", ["customerId" => ""]) }}/' + customerId);
+            });
+            
+            $("th, td").each(function() {
+                $(this).attr("data-toggle", "tooltip");
+                $(this).attr("title", $(this).text());
             });
         });
         
@@ -109,10 +116,11 @@ $user = Auth::user();
             }).on("loaded.rs.jquery.bootgrid", function (e, rows) {
                 if($("#delete-all-div").length === 0) {
                     $(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
-                    $('form').submit(function (e) {
-                        appendIdToFormAction(e, $(this));
-                    }); 
                 }
+                
+                $('form').submit(function (e) {
+                    appendIdToFormAction(e, $(this));
+                });
             });
         }
     </script>
