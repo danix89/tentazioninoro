@@ -44,6 +44,10 @@ $typology = $jewel->typology;
 		text-decoration: underline;
 	    }
             
+            table {
+                margin-top: 30px;
+            }
+            
 	    @media print {
 		@page { 
 		    margin: 0; 
@@ -57,8 +61,12 @@ $typology = $jewel->typology;
 		    font-size: 8px !important;
 		}
                 
-                #logo {
-                    width: 1000px;
+                table {
+                    margin-top: 1px !important;
+                }
+                
+                td {
+                    padding: 3px !important;
                 }
 	    }
 	</style>
@@ -92,8 +100,8 @@ $typology = $jewel->typology;
 		    </table>
 		</div>
 	    </div>
-            <div id="logo-div" style="width: 100%; top: -5px; position: relative; background: white; height: 60px;"></div>
-		<img id=logo" style="width: 60px; margin: auto; margin-top: -75px; display: block;" src="{{ asset('images/logo.jpg') }}">
+            <div id="hide-logo-div" style="width: 100%; top: -5px; position: relative; background: white; height: 60px;"></div>
+            <img id=logo" style="width: 80px; margin: auto; margin-top: -80px; display: block;" src="{{ asset('images/logo.jpg') }}">
 	    <script>
 		$(document).ready(function () {
 		    var now = getTodayDate().split(" ");

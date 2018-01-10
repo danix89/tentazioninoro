@@ -1,13 +1,17 @@
 <?php
 $showCustomerList = $data["showCustomerList"];
+$customerList = $data["customerList"];
 $fixing = $data["fixing"];
 $user = Auth::user();
 if($showCustomerList) {
+    $showCustomerList = true;
+    $customerId = 0;
+    $route = ["fixing.store"];
+    $method = "POST";
     $fixingId = $data["fixingId"];
     $new = "Nuova";
     $disabled = false;
     $customer = $data["customer"];
-    $customerList = $data["customerList"];
     $typology = "Orologio";
     $weight = "220";
     $metal = "Acciaio";
@@ -18,7 +22,10 @@ if($showCustomerList) {
     $toPrint = "false";
 } else {
     $new = "";
+    $method = "PUT";
+    $route = ["fixing.update", $fixing->id];
     $fixingId = $fixing->id;
+    $customerId = $fixing->customer_id;
     $stateList = [
 	Config::get('constants.fixing.state.NOT_YET_STARTED') => Config::get('constants.fixing.state.NOT_YET_STARTED'),
 	Config::get('constants.fixing.state.IN_PROGRESS') => Config::get('constants.fixing.state.IN_PROGRESS'),
@@ -27,7 +34,7 @@ if($showCustomerList) {
     ];
     $identityDocument = $data["identityDocument"];
     $jewel = $data["jewel"];
-    $disabled = true;
+    $disabled = false;
     $typology = $jewel->typology;
     $weight = $jewel->weight;
     $metal = $jewel->metal;
@@ -176,25 +183,19 @@ if($showCustomerList) {
     {!! Form::close() !!}
 @endif
 
-{!! Form::model($fixing, ['route' => ['fixing.store', $fixing->id], 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+{!! Form::model($fixing, ['route' => $route, 'method' => $method, 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     {!! Form::hidden('toPrint', $toPrint, ['id' => 'toPrint']) !!}
     <fieldset>
 	<legend class="fieldset-border">Dati cliente</legend>
 	<div class="form-group">
 	    {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
-	    @if($showCustomerList)
-		<div class="col-md-5">
-		    <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
-		    {!! Form::select('customer_id', $customerList, 1, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
-		</div>
-		<div class="col-md-1">
-		    <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
-		</div>
-	    @else
-		<div class="col-md-5">
-		    {!! Form::text('customer_id', $identityDocument->name . " " . $identityDocument->surname, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		</div>
-	    @endif
+            <div class="col-md-5">
+                <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
+                {!! Form::select('customer_id', $customerList, $customerId, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
+            </div>
+            <div class="col-md-1">
+                <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
+            </div>
 	</div>
     </fieldset>
     <fieldset>
@@ -330,7 +331,8 @@ if($showCustomerList) {
 	@else
             setPrintRoute("{{ route('printFixing', $fixingId) }}");
 	    setSaveButton("Aggiorna", function() {
-		$("#update-fixing").submit();
+//		$("#update-fixing").submit();
+                $("#save-btn").click();
 	    });
 	@endif
     </script>
