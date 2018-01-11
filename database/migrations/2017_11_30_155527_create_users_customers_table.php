@@ -25,6 +25,7 @@ class CreateUsersCustomersTable extends Migration
             $table->foreign('customer_id')
                     ->references('id')->on('customers')
                     ->onDelete('cascade');
+            $table->unique(['user_id', 'customer_id']);
         });
     }
 

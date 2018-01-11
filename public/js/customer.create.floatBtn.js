@@ -1,6 +1,4 @@
 var homeRoute;
-var printRoute;
-var formId;
 var saveUpdateFunction;
 
 function setHomeRoute(hr) {

@@ -1,5 +1,6 @@
 <?php
 $customerList = $data["customerList"];
+$canBeUpdated = false;
 $identityDocumentsJson = json_encode($data["identityDocuments"]);
 $newSaleActId = $data["newSaleActId"];
 $saleAct = $data["saleAct"];
@@ -46,8 +47,8 @@ $saleAct = $data["saleAct"];
 	    {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
 		{!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
 
-		<div id="body" class="row" style="position: relative; top: 40px;">
-		    <table class='table'>
+		<div id="body" class="row" style="">
+                    <table class='table' style="margin-top: 15px;">
 			{!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', array_merge([0 => ""], $customerList), 0, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
 			<thead>
 			    <tr>
@@ -82,18 +83,39 @@ $saleAct = $data["saleAct"];
 			    </tr>
 			</tbody>
 		    </table>
-		    <div style="margin-bottom: 50px;">
+                    
+		    <div style="margin-bottom: 0px;">
 			<p>{!! Form::label('objects', 'Oggetti:', ['class' => 'control-label']) !!}{!! Form::text('objects', 'Bracciale', ['class' => 'form-control', 'autofocus' => true, 'required' => true,]) !!}</p>
 
 			<div id='photos' class="">
-			    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-			    {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
-			    <div id="preview" style="margin-top: 15px;">
-				<img id="photo" hidden src="#">
-			    </div>
+                            {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
+                            <div id="myCarousel" hidden class="carousel slide" style="width: 600px; margin-bottom: 8px;" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators"></ol>
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner"></div>
+                                <!-- Left and right controls -->
+                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Precedente</span>
+                                </a>
+                                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Successiva</span>
+                                </a>
+                            </div>
+                            {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'data-to-alert' => $canBeUpdated === true? 'true' : 'false',  'style' => 'opacity: 0;', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
+                            {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+                            <div class="preview" style="position: relative; top: -44px;">
+                                <div class="photos-message-div" style="position: relative; top: 16px; left: 100px;">
+                                    <p id='photos-message'>Nessuna foto selezionata</p>
+                                </div>
+                                <button id="photo-paths-btn" type="button" class="btn btn-default btn-info" style="position: relative; top: -20px; ">Carica foto</button>
+                            </div>
 			</div>
 		    </div>
-		    <div style="">
+                    
+		    <div style="margin-top: -44px;">
 			<p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '', ['class' => 'form-control', 'required' => true]) !!}</p>
 			<p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '', ['class' => 'form-control', 'required' => true]) !!}</p>
 			<p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '', ['class' => 'form-control', 'required' => true]) !!}</p>
@@ -104,6 +126,8 @@ $saleAct = $data["saleAct"];
 		    </div>
 		</div>
 	    </div>
+            <!-- Questo pulsante serve per permettere di riprodurre correttamente l'operazione di submit del form, in modo da consentire di controllare in automatico se i campi input richiesti sono vuoti. -->
+            <button id="save-btn" type="submit" class="btn btn-primary" style="display: none;">Salva</button>
 	{!! Form::close() !!}
 
 	<script>
@@ -167,4 +191,11 @@ $saleAct = $data["saleAct"];
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
     <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/saleact.toBeFilled.floatBtn.js') }}"></script>
+    <script>
+	setHomeRoute("{{ route('home') }}");
+        //E' necessario definire qui il comportamento del pulsante "Salva", in quanto se definito direttamente in fixing.create.floatBtn.js, non viene associato correttamente.
+        setSaveButton("Salva", function() {
+            $("#save-btn").click();
+        });
+    </script>
 @endsection

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder {
         ]);
         
 	factory(Tentazioninoro\User::class, 1)->create([
-            'name' => 'mik',
+            'name' => 'orousato',
             'password' => '$2y$10$4f1bp5Dpwj5t8zf2p5MOVe3SZEPKRHJ1jILeQVmg/kc8MfaUOp0dC',
             'email' => 'prova@gmail.com',
             'permissions' => \Config::get('constants.permission.SALES_ACTS'),
@@ -53,12 +53,19 @@ class DatabaseSeeder extends Seeder {
 				    'customer_id' => $customerId,
 				]);
 			
-			DB::table('users_customers')->insert(
-                        [
-                            'user_id' => $user->id, 
-                            'customer_id' => $customer->id,
-                        ]
-                );
+                        $userCustomer = Tentazioninoro\UserCustomer::where([
+                            'user_id' => $user->id,
+                            'customer_id' => $customerId,
+                        ])->get();
+                        if(count($userCustomer) === 0) {
+                            DB::table('users_customers')->insert(
+                                [
+                                    'user_id' => $user->id, 
+                                    'customer_id' => $customer->id,
+                                ]
+                            );
+                        } 
+			
 		    }
 		}
 	    }

@@ -39,7 +39,7 @@ class FixingController extends Controller {
                     'fixingList' => $fixingList,
         ]);
     }
-    
+
     private function buildCustomerList() {
         $userId = Auth::id();
         $users_customers = User::find($userId)->customers()->get(); //->groupBy('customer_id');
@@ -62,7 +62,7 @@ class FixingController extends Controller {
             $birthDate = $day . "/" . $month . "/" . $year;
             $customerList[$user_customer->customer_id] = $identityDocument->name . " " . $identityDocument->surname . $aka . " - " . $birthDate;
         }
-        
+
         return $customerList;
     }
 
@@ -73,15 +73,16 @@ class FixingController extends Controller {
      */
     public function create() {
         $customerList = $this->buildCustomerList();
-        
+        $customer = new Customer;
         $fixing = new Fixing;
         Debugbar::info($fixing);
 
         $lastFixing = Fixing::orderBy('id', 'desc')->take(1)->first();
 
         $data = array(
-            'showCustomerList' => true,
+            'canBeUpdated' => false,
             'customerList' => $customerList,
+            'customer' => $customer,
             'fixing' => $fixing,
             'fixingId' => ++$lastFixing->id,
         );
@@ -97,14 +98,14 @@ class FixingController extends Controller {
     public function store(Request $request) {
         $this->validate($request, Fixing::$rules);
         if ($request->customer_id > 0) {
-            $photoPaths = $this->saveJewelPhotos();
-            
+            $photoPaths = $this->saveJewelPhotos($request->customer_id);
+
             $jewelData = $this->buildJewelData($request, $photoPaths);
             $jewel = Jewel::create($jewelData);
-            
+
             $fixingData = $this->buildFixingData($request, $jewel->id);
             $fixing = Fixing::create($fixingData);
-            
+
             if ($request->toPrint === 'true') {
                 $data = array(
                     'showCustomerList' => false,
@@ -120,19 +121,27 @@ class FixingController extends Controller {
         return redirect(route('fixing.index'));
     }
 
-    private function saveJewelPhotos($fixingId = -1) {
+    private function deletePhotos($photoPaths) {
+        $photoPaths = explode("~", $photoPaths);
+        \Storage::delete($photoPaths);
+    }
+
+    private function saveJewelPhotos($customerId, $fixingId = -1) {
         $path = "";
         if (Input::hasFile('path_photo')) {
-            if($fixingId === -1) {
+            if ($fixingId === -1) {
                 $fixings = Fixing::orderBy('id', 'desc')->get(["id"]);
                 if (isset($fixings)) {
                     Debugbar::info($fixings);
-                    $fixingId = $fixings->take(1)->first()->id + 1;
+                    $fixing = $fixings->take(1)->first();
+                    $fixingId = $fixing->id + 1;
                 } else {
                     $fixingId = 1;
                 }
             }
-            
+            $customer = Customer::find($customerId);
+            $identityDocument = $customer->identityDocument()->get(['name', 'surname'])[0];
+
             $i = 1;
             foreach (Input::file('path_photo') as $photo) {
                 $ext = $photo->extension();
@@ -146,7 +155,7 @@ class FixingController extends Controller {
 //	    $path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
         return $path;
     }
-    
+
     private function buildJewelData($request, $photoPaths) {
         $customer = Customer::find($request->customer_id);
         $identityDocument = $customer->identityDocument()->get(['name', 'surname'])[0];
@@ -158,17 +167,17 @@ class FixingController extends Controller {
             "metal" => $request->metal,
             "path_photo" => $photoPaths,
         );
-        
+
         return $jewelData;
     }
 
-    
     private function buildFixingData($request, $jewelId) {
         $id = Auth::id();
         $fixingData = array(
             "user_id" => $id,
             "customer_id" => $request->customer_id,
             "jewel_id" => $jewelId,
+            "state" => $request->state,
             "description" => $request->description,
             "deposit" => $request->deposit,
             "estimate" => $request->estimate,
@@ -177,7 +186,7 @@ class FixingController extends Controller {
         );
         return $fixingData;
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -193,14 +202,14 @@ class FixingController extends Controller {
         $jewel = Jewel::where('id', $fixing->jewel_id)->get()->first();
 //            $customer = Customer::where('id', $fixing->customer_id)->get()->first();
         $identityDocument = Customer::find($fixing->customer_id)->identityDocument;
-        
+
         $customerList = $this->buildCustomerList();
-        
+
         $data = array(
-            'showCustomerList' => false,
+            'canBeUpdated' => true,
             'customerList' => $customerList,
             'fixing' => $fixing,
-//                'customer' => $customer,
+            'customer' => $customer,
             'identityDocument' => $identityDocument,
             'jewel' => $jewel,
         );
@@ -267,24 +276,24 @@ class FixingController extends Controller {
     public function update(Request $request, $fixingId) {
         $fixing = Fixing::where("id", $fixingId)->first();
         $jewel = Jewel::where("id", $fixing->jewel_id)->first();
-        
-        $photoPaths = $this->saveJewelPhotos();
-        
+        $this->deletePhotos($jewel->path_photo);
+        $photoPaths = $this->saveJewelPhotos($request->customer_id, $fixingId);
+
         $jewelData = $this->buildJewelData($request, $photoPaths);
         $jewel->update($jewelData);
 
         $fixingData = $this->buildFixingData($request, $jewel->id);
         $fixing->update($fixingData);
-        
+
         return $this->show($fixingId);
     }
 
-    public function updateState(Request $request, $fixingId) {
-        $fixing = Fixing::find($fixingId);
-        $fixing->state = $request->state;
-        $fixing->save();
-        return redirect(route('home'));
-    }
+//    public function updateState(Request $request, $fixingId) {
+//        $fixing = Fixing::find($fixingId);
+//        $fixing->state = $request->state;
+//        $fixing->save();
+//        return redirect(route('home'));
+//    }
 
     /**
      * Remove the specified resource from storage.

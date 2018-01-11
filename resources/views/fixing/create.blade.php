@@ -1,17 +1,16 @@
 <?php
-$showCustomerList = $data["showCustomerList"];
+$canBeUpdated = $data["canBeUpdated"];
 $customerList = $data["customerList"];
 $fixing = $data["fixing"];
+$customer = $data["customer"];
 $user = Auth::user();
-if($showCustomerList) {
-    $showCustomerList = true;
+if(!$canBeUpdated) {
     $customerId = 0;
     $route = ["fixing.store"];
     $method = "POST";
     $fixingId = $data["fixingId"];
     $new = "Nuova";
     $disabled = false;
-    $customer = $data["customer"];
     $typology = "Orologio";
     $weight = "220";
     $metal = "Acciaio";
@@ -89,108 +88,90 @@ if($showCustomerList) {
 @section('modal-id', 'add-customer')
 @section('modal-title', 'Dati riparazione')
 
-@if($showCustomerList)
-    @section('modal-form-start')
+@section('modal-form-start')
     {!! Form::model($customer, ['route' => ['customer.store'], 'class' => 'form-horizontal']) !!}
-    <!--<form class="form-horizontal" action="" method="post">-->
-    @endsection
+@endsection
     @section('modal-body')
-	<div class="form-group">
-	    {!! Form::label('name', 'Nome:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-name">Nome:</label>-->
-	    <div class="col-md-4">
-		{!! Form::text('name', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-name" placeholder="" name="customer-name" required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('surname', 'Cognome:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-surname">Cognome:</label>-->
-	    <div class="col-md-5">
-		{!! Form::text('surname', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-surname" placeholder="" name="customer-surname" required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
-	    <div class="col-md-4">
-		{!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('birth_date', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-fiscalcode">Codice Fiscale:</label>-->
-	    <div class="col-md-4">
-		{!! Form::date('birth_date', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-fiscal-code" placeholder="" name="customer-fiscal-code" autofocus required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-phonenumber">Telefono:</label>-->
-	    <div class="col-md-5">
-		{!! Form::text('phone_number', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-phonenumber" placeholder="" name="customer-phonenumber" required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('mobile_phone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-mobilephone">Cellulare:</label>-->
-	    <div class="col-md-5">
-		{!! Form::text('mobile_phone', '', ['class' => 'form-control', 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-mobilephone" placeholder="" name="customer-mobilephone" required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('email', 'Email:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-email">Email:</label>-->
-	    <div class="col-md-5">
-		{!! Form::text('email', '', ['class' => 'form-control', 'required' => false, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="customer-email" placeholder="" name="customer-email" required>-->
-	    </div>
-	</div>
-	<div class="form-group">
-	    {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="customer-description">Descrizione:</label>-->
-	    <div class="col-md-5">
-		{!! Form::textarea('description', '', ['class' => 'form-control', 'required' => false]) !!}
-		<!--<textarea type="text" class="form-control" id="customer-description" placeholder="" name="customer-description"></textarea>-->
-	    </div>
-	</div>
+        <div class="form-group">
+            {!! Form::label('name', 'Nome:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-4">
+                {!! Form::text('name', '', ['class' => 'form-control', 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('surname', 'Cognome:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::text('surname', '', ['class' => 'form-control', 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('aka', 'Soprannome:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::text('aka', '', ['class' => 'form-control', 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-4">
+                {!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('birth_date', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-4">
+                {!! Form::date('birth_date', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::text('phone_number', '', ['class' => 'form-control', 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('mobile_phone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::text('mobile_phone', '', ['class' => 'form-control', 'required' => true]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('email', 'Email:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::text('email', '', ['class' => 'form-control', 'required' => false]) !!}
+            </div>
+        </div>
+        <div class="form-group">
+            {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
+            <div class="col-md-5">
+                {!! Form::textarea('description', '', ['class' => 'form-control', 'required' => false]) !!}
+            </div>
+        </div>
     @endsection
 
-    @section('modal-form-stop')
-	{!! Form::close() !!}
-    <!--</form>-->
-    @endsection
-@endif
+@section('modal-form-stop')
+    {!! Form::close() !!}
+@endsection
 
 @section('content')
 
-@if(isset($stateList))
-    {!! Form::model($fixing, ['route' => ['updateStateFixing', $fixing->id], 'id' => 'update-fixing', 'class' => 'form-horizontal']) !!}
-	<fieldset>
-	    <legend class="fieldset-border">Stato riparazione</legend>
-	    <div class="form-group">
-		{!! Form::label('state', 'Stato:', ['class' => 'control-label col-md-4']) !!}
-		<div class="col-md-5">
-		    {!! Form::select('state', $stateList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare uno stato...']); !!}
-		</div>
-	    </div>
-	</fieldset>
-    {!! Form::close() !!}
-@endif
-
 {!! Form::model($fixing, ['route' => $route, 'method' => $method, 'id' => 'fixing', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     {!! Form::hidden('toPrint', $toPrint, ['id' => 'toPrint']) !!}
+    @if($canBeUpdated)
+        <fieldset>
+            <legend class="fieldset-border">Stato riparazione</legend>
+            <div class="form-group">
+                {!! Form::label('state', 'Stato:', ['class' => 'control-label col-md-4']) !!}
+                <div class="col-md-5">
+                    {!! Form::select('state', $stateList, null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare uno stato...']); !!}
+                </div>
+            </div>
+        </fieldset>
+    @endif
     <fieldset>
 	<legend class="fieldset-border">Dati cliente</legend>
 	<div class="form-group">
 	    {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                <!--<input type="text" class="form-control" id="customer" placeholder="" name="customer" autofocus required>-->
                 {!! Form::select('customer_id', $customerList, $customerId, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
             </div>
             <div class="col-md-1">
@@ -202,74 +183,80 @@ if($showCustomerList) {
 	<legend class="fieldset-border">Dati gioiello</legend>
 	<div class="form-group">
 	    {!! Form::label('typology', 'Tipologia:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="tipologia">Tipologia:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('typology', $typology, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="tipologia" placeholder="" name="tipologia" required>-->
+		{!! Form::text('typology', $typology, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('weight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="peso">Peso:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="peso" placeholder="" name="peso" required>-->
+		{!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('metal', 'Metallo:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="metallo">Metallo:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('metal', $metal, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="metallo" placeholder="" name="metallo" required>-->
+		{!! Form::text('metal', $metal, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="foto">Foto:</label>-->
-	    <div class="col-md-5">
-		@if(isset($photo_paths) && count($photo_paths) > 0)
-		    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-			<?php $i = 0; ?>
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			    @for ($i = 1; $i < count($photo_paths); $i++)
-				<li data-target="#myCarousel" data-slide-to="{{ $i }}"></li>
-			    @endfor
-			</ol>
-			<?php $i = 0; ?>
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner">
-			    @foreach($photo_paths as $photo_path)
-				@if(!empty($photo_path))
-				    @if($i === 0)
-					<div class="item active">
-				    @else
-					<div class="item">
-				    @endif
-					    <img class='photo big d-block img-fluid' style="margin: 0 auto;" src="{{ Storage::url($photo_path) }}" alt="{{ $i++ }}" />
-					</div>
-				@endif
-			    @endforeach
-			</div>
+            <div class="col-md-5" style="margin-bottom: -60px;">
+                <?php 
+                $showCarousel = (isset($photo_paths) && count($photo_paths) > 0);
+                if($showCarousel) {
+                    $hidden = "";
+                } else {
+                    $hidden = "hidden";
+                }
+                ?>
+                <div id="myCarousel" {{ $hidden }} class="carousel slide" data-ride="carousel" style="margin-bottom: 8px;">
+                    <?php $i = 0; ?>
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        @if($showCarousel)
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            @for ($i = 1; $i < count($photo_paths); $i++)
+                                <li data-target="#myCarousel" data-slide-to="{{ $i }}"></li>
+                            @endfor
+                        @endif
+                    </ol>
+                    <?php $i = 0; ?>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        @if($showCarousel)
+                            @foreach($photo_paths as $photo_path)
+                                @if(!empty($photo_path))
+                                    @if($i === 0)
+                                        <div class="item active">
+                                    @else
+                                        <div class="item">
+                                    @endif
+                                            <img class='photo big d-block img-fluid' style="margin: 0 auto;" src="{{ Storage::url($photo_path) }}" alt="{{ $i++ }}" />
+                                        </div>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
 
-			<!-- Left and right controls -->
-			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-			    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-			    <span class="sr-only">Precedente</span>
-			</a>
-			<a class="right carousel-control" href="#myCarousel" data-slide="next">
-			    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			    <span class="sr-only">Successiva</span>
-			</a>
-		    </div>
-		@else
-		    {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'autofocus' => true, 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg', 'disabled' => $disabled]) !!}
-		    <div id="preview" style="margin-top: 15px;">
-			<img id="photo" hidden src="#">
-		    </div>
-		@endif
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Precedente</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Successiva</span>
+                    </a>
+                </div>
+                {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'data-to-alert' => $canBeUpdated === true? 'true' : 'false',  'style' => 'opacity: 0;', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
+                {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+                <div class="preview" style="position: relative; top: -44px;">
+                    <div class="photos-message-div" style="position: relative; top: 16px; left: 100px;">
+                        <p id='photos-message'>Nessuna foto selezionata</p>
+                    </div>
+                    <button id="photo-paths-btn" type="button" class="btn btn-default btn-info" style="position: relative; top: -20px; ">Carica foto</button>
+                </div>
 	    </div>
 	</div>
     </fieldset>
@@ -277,10 +264,8 @@ if($showCustomerList) {
 	<legend class="fieldset-border">Dettagli guasto</legend>
 	<div class="form-group">
 	    {!! Form::label('description', 'Descrizione:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="fault-description">Descrizione:</label>-->
 	    <div class="col-md-5">
-		{!! Form::textarea('description', $description, ['class' => 'form-control', 'autofocus' => true, 'disabled' => $disabled]) !!}
-		<!--<textarea class="form-control" id="fault-description" rows="3" name="fault-description"></textarea>-->
+		{!! Form::textarea('description', $description, ['class' => 'form-control', 'autofocus' => true]) !!}
 	    </div>
 	</div>
     </fieldset>
@@ -288,26 +273,20 @@ if($showCustomerList) {
 	<legend class="fieldset-border">Dettagli pagamento</legend>
 	<div class="form-group">
 	    {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="deposit">Acconto:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="deposit" placeholder="" name="deposit" required>-->
+		{!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="estimate">Preventivo:</label>-->
 	    <div class="col-md-5">
-		{!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'disabled' => $disabled]) !!}
-		<!--<input type="text" class="form-control" id="estimate" placeholder="" name="estimate" required>-->
+		{!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('notes', 'Appunti:', ['class' => 'control-label col-md-4']) !!}
-	    <!--<label class="control-label col-md-4" for="notes">Appunti:</label>-->
 	    <div class="col-md-5">
-		{!! Form::textarea('notes', $notes, ['class' => 'form-control', 'autofocus' => true, 'required' => false, 'disabled' => $disabled]) !!}
-		<!--<textarea class="form-control" id="notes" rows="3" name="notes"></textarea>-->
+		{!! Form::textarea('notes', $notes, ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
 	    </div>
 	</div>
     </fieldset>

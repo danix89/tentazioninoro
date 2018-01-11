@@ -1,10 +1,22 @@
+var homeRoute;
+var saveUpdateFunction;
+
+function setHomeRoute(hr) {
+    homeRoute = hr;
+}
+
+function setSaveButton(btnl, suf) {
+    $("#save-update-btn").next().children("span").text(btnl);
+    saveUpdateFunction = suf;
+}
+
 var options =
         [
             {
                 icon: '<i class="fa fa-floppy-o" aria-hidden="true" style="position: relative; top: 10px;"></i>',
                 label: 'Salva',
                 callback: function () {
-                    $("#pdf").submit();
+                    saveUpdateFunction();
                 }
             },
             {
@@ -16,6 +28,13 @@ var options =
 //                    window.print();
                 }
             },
+            {
+		icon: '<i class="fa fa-home" aria-hidden="true" style="position: relative; top: 10px;"></i>',
+		label: 'Home',
+		callback: function () {
+		    window.location = homeRoute;
+		}
+	    },
 //	{
 //		icon:'3',
 //		label: 'Test Element 3',
