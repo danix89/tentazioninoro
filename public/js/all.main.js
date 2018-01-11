@@ -24,7 +24,7 @@ function showPhotoPreview(input) {
                     $('.item').first().addClass('active');
                     $('.carousel-indicators > li').first().addClass('active');
                     $('#myCarousel').show();
-                    $('#myCarousel').carousel();
+//                    $('#myCarousel').carousel();
                 }
             };
 
@@ -72,6 +72,9 @@ function appendIdToFormAction(elem, formObj) {
 }
 
 function deletePreviewsAndPhotosOnUpdate() {
+    $('#myCarousel').carousel({
+        interval: false,
+    });
     $('#myCarousel').hide();
     $("#deletePhotos").val(true);
     $(".carousel-indicators > li").remove();

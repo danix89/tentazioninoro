@@ -93,9 +93,9 @@ $user = Auth::user();
                             $showCustomerRoute = route("showCustomer", ["customerId" => ""]);
                             $deleteCustomerRoute = ["customer.destroy", ""];
                         ?>
-                        return "<a class=\"btn btn-default\" href=\"{{ $showCustomerRoute }}/" + row.customer_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
+                        return "<a class=\"btn btn-default\" href=\"{{ $showCustomerRoute }}/" + row.customer_id + "\"><i class=\"fa fa-eye fa-lg\" aria-hidden=\"true\"></i></a> " +
                                 '{!! Form::open(["method" => "delete", "route" => $deleteCustomerRoute, "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
-                                '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
+                                '<button class="btn btn-danger" type="submit"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>' +
                                 '{!! Form::close() !!}';
                     }
                 }
@@ -115,7 +115,7 @@ $user = Auth::user();
 //		    console.log("Deselect: " + rowIds.join(","));
             }).on("loaded.rs.jquery.bootgrid", function (e, rows) {
                 if($("#delete-all-div").length === 0) {
-                    $(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+                    $(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></div>');
                 }
                 
                 $('form').submit(function (e) {

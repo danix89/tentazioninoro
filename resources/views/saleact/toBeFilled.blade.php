@@ -35,6 +35,7 @@ $saleAct = $data["saleAct"];
 @section('navbar-li-left')
     @parent
     @section('home_class', '')
+    <li class=""><a href="{{ route('showCustomerList') }}">Clienti</a></li>
     <li class="active"><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
 @endsection
 
@@ -57,14 +58,14 @@ $saleAct = $data["saleAct"];
 			</thead>
 			<tbody>
 			    <tr>
-				<td>{!! Form::label('surname', 'Cognome', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'surname form-control', 'required' => true]) !!}</td>
 				<td>{!! Form::label('name', 'Nome', ['class' => '']) !!}{!! Form::text('name', '', ['class' => 'name form-control', 'required' => true]) !!}</td>
+				<td>{!! Form::label('surname', 'Cognome', ['class' => '']) !!}{!! Form::text('surname', '', ['class' => 'surname form-control', 'required' => true]) !!}</td>
 				<td></td>
 			    </tr>
 			    <tr>
 				<td>{!! Form::label('birthResidence', 'Nato/a a ', ['class' => '']) !!}{!! Form::text('birthResidence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
 				<td>{!! Form::label('birthProvince', 'Prov.', ['class' => '']) !!}{!! Form::text('birthProvince', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-				<td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::date('birthDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+				<td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::date('birthDate', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => true]) !!}</td>
 			    </tr>
 			    <tr>
 				<td>{!! Form::label('residence', 'Residente a ', ['class' => '']) !!}{!! Form::text('residence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
@@ -72,8 +73,8 @@ $saleAct = $data["saleAct"];
 				<td>{!! Form::label('streetNumber', 'N&#176;.', ['class' => '']) !!}{!! Form::text('streetNumber', '', ['class' => 'form-control', 'required' => true]) !!}</td>
 			    </tr>
 			    <tr>
-				<td>{!! Form::label('type', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('type', ['' => '', 'C.C.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], null, ['class' => 'form-control', 'required' => true]); !!}</td>
-				<td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::date('releaseDate', "", ['class' => 'form-control', 'required' => true]) !!}</td>
+				<td>{!! Form::label('type', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('type', ['' => '', 'C.I.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], 'C.I.', ['class' => 'form-control', 'required' => true]); !!}</td>
+				<td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::date('releaseDate', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => true]) !!}</td>
 				<td></td>
 			    </tr>
 			    <tr>
@@ -89,18 +90,18 @@ $saleAct = $data["saleAct"];
 
 			<div id='photos' class="">
                             {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-                            <div id="myCarousel" hidden class="carousel slide" style="width: 600px; margin-bottom: 8px;" data-ride="carousel">
+                            <div id="myCarousel" hidden class="carousel" style="width: 600px; margin-bottom: 8px;" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators"></ol>
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner"></div>
                                 <!-- Left and right controls -->
                                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
                                     <span class="sr-only">Precedente</span>
                                 </a>
                                 <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="fa fa-arrow-right" aria-hidden="true"></span>
                                     <span class="sr-only">Successiva</span>
                                 </a>
                             </div>
@@ -116,13 +117,13 @@ $saleAct = $data["saleAct"];
 		    </div>
                     
 		    <div style="margin-top: -44px;">
-			<p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-			<p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-			<p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '12', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '111', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '1', ['class' => 'form-control', 'required' => true]) !!}</p>
     <!--		    <p id=''>{!! Form::label('weight', 'ARG999', ['class' => '']) !!}{!! Form::text('silver', '2', ['class' => 'form-control', 'required' => true]) !!}</p>-->
-			<p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '222', ['class' => 'form-control', 'required' => true]) !!}</p>
 			<div></div>
-			<p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::text('termsOfPayment', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+			<p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::text('termsOfPayment', 'C.C.', ['class' => 'form-control', 'required' => true]) !!}</p>
 		    </div>
 		</div>
 	    </div>
@@ -159,8 +160,8 @@ $saleAct = $data["saleAct"];
 		}
 
 		function fillCustomerInputs(data) {
-		    setInputValueAndText(".name", data.name, {"readOnly": "true"});
-		    setInputValueAndText(".surname", data.surname, {"readOnly": "true"});
+		    setInputValueAndText("#name", data.name, {"readOnly": "true"});
+		    setInputValueAndText("#surname", data.surname, {"readOnly": "true"});
 		    setInputValueAndText("#birthResidence", data.birth_residence, {"readOnly": "true"});
 		    setInputValueAndText("#birthProvince", data.birth_province, {"readOnly": "true"});
 		    setInputValueAndText("#birthDate", data.birth_date, {"readOnly": "true"});

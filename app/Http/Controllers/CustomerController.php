@@ -15,7 +15,7 @@ class CustomerController extends Controller {
 
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('has-permissions:' . Config::get('constants.permission.FIXINGS') . ',' . Config::get('constants.permission.SALES_ACTS'));
+        $this->middleware('has-permissions:' . Config::get('constants.permission.FIXINGS') . '-' . Config::get('constants.permission.SALES_ACTS'));
         app('debugbar')->enable();
     }
 

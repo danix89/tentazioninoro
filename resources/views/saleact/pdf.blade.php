@@ -61,6 +61,15 @@ $path_photo = $saleAct->path_photo;
             span {
                 text-decoration: underline;
             }
+            
+            @media print {
+                body { 
+                    margin-top: 1em;
+                    margin-right: 1.5cm;
+                    margin-bottom: 3em;
+                    margin-left: 1.5cm; 
+                }
+            }
         </style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
@@ -143,7 +152,7 @@ $path_photo = $saleAct->path_photo;
 			<h4 id='' style="position: absolute; right: 0px;"><b>Firma</b></h4>
 			<hr style="position: absolute; margin-top: 70px; right: 0px; width: 30%; border-style: inset;">
 		    </div>
-		    <div style="margin: 12em 0em;">
+		    <div style="margin: 150px 0;">
 			<p>Il/La Sottoscritto/a Nome <span id="name">{{ $name }}</span> Cognome <span id="surname">{{ $surname }}</span></p>
 			<p>Dichiara che tutti gli oggetti sopravenduti non sono di illecita provenienza e di essere in possesso di tutti i diritti atti alla vendita degli stessi.</p>
 			<p>La presente vale anche come ricevuta a saldo per la somma riportata "prezzo complessivo".</p>

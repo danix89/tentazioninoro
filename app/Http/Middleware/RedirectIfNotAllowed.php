@@ -18,10 +18,10 @@ class RedirectIfNotAllowed {
     public function handle($request, Closure $next, $permissions) {
 	$user = Auth::user();
 	if (isset($user)) {
-	    if (!preg_match("/$permissions/", $user->permissions)) {
+	    if (!preg_match("/$user->permissions/", $permissions)) {
 		Debugbar::info("Accesso non consentito");
 		return redirect(route('accessNotAllowed'));
-	    }
+            }
 	}
 	return $next($request);
     }

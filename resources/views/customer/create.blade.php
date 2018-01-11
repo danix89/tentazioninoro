@@ -95,7 +95,7 @@
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
     <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
-    <script src="{{ asset('js/fixing.create.floatBtn.js') }}"></script>
+    <script src="{{ asset('js/customer.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");
         setSaveButton("Salva", function() {

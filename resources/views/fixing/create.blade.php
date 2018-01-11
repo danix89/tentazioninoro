@@ -210,7 +210,7 @@ if(!$canBeUpdated) {
                     $hidden = "hidden";
                 }
                 ?>
-                <div id="myCarousel" {{ $hidden }} class="carousel slide" data-ride="carousel" style="margin-bottom: 8px;">
+                <div id="myCarousel" {{ $hidden }} class="carousel" data-ride="carousel" style="margin-bottom: 8px;">
                     <?php $i = 0; ?>
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
@@ -241,11 +241,11 @@ if(!$canBeUpdated) {
 
                     <!-- Left and right controls -->
                     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="fa fa-arrow-left" aria-hidden="true"></span>
                         <span class="sr-only">Precedente</span>
                     </a>
                     <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="fa fa-arrow-right" aria-hidden="true"></span>
                         <span class="sr-only">Successiva</span>
                     </a>
                 </div>

@@ -63,20 +63,31 @@ class SaleActController extends Controller {
      */
     public function create() {
 	$userId = Auth::id();
-	$customersIds = User::find($userId)->customers()->get(); //->groupBy('customer_id');
-//	    Debugbar::info($customersIds);
-	$identityDocuments = array([]);
-	$customerList = array();
-	foreach ($customersIds as $customerId) {
-	    //            Debugbar::info("customerId - start", $customerId, "customerId - end");
-	    $customer = Customer::join("identity_documents", "identity_documents.customer_id", "=", "customers.id", "")
-		    ->where("customers.id", $customerId->customer_id)
+        $users_customers = User::find($userId)->customers()->get(); //->groupBy('customer_id');
+//	Debugbar::info($customersIds);
+        $customerList = array();
+        $identityDocuments = array([]);
+        foreach ($users_customers as $user_customer) {
+//	    Debugbar::info('$user_customer - start', $user_customer, '$user_customer - end');
+            $customer = Customer::join("identity_documents", "identity_documents.customer_id", "=", "customers.id", "")
+		    ->where("customers.id", $user_customer->customer_id)
 		    ->first(["identity_documents.*", "customers.fiscal_code"]);
 //	    Debugbar::info('$customer - start', $customer, '$customer - end');
-	    $identityDocuments[] = $customer;
-	    $customerList[$customerId->customer_id] = $customer->name . " " . $customer->surname;
-	}
-	
+            $identityDocument = $customer->identityDocument;
+	    $identityDocuments[] = $identityDocument;
+            if (!empty($customer->aka)) {
+                $aka = " (" . $customer->aka . ")";
+            } else {
+                $aka = "";
+            }
+            $date = explode("-", $identityDocument->birth_date);
+            $year = $date[0];
+            $month = $date[1];
+            $day = $date[2];
+            $birthDate = $day . "/" . $month . "/" . $year;
+            $customerList[$user_customer->customer_id] = $identityDocument->name . " " . $identityDocument->surname . $aka . " - " . $birthDate;
+            $identityDocuments[] = $customer;
+        }
 //	setcookie('identityDocuments', json_encode($identityDocuments), time() + (60 * 30), "/");
 
 	$saleAct = SaleAct::orderBy('id', 'desc')->take(1)->first();
@@ -147,7 +158,6 @@ class SaleActController extends Controller {
 	    }
 	    $path = substr($path, 0, strlen($path) - 1);
 	    var_dump($path);
-	    return;
 	} else {
 	    $path = null;
 	}

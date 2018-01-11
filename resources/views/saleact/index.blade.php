@@ -24,6 +24,7 @@ $saleActList = json_decode($saleActList, TRUE);
     @section('navbar-li-left')
 	@parent
 	@section('home_class', 'active')
+        <li class=""><a href="{{ route('showCustomerList') }}">Clienti</a></li>
 	<li class=""><a href="{{ route('newSaleAct') }}">Nuovo Atto di Vendita</a></li>
     @endsection
     
@@ -112,10 +113,10 @@ $saleActList = json_decode($saleActList, TRUE);
 				$showSaleActPhotosRoute = route("showSaleActPhotos", ["saleActId" => ""]);
 				$deleteSaleActRoute = ["sale-act.destroy", ""];
 			    ?>
-			    return "<a class=\"btn btn-default\" href=\"{{ $showSaleActRoute }}/" + row.saleAct_id + "\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> " +
-				    "<a class=\"btn btn-default\" href=\"{{ $showSaleActPhotosRoute }}/" + row.saleAct_id + "\"><span class=\"glyphicon glyphicon-camera\"></span></a> " +
+			    return "<a class=\"btn btn-default\" href=\"{{ $showSaleActRoute }}/" + row.saleAct_id + "\"><i class=\"fa fa-eye fa-lg\" aria-hidden=\"true\"></i></a> " +
+				    "<a class=\"btn btn-default\" href=\"{{ $showSaleActPhotosRoute }}/" + row.saleAct_id + "\"><i class=\"fa fa-camera fa-lg\" aria-hidden=\"true\"></i></a> " +
 				    '{!! Form::open(["method" => "delete", "route" => $deleteSaleActRoute, "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
-				    '<button class="btn btn-danger" type="submit"><span class=\"glyphicon glyphicon-trash\"></span></button>' +
+				    '<button class="btn btn-danger" type="submit"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>' +
 				    '{!! Form::close() !!}';
 			}
 		    }
@@ -135,7 +136,7 @@ $saleActList = json_decode($saleActList, TRUE);
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
-			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" type="button" style="width:51px; height:34px;"><span class="glyphicon glyphicon-trash"></span></div>');
+			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></div>');
 		    }
 		    
 		    $('form').submit(function (e) {
