@@ -82,6 +82,8 @@ function deletePreviewsAndPhotosOnUpdate() {
 }
 
 jQuery(document).ready(function ($) {
+    $("#deletePhotos").val(false);
+    
     $("#path_photo").change(function (e) {
         deletePreviewsAndPhotosOnUpdate();
         showPhotoPreview(this);

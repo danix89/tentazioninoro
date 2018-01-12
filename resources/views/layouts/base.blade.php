@@ -54,7 +54,7 @@
 			@else
 			<li class="dropdown">
 			    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-				<span class="glyphicon glyphicon-user"></span>
+				<span class="fa fa-user fa-lg"></span>
 				{{ Auth::user()->name }} <span class="caret"></span>
 			    </a>
 

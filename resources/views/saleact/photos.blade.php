@@ -60,11 +60,11 @@ if(empty($photo_paths[$lastIndex])) {
 
 	    <!-- Left and right controls -->
 	    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-left fa-lg" aria-hidden="true"></span>
 		<span class="sr-only">Precedente</span>
 	    </a>
 	    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-chevron-right fa-lg" aria-hidden="true"></span>
 		<span class="sr-only">Successiva</span>
 	    </a>
 	</div>

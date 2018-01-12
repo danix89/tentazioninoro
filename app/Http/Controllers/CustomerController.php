@@ -28,6 +28,7 @@ class CustomerController extends Controller {
         $userId = Auth::id();
         $customers = UserCustomer::where('user_id', $userId)->get(["customer_id"]);
         $customerList = array();
+        $identityDocumentList = array();
         foreach ($customers as $customer) {
             Debugbar::info($customer);
             $customerList[] = Customer::find($customer->customer_id);

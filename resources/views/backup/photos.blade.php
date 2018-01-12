@@ -18,6 +18,9 @@
     <li class="active"><a href="">Backup</a></li>
 @endsection
 
+@section('anchor-backup-href', route('photoBackup', Config::get('constants.folders.FIXINGS')) )
+@section('anchor-delete-photos-href', route('photoDelete', Config::get('constants.folders.FIXINGS')) )
+    
 @section('content')
     {{ $message }}
 @endsection

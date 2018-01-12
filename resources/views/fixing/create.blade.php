@@ -111,27 +111,27 @@ if(!$canBeUpdated) {
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('fiscal_code', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('fiscalCode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-4">
-                {!! Form::text('fiscal_code', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
+                {!! Form::text('fiscalCode', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('birth_date', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('birthDate', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-4">
-                {!! Form::date('birth_date', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+                {!! Form::date('birthDate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('phoneNumber', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::text('phone_number', '', ['class' => 'form-control', 'required' => true]) !!}
+                {!! Form::text('phoneNumber', '', ['class' => 'form-control', 'required' => true]) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('mobile_phone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('mobilePhone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::text('mobile_phone', '', ['class' => 'form-control', 'required' => true]) !!}
+                {!! Form::text('mobilePhone', '', ['class' => 'form-control', 'required' => true]) !!}
             </div>
         </div>
         <div class="form-group">
@@ -241,16 +241,16 @@ if(!$canBeUpdated) {
 
                     <!-- Left and right controls -->
                     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                         <span class="sr-only">Precedente</span>
                     </a>
                     <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                        <span class="fa fa-arrow-right" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         <span class="sr-only">Successiva</span>
                     </a>
                 </div>
                 {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'data-to-alert' => $canBeUpdated === true? 'true' : 'false',  'style' => 'opacity: 0;', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
-                {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+                {!! Form::hidden('deletePhotos', false, ['id' => 'deletePhotos']) !!}
                 <div class="preview" style="position: relative; top: -44px;">
                     <div class="photos-message-div" style="position: relative; top: 16px; left: 100px;">
                         <p id='photos-message'>Nessuna foto selezionata</p>
@@ -313,6 +313,7 @@ if(!$canBeUpdated) {
 //		$("#update-fixing").submit();
                 $("#save-btn").click();
 	    });
+	    
 	@endif
     </script>
 @endsection

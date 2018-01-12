@@ -3,4 +3,5 @@
 /node_modules/
 /nbproject
 /database/factories/UserFactory.php
+/database/seeds/*
 /public/uploads/*

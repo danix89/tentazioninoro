@@ -4,6 +4,7 @@ namespace Tentazioninoro\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Config;
+use Debugbar;
 use View;
 
 class PhotosBackupController extends Controller {
@@ -29,6 +30,7 @@ class PhotosBackupController extends Controller {
 	    $jewels->save();
 	}
 	$cmd = "xcopy " . Config::get('constants.folders.BASE') . $directoryName . " " . $backupPathPhoto . " /D /H /S /C /I /Z";
+	Debugbar::info($cmd);
 	$message = exec($cmd);
 	return View::make('backup/photos')->with([
 		    'message' => $message,
@@ -36,7 +38,8 @@ class PhotosBackupController extends Controller {
     }
 
     public function delete($directoryName) {
-	$cmd = "DEL " . \Config::get('constants.folders.BASE') . $directoryName . "* /Q";
+	$cmd = "DEL " . \Config::get('constants.folders.BASE') . $directoryName . "\\* /Q";
+	Debugbar::info($cmd);
 	$message = exec($cmd);
 	if(empty($message)) {
 	    $message = "Tutte le foto sono state rimosse correttamente.";

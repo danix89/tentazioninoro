@@ -115,9 +115,9 @@ if(!isset($state)) {
 				$showFixingRoute = route("showFixing", ["fixingId" => ""]);
 				$deleteFixingRoute = ["fixing.destroy", ""];
 			    ?>
-			    return "<a class=\"btn btn-default\" href=\"{{ $showFixingRoute }}/" + row.fixing_id + "\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></a> " +
+			    return "<a class=\"btn btn-default\" href=\"{{ $showFixingRoute }}/" + row.fixing_id + "\"><i class=\"fa fa-eye fa-lg\" aria-hidden=\"true\"></i></a> " +
 				    '{!! Form::open(["method" => "delete", "route" => $deleteFixingRoute, "class" => "deleteForm", "style" => "display: inline;"]) !!}' +
-				    '<button class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>' +
+				    '<button class="btn btn-danger" type="submit"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>' +
 				    '{!! Form::close() !!}';
 			}
 		    }
@@ -137,7 +137,7 @@ if(!isset($state)) {
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
 		    if($("#delete-all-div").length === 0) {
-			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><i class="fa fa-trash" aria-hidden="true"></i></span></div>');
+			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></span></div>');
 		    }
                     
                     $('form').submit(function (e) {
