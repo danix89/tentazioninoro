@@ -71,14 +71,37 @@ class CustomerController extends Controller {
         );
         $customer = Customer::create($customerData);
 
+	if(isset($request->type)) {
+	    $type = $request->type;
+	    $releaseDate = $request->releaseDate;
+	    $birthResidence = $request->birthResidence;
+	    $birthProvince = $request->birthProvince;
+	    $streetNumber = $request->streetNumber;
+	    $residence = $request->residence;
+	    $street = $request->street;
+	    $streetNumber = $request->streetNumber;
+	} else {
+	    $type = "";
+	    $releaseDate = "";
+	    $birthResidence = "";
+	    $birthProvince = "";
+	    $streetNumber = "";
+	    $residence = "";
+	    $street = "";
+	    $streetNumber = "";
+	}
         $identityDocumentData = array(
             'customer_id' => $customer->id,
             'name' => $request->name,
             'surname' => $request->surname,
             'birth_date' => $request->birthDate,
-            'residence' => "",
-            'street' => "",
-            'street_number' => "",
+            'birth_residence' => $birthResidence,
+            'birth_province' => $birthProvince,
+            'residence' => $residence,
+            'street' => $street,
+            'street_number' => $streetNumber,
+            'type' => $type,
+            'release_date' => $releaseDate,
         );
         IdentityDocument::create($identityDocumentData);
 

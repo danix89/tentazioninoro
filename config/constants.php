@@ -16,7 +16,7 @@ return [
     ],
     'folders' => [
 	'BASE' => 'D:\xampp\htdocs\tentazioninoro\storage\app\public\\',
-	'EXTERNAL_BACKUP' => 'F:\Backup\photos\\',
+	'EXTERNAL_BACKUP' => 'F:\tentazioninoro\backup\\',
 	'FIXINGS' => 'fixings',
 	'SALES_ACTS' => 'sales_acts',
     ],

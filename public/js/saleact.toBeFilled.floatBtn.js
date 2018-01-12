@@ -24,7 +24,7 @@ var options =
                 label: 'Stampa',
                 callback: function () {
 		    $("#toPrint").val("true");
-		    $("#pdf").submit();
+		    $("#save-btn").click();
 //                    window.print();
                 }
             },

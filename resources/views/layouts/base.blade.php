@@ -71,8 +71,17 @@
 					{{ csrf_field() }}
 				    </form>
 				</li>
-				<li class=""><a id="anchor-backup" href="@yield('anchor-backup-href')">Backup</a></li>
-				<li class=""><a id="anchor-delete" class="delete-all-file" href="" data-href="@yield('anchor-delete-photos-href')">Cancella tutte le foto</a></li>
+				<?php
+				if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.FIXINGS'))) {
+				    $folder = Config::get('constants.folders.FIXINGS');
+				} else if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.SALES_ACTS'))) {
+				    $folder = Config::get('constants.folders.SALES_ACTS');
+				}
+				$photosBackupRoute = route('photoBackup', $folder);
+				$photosDeleteRoute = route('photoDelete', $folder);
+				?>
+				<li class=""><a id="anchor-backup" href="@yield('anchor-backup-href', $photosBackupRoute)">Backup</a></li>
+				<li class=""><a id="anchor-delete" class="delete-all-file" href="" data-href="@yield('anchor-delete-photos-href', $photosDeleteRoute)">Cancella tutte le foto</a></li>
 				@show
 			    </ul>
 			</li>

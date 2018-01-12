@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration {
 //            $table->bigInteger('identity_document')->unsigned();
             $table->string('mobile_phone')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
