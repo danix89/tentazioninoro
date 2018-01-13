@@ -84,7 +84,6 @@ class SaleActController extends Controller {
 	    $day = $date[2];
 	    $birthDate = $day . "/" . $month . "/" . $year;
 	    $customerList[$user_customer->customer_id] = $customer->name . " " . $customer->surname . $aka . " - " . $birthDate;
-	    $identityDocuments[] = $customer;
 	}
 //	setcookie('identityDocuments', json_encode($identityDocuments), time() + (60 * 30), "/");
 

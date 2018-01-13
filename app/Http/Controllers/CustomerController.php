@@ -51,17 +51,9 @@ class CustomerController extends Controller {
         $customer = new Customer();
         return View::make('customer/create')->with("customer", $customer);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
-//        $this->validate($request, Customer::$rules);
-        $data = $request->all();
-        $customerData = array(
+    
+    private function buildCustomerData($request) {
+	$customerData = array(
             'fiscal_code' => $request->fiscalCode,
             'aka' => $request->aka,
             'phone_number' => $request->phoneNumber,
@@ -69,8 +61,10 @@ class CustomerController extends Controller {
             'email' => $request->email,
             'description' => $request->description,
         );
-        $customer = Customer::create($customerData);
-
+	
+	return $customerData;
+    }
+    private function buildIdentityDocumentData($request, $customerId) {
 	if(isset($request->type)) {
 	    $type = $request->type;
 	    $releaseDate = $request->releaseDate;
@@ -91,7 +85,7 @@ class CustomerController extends Controller {
 	    $streetNumber = "";
 	}
         $identityDocumentData = array(
-            'customer_id' => $customer->id,
+            'customer_id' => $customerId,
             'name' => $request->name,
             'surname' => $request->surname,
             'birth_date' => $request->birthDate,
@@ -103,6 +97,22 @@ class CustomerController extends Controller {
             'type' => $type,
             'release_date' => $releaseDate,
         );
+	
+	return $identityDocumentData;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request) {
+//        $this->validate($request, Customer::$rules);
+	$customerData = $this->buildCustomerData($request);
+        $customer = Customer::create($customerData);
+	
+	$identityDocumentData = $this->buildIdentityDocumentData($request, $customer->id);
         IdentityDocument::create($identityDocumentData);
 
         UserCustomer::create(array(
@@ -148,28 +158,12 @@ class CustomerController extends Controller {
      */
     public function update(Request $request, $id) {
         $customer = Customer::where("id", $id)->first();
-
         $identityDocument = $customer->identityDocument;
-
-        $customerData = array(
-            'fiscal_code' => $request->fiscalCode,
-            'aka' => $request->aka,
-            'phone_number' => $request->phoneNumber,
-            'mobile_phone' => $request->mobilePhone,
-            'email' => $request->email,
-            'description' => $request->description,
-        );
+	
+        $customerData = $this->buildCustomerData($request);
         $customer->update($customerData);
 
-        $identityDocumentData = array(
-            'customer_id' => $id,
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'birth_date' => $request->birthDate,
-            'residence' => "",
-            'street' => "",
-            'street_number' => "",
-        );
+        $identityDocumentData = $this->buildIdentityDocumentData($request, $customer->id);
         $identityDocument->update($identityDocumentData);
 
         return redirect(route('showCustomer', ["customerId" => $id]));

@@ -13,15 +13,13 @@ $aka = $customer->aka;
 $id = $customer->id;
 $fiscalCode = $customer->fiscal_code;
 $type = $identityDocument->type;
+$releaseDate = $identityDocument->release_date;
 $birthDate = $identityDocument->birth_date;
 $birthResidence = $identityDocument->birth_residence;
 $birthProvince = $identityDocument->birth_province;
 $residence = $identityDocument->residence;
 $street = $identityDocument->street;
 $streetNumber = $identityDocument->street_number;
-$year = $birthDate[0];
-$month = $birthDate[1];
-$day = $birthDate[2];
 $telephone = $customer->phone_number;
 $mobile = $customer->mobile_phone;
 $email = $customer->email;
@@ -94,43 +92,43 @@ $description = $customer->description;
 		<div class="form-group">
 		    {!! Form::label('birthResidence', 'Luogo di nascita:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('birthResidence', "", ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::text('birthResidence', $birthResidence, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('birthProvince', 'Provincia di nascita:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('birthProvince', "", ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::text('birthProvince', $birthProvince, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('residence', 'Residenza:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('residence', "", ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::text('residence', $residence, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('street', 'Via:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('street', "", ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::text('street', $street, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('streetNumber', 'N. civico:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('streetNumber', "", ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::text('streetNumber', $streetNumber, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('type', 'Doc. Identit&agrave;', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::select('type', ['' => '', 'C.I.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], '', ['class' => 'form-control', 'required' => $required]); !!}
+			{!! Form::select('type', ['' => '', 'C.I.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], $type, ['class' => 'form-control', 'required' => $required]); !!}
 		    </div>
 		</div>
 		<div class="form-group">
 		    {!! Form::label('releaseDate', 'Ril. il:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::date('releaseDate', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => $required]) !!}
+			{!! Form::date('releaseDate', $releaseDate, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
 	    @endif

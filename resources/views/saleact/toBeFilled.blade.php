@@ -151,10 +151,12 @@ $saleAct = $data["saleAct"];
 		    }
 		});
 
-		function setInputValueAndText(elementId, value, attr = {}) {
+		function setInputValueAndText(elementId, value, attr = {}, type = "input") {
 		    if (value !== undefined) {
 			$(elementId).val(value);
-			$(elementId).text(value);
+			if(type !== "select") {
+			    $(elementId).text(value);
+			}
 			$(elementId).attr(attr);
 		    }
 		}
@@ -169,6 +171,7 @@ $saleAct = $data["saleAct"];
 		    setInputValueAndText("#street", data.street, {});
 		    setInputValueAndText("#streetNumber", data.street_number, {});
 		    setInputValueAndText("#identityDocument", data.identity_document);
+		    setInputValueAndText("#type", data.type, {}, "select");
 		    setInputValueAndText("#releaseDate", data.release_date);
 		    setInputValueAndText("#fiscalCode", data.fiscal_code, {"readOnly": "true"});
 		}
