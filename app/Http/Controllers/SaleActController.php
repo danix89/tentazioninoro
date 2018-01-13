@@ -122,7 +122,6 @@ class SaleActController extends Controller {
 		'fiscal_code' => $request->fiscalCode,
 	    );
 	    $customer = Customer::create($customerData);
-	    $customerId = $customer->id;
 
 	    $identityDocumentData = array(
 		'customer_id' => $customerId,
