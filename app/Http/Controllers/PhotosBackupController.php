@@ -38,8 +38,8 @@ class PhotosBackupController extends Controller {
     }
 
     public function delete($directoryName) {
-	$cmd = "DEL " . \Config::get('constants.folders.BASE') . $directoryName . "\\* /Q";
-	Debugbar::info($cmd);
+	$cmd = "DEL " . \Storage::disk()->getDriver()->getAdapter()->getPathPrefix() . $directoryName . "\\* /Q";
+	Debugbar::info($cmd);	
 	$message = exec($cmd);
 	if(empty($message)) {
 	    $message = "Tutte le foto sono state rimosse correttamente.";
