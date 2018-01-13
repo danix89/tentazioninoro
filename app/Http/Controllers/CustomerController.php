@@ -76,7 +76,7 @@ class CustomerController extends Controller {
 	    $streetNumber = $request->streetNumber;
 	} else {
 	    $type = "";
-	    $releaseDate = "";
+	    $releaseDate = \Carbon::create(1900,1,1);
 	    $birthResidence = "";
 	    $birthProvince = "";
 	    $streetNumber = "";
