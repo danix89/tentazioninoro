@@ -5,3 +5,5 @@
 /database/factories/UserFactory.php
 /database/seeds/*
 /public/uploads/*
+/public/fixings/*
+/public/sales_acts/*
