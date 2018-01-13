@@ -3,6 +3,7 @@
 namespace Tentazioninoro\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 use Tentazioninoro\Customer;
@@ -76,7 +77,7 @@ class CustomerController extends Controller {
 	    $streetNumber = $request->streetNumber;
 	} else {
 	    $type = "";
-	    $releaseDate = \Carbon::create(1900,1,1);
+	    $releaseDate = Carbon::create(1900,1,1);
 	    $birthResidence = "";
 	    $birthProvince = "";
 	    $streetNumber = "";
