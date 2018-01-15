@@ -23,6 +23,13 @@ if(!isset($state)) {
 @auth
     @section('title', 'Lista riparazioni')
     @section('head-stylesheet')
+        @parent
+        <style>
+            #grid-basic {
+                table-layout: inherit !important;
+            }
+        </style>
+    @endsection
     @section('head-javascript')
 	@parent
 	<script src="{{ asset('js/fixing.main.js') }}"></script>
@@ -42,27 +49,28 @@ if(!isset($state)) {
 	@if (!isset($fixingList))
 	    <p>Non ci sono riparazioni in corso.</p>
 	@else
-	    <div id="state-select-div" class="" hidden style="width: 33%; position: relative; top: 49px; z-index: 9999;">
-		{!! Form::select('state-select', $stateList, $state, ['id' => 'state-select', 'class' => 'form-control', 'required' => true,]); !!}
-	    </div>
-	    <table id="grid-basic" class="table">
-		<thead>
-		    <tr>
-			<th data-column-id="fixing_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
-			<th data-column-id="state" data-identifier="true" data-width="10%">Stato</th>
-			<th data-column-id="updated_at" data-order="desc" data-width="9%">Data</th>
-			<th data-column-id="customer_id" data-width="15%">Cliente</th>
-			<th data-column-id="jewel_id" data-width="8%">Gioiello</th>
-			<th data-column-id="description" data-width="30%">Descrizione</th>
-			<th data-column-id="deposit" data-width="8%">Anticipo</th>
-			<th data-column-id="estimate" data-width="10%">Preventivo</th>
-			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="10%">Comandi</th>
-			<!--<th data-column-id="delete"></th>-->
-		    </tr>
-		</thead>
-		<tbody>
-		    @foreach($fixingList as $fixing)
-                        <?php 
+            <div class="row">
+                <div id="state-select-div" class="" hidden style="width: 33%; position: relative; top: 49px; left: 15px; z-index: 9999;">
+                    {!! Form::select('state-select', $stateList, $state, ['id' => 'state-select', 'class' => 'form-control', 'required' => true,]); !!}
+                </div>
+                <table id="grid-basic" class="table">
+                    <thead>
+                        <tr>
+                            <th data-column-id="fixing_id" data-identifier="true" data-type="numeric" data-order="asc">Id</th>
+                            <th data-column-id="state" data-identifier="true">Stato</th>
+                            <th data-column-id="updated_at" data-order="desc">Data</th>
+                            <th data-column-id="customer_id">Cliente</th>
+                            <th data-column-id="jewel_id">Gioiello</th>
+                            <th data-column-id="description">Descrizione</th>
+                            <th data-column-id="deposit">Anticipo</th>
+                            <th data-column-id="estimate">Preventivo</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Comandi</th>
+                            <!--<th data-column-id="delete"></th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($fixingList as $fixing)
+                        <?php
                         $jewel = Tentazioninoro\Jewel::where('id', $fixing["jewel_id"])->get()->first();
                         $identityDocument = Tentazioninoro\Customer::find($fixing["customer_id"])->identityDocument;
                         $date = explode(" ", $fixing["updated_at"])[0];
@@ -71,21 +79,22 @@ if(!isset($state)) {
                         $month = $date[1];
                         $day = $date[2];
                         ?>
-			{{-- Debugbar::info($fixing) --}}
-			{{-- Debugbar::info($identityDocument) --}}
-			<tr>
-			    <td>{{ $fixing["id"] }}</td>
-			    <td>{{ $fixing["state"] }}</td>
-			    <td>{{ $day . "/" . $month . "/" . $year }}</td>
-			    <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
-			    <td>{{ $jewel->typology }}</td>
-			    <td>{{ $fixing["description"] }}</td>
-			    <td>{{ $fixing["deposit"] }}&#8364;</td>
-			    <td>{{ $fixing["estimate"] }}&#8364;</td>
-			</tr>
-		    @endforeach
-		</tbody>
-	    </table>
+                        {{-- Debugbar::info($fixing) --}}
+                        {{-- Debugbar::info($identityDocument) --}}
+                        <tr>
+                            <td>{{ $fixing["id"] }}</td>
+                            <td>{{ $fixing["state"] }}</td>
+                            <td>{{ $day . "/" . $month . "/" . $year }}</td>
+                            <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
+                            <td>{{ $jewel->typology }}</td>
+                            <td>{{ $fixing["description"] }}</td>
+                            <td>{{ $fixing["deposit"] }}&#8364;</td>
+                            <td>{{ $fixing["estimate"] }}&#8364;</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 	@endif
 	<script>
 	    mm.resetAll(["toDelete"]);
@@ -136,6 +145,10 @@ if(!isset($state)) {
 		    }
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
+                    // Consente di navigare la tabella orizzontalmente su dispositivi con schermo piccolo.
+                    var div = $("<div />").css("overflow-x", "auto");
+                    $(this).wrap(div);
+                    
 		    if($("#delete-all-div").length === 0) {
 			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></span></div>');
 		    }
@@ -144,6 +157,7 @@ if(!isset($state)) {
                         appendIdToFormAction(e, $(this));
                     });
                     
+//                    $(this).removeClass("bootgrid-table")
                     $("#state-select-div").show();
 		});
 	    }

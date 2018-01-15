@@ -6,6 +6,13 @@ $user = Auth::user();
 ?>
 @section('title', 'Lista clienti')
 @section('head-stylesheet')
+    @parent
+    <style>
+        #grid-basic {
+            table-layout: inherit !important;
+        }
+    </style>
+@endsection
 @section('head-javascript')
     @parent
     <!--<script src="{{ asset('js/customer.main.js') }}"></script>-->
@@ -28,15 +35,15 @@ $user = Auth::user();
         <table id="grid-basic" class="table">
             <thead>
                 <tr>
-                    <th data-column-id="customer_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="4%">Id</th>
-                    <th data-column-id="name" data-identifier="true" data-width="10%">Nome</th>
-                    <th data-column-id="surname" data-identifier="true" data-width="10%">Cognome</th>
-                    <th data-column-id="aka" data-identifier="true" data-width="9%">Soprannome</th>
-                    <th data-column-id="birth_date" data-order="desc" data-width="9%">Data nascita</th>
-                    <th data-column-id="phone_number" data-width="10%">Telefono</th>
-                    <th data-column-id="mobile_phone" data-width="10%">Cellulare</th>
-                    <th data-column-id="email" data-width="14%">E-mail</th>
-                    <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="10%">Comandi</th>
+                    <th data-column-id="customer_id" data-identifier="true" data-type="numeric" data-order="asc">Id</th>
+                    <th data-column-id="name" data-identifier="true">Nome</th>
+                    <th data-column-id="surname" data-identifier="true">Cognome</th>
+                    <th data-column-id="aka" data-identifier="true">Soprannome</th>
+                    <th data-column-id="birth_date" data-order="desc">Data nascita</th>
+                    <th data-column-id="phone_number">Telefono</th>
+                    <th data-column-id="mobile_phone">Cellulare</th>
+                    <th data-column-id="email">E-mail</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Comandi</th>
                     <!--<th data-column-id="delete"></th>-->
                 </tr>
             </thead>
@@ -114,6 +121,10 @@ $user = Auth::user();
                 }
 //		    console.log("Deselect: " + rowIds.join(","));
             }).on("loaded.rs.jquery.bootgrid", function (e, rows) {
+                // Consente di navigare la tabella orizzontalmente su dispositivi con schermo piccolo.
+                var div = $("<div />").css("overflow-x", "auto");
+                $(this).wrap(div);
+
                 if($("#delete-all-div").length === 0) {
                     $(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" onclick="deleteAll()" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></div>');
                 }

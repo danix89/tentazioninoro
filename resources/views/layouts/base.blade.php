@@ -1,3 +1,13 @@
+<?php
+if (preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.FIXINGS'))) {
+    $folder = Config::get('constants.folders.FIXINGS');
+} else if (preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.SALES_ACTS'))) {
+    $folder = Config::get('constants.folders.SALES_ACTS');
+}
+$photosBackupRoute = route('photoBackup', $folder);
+$photosDeleteRoute = route('photoDelete', $folder);
+?>
+
 <html lang="en">
     <head>
         <title>Tentazioni in Oro - @yield('title')</title>
@@ -35,63 +45,65 @@
 		    <p class="subtitle">@yield('subtitle')</p>
 		</div>
 	    </div>
+        
+            <nav class="navbar navbar-inverse" id="headerNavbar">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ route('home') }}">Tentazioni in Oro</a>
+                    </div>
 
-	    <nav class="navbar navbar-inverse">
-		<div class="collapse navbar-collapse" id="headerNavbar">
-		    @section('navbar-ul')
-		    <ul class="nav navbar-nav">
-			@section('navbar-li-left')
-			<li class="@yield('home_class')"><a href="{{ route('home') }}">Home</a></li>
-			<!--<li><a href="#">Cerca riparazione</a></li>-->
-			@show
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-			@section('navbar-li-right')
-			<!-- Authentication Links -->
-			@guest
-			<li><a href="{{ route('login') }}">Login</a></li>
-			<li><a href="{{ route('register') }}">Register</a></li>
-			@else
-			<li class="dropdown">
-			    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-				<span class="fa fa-user fa-lg"></span>
-				{{ Auth::user()->name }} <span class="caret"></span>
-			    </a>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        @section('navbar-ul')
+                            <ul class="nav navbar-nav">
+                                @section('navbar-li-left')
+                                    <li class="@yield('home_class')"><a href="{{ route('home') }}">Home</a></li>
+                                @show
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                @section('navbar-li-right')
+                                    @guest
+                                        <li><a href="{{ route('login') }}">Login</a></li>
+                                        <li><a href="{{ route('register') }}">Register</a></li>
+                                    @else
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                                <span class="fa fa-user fa-lg"></span>
+                                                {{ Auth::user()->name }} <span class="caret"></span>
+                                            </a>
 
-			    <ul class="dropdown-menu">
-				@section('dropdown-menu')
-				<li>
-				    <a href="{{ route('logout') }}"
-				       onclick="event.preventDefault();
-					   document.getElementById('logout-form').submit();">
-					Logout
-				    </a>
+                                            <ul class="dropdown-menu">
+                                                @section('dropdown-menu')
+                                                <li>
+                                                    <a href="{{ route('logout') }}"
+                                                       onclick="event.preventDefault();
+                                                           document.getElementById('logout-form').submit();">
+                                                        Logout
+                                                    </a>
 
-				    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-					{{ csrf_field() }}
-				    </form>
-				</li>
-				<?php
-				if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.FIXINGS'))) {
-				    $folder = Config::get('constants.folders.FIXINGS');
-				} else if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.permission.SALES_ACTS'))) {
-				    $folder = Config::get('constants.folders.SALES_ACTS');
-				}
-				$photosBackupRoute = route('photoBackup', $folder);
-				$photosDeleteRoute = route('photoDelete', $folder);
-				?>
-				<li class=""><a id="anchor-backup" href="@yield('anchor-backup-href', $photosBackupRoute)">Backup</a></li>
-				<li class=""><a id="anchor-delete" class="delete-all-file" href="" data-href="@yield('anchor-delete-photos-href', $photosDeleteRoute)">Cancella tutte le foto</a></li>
-				@show
-			    </ul>
-			</li>
-			@endguest
-			@show
-		    </ul>
-		    @show
-		</div>
-	    </nav>
-
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        {{ csrf_field() }}
+                                                    </form>
+                                                </li>
+                                                <li class=""><a id="anchor-backup" href="@yield('anchor-backup-href', $photosBackupRoute)">Backup</a></li>
+                                                <li class=""><a id="anchor-delete" class="delete-all-file" href="" data-href="@yield('anchor-delete-photos-href', $photosDeleteRoute)">Cancella tutte le foto</a></li>
+                                                @show
+                                            </ul>
+                                        </li>
+                                    @endguest
+                                @show
+                            </ul>
+                        @show
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        
 	    <!-- Modal -->
 	    <div id="@yield('modal-id')-modal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
@@ -119,7 +131,7 @@
 		</div>
 	    </div>
 
-	    <div class="container">
+	    <div class="container-fluid">
 		<h3>@yield('content-title')</h3>
 		@yield('content')
 	    </div>

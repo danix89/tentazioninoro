@@ -15,6 +15,13 @@ $saleActList = json_decode($saleActList, TRUE);
 @auth
     @section('title', 'Lista Atti di Vendita')
     @section('head-stylesheet')
+        @parent
+        <style>
+            #grid-basic {
+                table-layout: inherit !important;
+            }
+        </style>
+    @endsection
     @section('head-javascript')
 	@parent
 	<!--<script src="{{ asset('js/saleact.main.js') }}"></script>-->
@@ -38,14 +45,14 @@ $saleActList = json_decode($saleActList, TRUE);
 	    <table id="grid-basic" class="table">
 		<thead>
 		    <tr>
-			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-order="asc" data-width="5%">Id</th>
-			<th data-column-id="updated_at" data-order="desc" data-width="10%">Data</th>
-			<th data-column-id="customer_id" data-width="15%">Cliente</th>
+			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-order="asc">Id</th>
+			<th data-column-id="updated_at" data-order="desc">Data</th>
+			<th data-column-id="customer_id">Cliente</th>
 			<th data-column-id="objects_id">Oggetti</th>
 			<th data-column-id="deposit">Prezzo</th>
-			<th data-column-id="estimate" data-width="12%">Concordato</th>
-			<th data-column-id="estimate" data-width="13%">AU (750/1000)</th>
-			<th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Comandi</th>
+			<th data-column-id="estimate">Concordato</th>
+			<th data-column-id="estimate">AU (750/1000)</th>
+			<th data-column-id="commands" data-formatter="commands" data-sortable="false">Comandi</th>
 			<!--<th data-column-id="delete"></th>-->
 		    </tr>
 		</thead>
@@ -135,6 +142,10 @@ $saleActList = json_decode($saleActList, TRUE);
 		    }
 //		    console.log("Deselect: " + rowIds.join(","));
 		}).on("loaded.rs.jquery.bootgrid", function (e, rows) {
+                    // Consente di navigare la tabella orizzontalmente su dispositivi con schermo piccolo.
+                    var div = $("<div />").css("overflow-x", "auto");
+                    $(this).wrap(div);
+                    
 		    if($("#delete-all-div").length === 0) {
 			$(".actions.btn-group .dropdown.btn-group").last().after('<div id="delete-all-div" class="dropdown btn-group"><button id="delete-all-btn" class="btn btn-danger dropdown-toggle" type="button" style="width:51px; height:34px;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></div>');
 		    }

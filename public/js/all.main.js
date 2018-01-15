@@ -4,23 +4,23 @@ function setDeleteRoute(dr) {
     deleteRoute = dr;
 }
 
-function showPhotoPreview(input) {
+function showPhotoPreview(input, uploadedPhotoCnt) {
     var len = input.files.length;
     if (input.files && input.files[0]) {
         var vocal = "";
-        if(len === 1) {
+        if (uploadedPhotoCnt === 1) {
             vocal = "a";
         } else {
             vocal = "e";
         }
-        $("#photos-message").text(len + " foto selezionat" + vocal);
+        $("#photos-message").text(uploadedPhotoCnt + " foto selezionat" + vocal);
         $.each(input.files, function (index, file) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('<div class="item"><img class="photo big d-block img-fluid" style="margin: 0 auto;" src="' + e.target.result + '"><div class="carousel-caption"></div></div>').appendTo('.carousel-inner');
                 $('<li data-target="#myCarousel" data-slide-to="' + index + '"></li>').appendTo('.carousel-indicators');
 
-                if(index === len - 1) {
+                if (index === uploadedPhotoCnt - 1) {
                     $('.item').first().addClass('active');
                     $('.carousel-indicators > li').first().addClass('active');
                     $('#myCarousel').show();
@@ -81,25 +81,47 @@ function deletePreviewsAndPhotosOnUpdate() {
     $(".carousel-inner > div").remove();
 }
 
+function addFileInput(fileInputId) {
+    $("#" + fileInputId).clone().appendTo("#fileContainer");
+}
+
+function resetFileInputs(fileInputId) {
+    showConfirmDialog(null, "Procedendo, verrano cancellate le foto appena caricate. Procedere comunque?", function () {
+        var fileInput = $("#path_photo").clone();
+        $("input[name='path_photo[]'").remove();
+        fileInput.val();
+        fileInput.appendTo("#fileContainer");
+    });
+}
+
+function doFileInputClick(e, fileInputId) {
+    if ($(fileInputId).data("to-alert")) {
+        showConfirmDialog(e, "Procedendo, verrano cancellate le foto caricate in precedenza. Procedere comunque?", function () {
+            $("#" + fileInputId).click();
+            $("#" + fileInputId).data("to-alert", false);
+            addFileInput(fileInputId);
+            $("#path_photo").click();
+        });
+    } else {
+        $("#" + fileInputId).click();
+        addFileInput(fileInputId);
+    }
+}
+;
+
 jQuery(document).ready(function ($) {
     $("#deletePhotos").val(false);
     
-    $("#path_photo").change(function (e) {
-        deletePreviewsAndPhotosOnUpdate();
-        showPhotoPreview(this);
-    });
-    
-    $("#photo-paths-btn").click(function (e) {
-        if($("#path_photo").data("to-alert")) {
-            showConfirmDialog(e, "Procedendo, verrano cancellate le foto caricate in precedenza. Procedere comunque?", function () {
-                $("#path_photo").click();
-                $("#path_photo").data("to-alert", false)
-            });
-        } else {
-            $("#path_photo").click();
-        }
+    var uploadedPhotoCnt = 0;
+    $(".path_photo").change(function (e) {
+        $("#path_photo").attr("data-add-or-remove", true);
+        showPhotoPreview(this, ++uploadedPhotoCnt);
     });
 
+    $("#remove-photo-paths-btn").click(function (e) {
+        uploadedPhotoCnt = 0;
+    });
+    
     $(".btn-danger").click(function (e) {
         showConfirmDialog(e, "L'operazione e' irreversibile. Procedere comunque?");
     });
