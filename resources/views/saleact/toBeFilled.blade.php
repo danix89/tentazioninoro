@@ -26,6 +26,10 @@ $saleAct = $data["saleAct"];
         span {
 	    text-decoration: underline;
 	}
+        
+        #fileContainer * {
+            margin-bottom: 5px;
+        }
     </style>
 @endsection
 
@@ -91,33 +95,11 @@ $saleAct = $data["saleAct"];
                     <p>{!! Form::label('objects', 'Oggetti:', ['class' => 'control-label']) !!}{!! Form::text('objects', 'Bracciale', ['class' => 'form-control', 'autofocus' => true, 'required' => true,]) !!}</p>
 
                     <div id='photos' class="">
-                        {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label']) !!}
-                        <div id="myCarousel" hidden class="carousel" style="width: 600px; margin-bottom: 8px;" data-ride="carousel">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators"></ol>
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner"></div>
-                            <!-- Left and right controls -->
-                            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Precedente</span>
-                            </a>
-                            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Successiva</span>
-                            </a>
-                        </div>
-                        <div id="fileContainer" style="position: absolute; top: -100px;">
-                            {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control path_photo', 'data-to-alert' => $canBeUpdated === true? 'true' : 'false',  'style' => 'opacity: 0;', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
-                        </div>
+                        <div id="fileContainer" style="margin-bottom: 5px;"></div>
+                        
                         {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
-                        <div class="preview" style="">
-                            <div class="photos-message-div" style="position: relative; top: 5px; width: 160px;">
-                                <p id='photos-message'>Nessuna foto selezionata</p>
-                            </div>
-                            <button id="add-photo-paths-btn" type="button" class="btn btn-default btn-info" onclick="doFileInputClick(this, 'path_photo')" style="">Carica foto</button>
-                            <button id="remove-photo-paths-btn" type="button" class="btn btn-default btn-warning" onclick="resetFileInputs(this, 'path_photo')" style="">Reset</button>
-                        </div>
+                        <button id="add-photo-paths-btn" type="button" class="btn btn-default btn-info" onclick="" style="">Aggiungi campo</button>
+                        <button id="remove-photo-paths-btn" type="button" class="btn btn-default btn-warning" onclick="removeFileInput()" style="">Rimuovi campo</button>
                     </div>
                 </div>
                     

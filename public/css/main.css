@@ -44,25 +44,47 @@
     font-weight: bold;
 }
 
-@media print {
+#fileContainer * {
+    margin-bottom: 5px !important;
+}
+
+.bubbler-wrapper {
+    z-index: 9999;
+}
+
+@media (max-width: 768px ) {
+    .carousel {
+        width: 330px !important;
+    }
+
     .bubbler-wrapper {
-	display: none !important;
+        margin: 0 1em 1em 0 !important;
     }
     
+    #add-customer-btn-div {
+        margin-top: 10px;
+    }
+}
+
+@media print {
+    .bubbler-wrapper {
+        display: none !important;
+    }
+
     @page { 
-	margin: 0; 
+        margin: 0; 
     }
 
     body { 
-	margin: 1.6cm 0cm;
+        margin: 1.6cm 0cm;
     }
 
     p, span, table, ol {
-	font-size: 18px !important;
+        font-size: 18px !important;
     }
-    
+
     .fine-print {
-	font-size: 12px !important;
+        font-size: 12px !important;
     }
 }
 

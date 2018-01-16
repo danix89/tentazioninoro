@@ -1,5 +1,15 @@
 var deleteRoute;
 
+var fileinputOptions = {
+    fileActionSettings: {
+        'showZoom': false,
+        'indicatorNew': '&nbsp;'
+    },
+    'showUpload': false,
+    autoOrientImage: true,
+    allowedFileExtensions: ["jpeg", "jpg", "png", "gif"]
+};
+
 function setDeleteRoute(dr) {
     deleteRoute = dr;
 }
@@ -81,47 +91,74 @@ function deletePreviewsAndPhotosOnUpdate() {
     $(".carousel-inner > div").remove();
 }
 
-function addFileInput(fileInputId) {
-    $("#" + fileInputId).clone().appendTo("#fileContainer");
+function addFileInput() {
+    var fileinputObj = $('<input />').attr({
+        id: "input-id",
+        type: "file",
+        name: "path_photo[]",
+        'accept': 'image/x-png,image/jpeg',
+        "data-preview-file-type": "text"
+    }).addClass("file").appendTo("#fileContainer");
+    fileinputObj.fileinput(fileinputOptions);
 }
 
-function resetFileInputs(fileInputId) {
-    showConfirmDialog(null, "Procedendo, verrano cancellate le foto appena caricate. Procedere comunque?", function () {
-        var fileInput = $("#path_photo").clone();
-        $("input[name='path_photo[]'").remove();
-        fileInput.val();
-        fileInput.appendTo("#fileContainer");
-    });
+function removeFileInput() {
+    if ($(".file-input").length > 1) {
+        $(".file-input").last().remove();
+    }
 }
 
 function doFileInputClick(e, fileInputId) {
-    if ($(fileInputId).data("to-alert")) {
+    if ($("#fileContainer").data("to-alert")) {
         showConfirmDialog(e, "Procedendo, verrano cancellate le foto caricate in precedenza. Procedere comunque?", function () {
             $("#" + fileInputId).click();
             $("#" + fileInputId).data("to-alert", false);
-            addFileInput(fileInputId);
             $("#path_photo").click();
         });
     } else {
-        $("#" + fileInputId).click();
-        addFileInput(fileInputId);
+        $("#path_photo").click();
     }
 }
-;
 
 jQuery(document).ready(function ($) {
-    $("#deletePhotos").val(false);
+    addFileInput();
     
-    var uploadedPhotoCnt = 0;
-    $(".path_photo").change(function (e) {
-        $("#path_photo").attr("data-add-or-remove", true);
-        showPhotoPreview(this, ++uploadedPhotoCnt);
+    $('#myCarousel').carousel();
+    
+    if($(".carousel-inner > .item").length > 0) {
+        $("#fileContainer").data("to-alert", true);
+    }
+//
+//    $('.carousel-control.left').click(function () {
+//        $('#myCarousel').carousel('prev');
+//    });
+//
+//    $('.carousel-control.right').click(function () {
+//        $('#myCarousel').carousel('next');
+//    });
+
+    $(".file, #add-photo-paths-btn").click(function (e) {
+        var obj = $(this);
+        if ($("#fileContainer").data("to-alert")) {
+            showConfirmDialog(e, "Procedendo, verrano cancellate le foto caricate in precedenza. Procedere comunque?", function () {
+                $("#fileContainer").data("to-alert", false);
+                deletePreviewsAndPhotosOnUpdate();
+                if (obj.attr("id") === "add-photo-paths-btn") {
+                    addFileInput();
+                }
+            });
+        } else {
+            if (obj.attr("id") === "add-photo-paths-btn") {
+                addFileInput();
+            }
+        }
     });
 
-    $("#remove-photo-paths-btn").click(function (e) {
-        uploadedPhotoCnt = 0;
+    $("#path_photo").change(function (e) {
+//        showPhotoPreview(this, ++uploadedPhotoCnt);
+//        addFileInput("path_photo");
     });
-    
+
     $(".btn-danger").click(function (e) {
         showConfirmDialog(e, "L'operazione e' irreversibile. Procedere comunque?");
     });

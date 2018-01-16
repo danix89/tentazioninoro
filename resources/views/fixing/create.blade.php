@@ -11,12 +11,18 @@ if(!$canBeUpdated) {
     $fixingId = $data["fixingId"];
     $new = "Nuova";
     $disabled = false;
-    $typology = "Orologio";
-    $weight = "220";
-    $metal = "Acciaio";
+//    $typology = "Orologio";
+//    $weight = "220";
+//    $metal = "Acciaio";
+//    $description = "";
+//    $deposit = "20";
+//    $estimate = "200";
+    $typology = "";
+    $weight = "";
+    $metal = "";
     $description = "";
-    $deposit = "20";
-    $estimate = "200";
+    $deposit = "";
+    $estimate = "";
     $notes = "";
     $toPrint = "false";
 } else {
@@ -174,7 +180,7 @@ if(!$canBeUpdated) {
             <div class="col-md-5">
                 {!! Form::select('customer_id', $customerList, $customerId, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
             </div>
-            <div class="col-md-1">
+            <div id="add-customer-btn-div" class="col-md-1">
                 <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
             </div>
 	</div>
@@ -201,12 +207,14 @@ if(!$canBeUpdated) {
 	</div>
 	<div class="form-group">
 	    {!! Form::label('path_photo', 'Foto:', ['class' => 'control-label col-md-4']) !!}
-            <div class="col-md-5" style="margin-bottom: -60px;">
+            <div class="col-md-5" style="/*margin-bottom: -60px;*/">
                 <?php 
                 $showCarousel = (isset($photo_paths) && count($photo_paths) > 0);
                 if($showCarousel) {
+                    $alert = true;
                     $hidden = "";
                 } else {
+                    $alert = false;
                     $hidden = "hidden";
                 }
                 ?>
@@ -249,14 +257,12 @@ if(!$canBeUpdated) {
                         <span class="sr-only">Successiva</span>
                     </a>
                 </div>
-                {!! Form::file('path_photo[]', ['id' => 'path_photo', 'class' => 'form-control', 'data-to-alert' => $canBeUpdated === true? 'true' : 'false',  'style' => 'opacity: 0;', 'required' => false, 'multiple' => true, 'accept' => 'image/x-png,image/jpeg']) !!}
-                {!! Form::hidden('deletePhotos', false, ['id' => 'deletePhotos']) !!}
-                <div class="preview" style="position: relative; top: -44px;">
-                    <div class="photos-message-div" style="position: relative; top: 16px; left: 100px;">
-                        <p id='photos-message'>Nessuna foto selezionata</p>
-                    </div>
-                    <button id="photo-paths-btn" type="button" class="btn btn-default btn-info" style="position: relative; top: -20px; ">Carica foto</button>
-                </div>
+                    
+                <div id="fileContainer" style="margin-bottom: 5px;"></div>
+
+                {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+                <button id="add-photo-paths-btn" type="button" class="btn btn-default btn-info" onclick="" style="">Aggiungi campo</button>
+                <button id="remove-photo-paths-btn" type="button" class="btn btn-default btn-warning" onclick="removeFileInput()" style="">Rimuovi campo</button>
 	    </div>
 	</div>
     </fieldset>

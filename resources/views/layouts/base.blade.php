@@ -22,6 +22,8 @@ $photosDeleteRoute = route('photoDelete', $folder);
 
 	    <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
             
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+            
 	    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	@show
 	
@@ -30,6 +32,12 @@ $photosDeleteRoute = route('photoDelete', $folder);
 	    <script src="{{ asset('vendor/bootstrap/3.3.7/js/bootstrap.min.js') }}"></script>
 	    <script src="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.js') }}"></script>
 	    <script src="{{ asset('vendor/jquery-cookie/2.1.4/js.cookie.js') }}"></script>
+            
+            <!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js 
+            3.3.x versions without popper.min.js. -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+            <!-- the main fileinput plugin file -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
 
 	    <script src="{{ asset('js/manager.memory.js') }}"></script>
 	    <script src="{{ asset('js/utilities.common.js') }}"></script>
@@ -145,5 +153,8 @@ $photosDeleteRoute = route('photoDelete', $folder);
 	@endguest
     </body>
     @section('footer-javascript')
+    <script>
+        $("#input-id").fileinput({'showUpload':false, 'previewFileType':'any'});
+    </script>
     @show
 </html>
