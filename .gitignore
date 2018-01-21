@@ -8,3 +8,7 @@
 /public/fixings/*
 /public/sales_acts/*
 .env
+*.env
+/.env
+/*.env
+./.env
