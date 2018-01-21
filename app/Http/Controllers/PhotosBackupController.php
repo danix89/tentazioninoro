@@ -29,7 +29,7 @@ class PhotosBackupController extends Controller {
 	    }
 	    $jewels->save();
 	}
-	$cmd = "xcopy " . Config::get('constants.folders.BASE') . $directoryName . " " . $backupPathPhoto . " /Y /H /S /C /I /Z";
+	$cmd = "xcopy " . \Storage::disk()->getDriver()->getAdapter()->getPathPrefix() . $directoryName . " " . $backupPathPhoto . " /Y /H /S /C /I /Z";
 	Debugbar::info($cmd);
 	$message = exec($cmd);
 	return View::make('backup/photos')->with([

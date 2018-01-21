@@ -124,11 +124,16 @@ jQuery(document).ready(function ($) {
     addFileInput();
     
     $(":required").each(function () {
-	var label = $(this).parent().siblings("label");
+	var label = $(this).parent().find("label");
 	var text = label.text();
-	text = text.substring(0, text.length - 1);
+	var indexOfSemicolon = text.indexOf(":");
+	var end = indexOfSemicolon > -1 ? indexOfSemicolon : text.length;
+	text = text.substring(0, end);
+	console.log(text);
 	label.text(text + "*:");
     });
+    
+    $(".select2").select2();
     
     $('#myCarousel').carousel();
     

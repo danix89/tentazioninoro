@@ -158,15 +158,16 @@ class FixingController extends Controller {
 		    $fixingId = 1;
 		}
 	    }
-
 	    $i = 1;
 	    foreach (Input::file('path_photo') as $photo) {
+		Debugbar::info($photo);
 		$ext = $photo->extension();
 		$name = str_replace(" ", "", $identityDocument->name);
 		$surname = str_replace(" ", "", $identityDocument->surname);
 		$path .= $photo->storeAs(Config::get('constants.folders.FIXINGS'), $fixingId . "-" . $name . "_" . $surname . "-" . date("d.m.Y") . "_n." . $i++ . "." . $ext, 'public') . "~";
 	    }
 	    $path = substr($path, 0, strlen($path) - 1);
+	    Debugbar::info($path);
 	}
 //	    echo $path;
 //	    $path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
@@ -190,13 +191,13 @@ class FixingController extends Controller {
 
     private function buildFixingData($request, $jewelId) {
 	$id = Auth::id();
-	
-	if(isset($request->state)) {
+
+	if (isset($request->state)) {
 	    $state = $request->state;
 	} else {
 	    $state = Config::get('constants.fixing.state.NOT_YET_STARTED');
 	}
-	
+
 	$fixingData = array(
 	    "user_id" => $id,
 	    "customer_id" => $request->customer_id,
@@ -302,27 +303,31 @@ class FixingController extends Controller {
     public function update(Request $request, $fixingId) {
 	$fixing = Fixing::where("id", $fixingId)->first();
 	$jewel = Jewel::where("id", $fixing->jewel_id)->first();
-	
-	$toDelete = $request->deletePhotos === "true"? true : false;
+
+	$toDelete = $request->deletePhotos === "true" ? true : false;
 //	var_dump($toDelete);
 //	return;
 	if ($toDelete) {
+	    Debugbar::info($jewel);
 	    $this->deletePhotos($jewel);
+	    Debugbar::info($jewel);
 	    $customer = Customer::find($request->customer_id);
+	    Debugbar::info($customer);
 	    $identityDocument = $customer->identityDocument()->get(['name', 'surname'])[0];
-//	    Debugbar::info($identityDocument);
+	    Debugbar::info($identityDocument);
 
 	    $photoPaths = $this->saveJewelPhotos($identityDocument, $fixingId);
 	} else {
 	    $photoPaths = $jewel->path_photo;
 	}
-
+//	var_dump($toDelete);
+//	return;
 	$jewelData = $this->buildJewelData($request, $photoPaths);
 	$jewel->update($jewelData);
 
 	$fixingData = $this->buildFixingData($request, $jewel->id);
 	$fixing->update($fixingData);
-	
+
 	return redirect(route('showFixing', $fixingId));
     }
 

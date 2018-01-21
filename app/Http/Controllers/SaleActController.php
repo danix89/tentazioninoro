@@ -64,7 +64,7 @@ class SaleActController extends Controller {
 	$userId = Auth::id();
 	$users_customers = User::find($userId)->customers()->get(); //->groupBy('customer_id');
 //	Debugbar::info($customersIds);
-	$customerList = array(0 => "");
+	$customerList = array(0 => "Selezionare un cliente...");
 	$identityDocuments = array(0 => "");
 	foreach ($users_customers as $user_customer) {
 //	    Debugbar::info('$user_customer - start', $user_customer, '$user_customer - end');

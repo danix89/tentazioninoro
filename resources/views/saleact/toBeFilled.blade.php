@@ -58,7 +58,7 @@ $types = [
         {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
             {!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
 	    <p id=''>{!! Form::label('idNumber', 'Numero id.:', ['class' => '']) !!}{!! Form::text('idNumber', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-            {!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', $customerList, 0, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
+            {!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', $customerList, 0, ['class' => 'form-control select2', 'required' => false, 'autofocus' => true]); !!}
             <div id="body" class="" style="">
                 <div style="overflow-x: auto;">
                     <table class='table' style="margin-top: 15px;">
@@ -74,24 +74,24 @@ $types = [
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>{!! Form::label('birthResidence', 'Nato/a a ', ['class' => '']) !!}{!! Form::text('birthResidence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-                                <td>{!! Form::label('birthProvince', 'Prov.', ['class' => '']) !!}{!! Form::text('birthProvince', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('birthResidence', 'Nato/a a:', ['class' => '']) !!}{!! Form::text('birthResidence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('birthProvince', 'Prov.:', ['class' => '']) !!}{!! Form::text('birthProvince', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td>{!! Form::label('birthDate', 'il', ['class' => '']) !!}{!! Form::date('birthDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <!--\Carbon\Carbon::now()-->
                             </tr>
                             <tr>
-                                <td>{!! Form::label('residence', 'Residente a ', ['class' => '']) !!}{!! Form::text('residence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('residence', 'Residente a:', ['class' => '']) !!}{!! Form::text('residence', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td>{!! Form::label('street', 'via', ['class' => '']) !!}{!! Form::text('street', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-                                <td>{!! Form::label('streetNumber', 'N&#176;.', ['class' => '']) !!}{!! Form::text('streetNumber', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('streetNumber', 'N&#176;.:', ['class' => '']) !!}{!! Form::text('streetNumber', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                             </tr>
                             <tr>
-                                <td>{!! Form::label('type', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('type', $types, '', ['class' => 'form-control', 'required' => true]); !!}</td>
-                                <td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::date('releaseDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-                                <td>{!! Form::label('number', 'Numero ', ['class' => '']) !!}{!! Form::text('number', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('type', 'Doc. Identit&agrave;:', ['class' => '']) !!}{!! Form::select('type', $types, '', ['class' => 'form-control', 'required' => true]); !!}</td>
+                                <td>{!! Form::label('releaseDate', 'Ril. il:', ['class' => '']) !!}{!! Form::date('releaseDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('number', 'Numero:', ['class' => '']) !!}{!! Form::text('number', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>{!! Form::label('fiscalCode', 'Codice Fiscale ', ['class' => '']) !!}{!! Form::text('fiscalCode', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('fiscalCode', 'Codice Fiscale:', ['class' => '']) !!}{!! Form::text('fiscalCode', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td></td>
                                 <td></td>
                             </tr>

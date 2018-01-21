@@ -178,7 +178,7 @@ if(!$canBeUpdated) {
 	<div class="form-group">
 	    {!! Form::label('customer_id', 'Cliente:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::select('customer_id', $customerList, $customerId, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
+                {!! Form::select('customer_id', $customerList, $customerId, ['id' => 'customerIdSelect2', 'class' => 'form-control select2', 'required' => true, 'placeholder' => 'Selezionare un cliente...']); !!}
             </div>
             <div id="add-customer-btn-div" class="col-md-1">
                 <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#add-customer-modal" value="Aggiungi">
