@@ -15,6 +15,9 @@ if(empty($photo_paths[$lastIndex])) {
     <link rel="stylesheet" href="{{ asset('css/bubbler.min.css') }}">
     
     <style>
+	body {
+	    margin-bottom: 100px !important;
+	}
 	.photo {
 	    margin-top: 0px;
 	}
@@ -68,9 +71,34 @@ if(empty($photo_paths[$lastIndex])) {
 		<span class="sr-only">Successiva</span>
 	    </a>
 	</div>
+	    
     @else
         <p>Nessuna foto trovata.</p>
     @endif
     
-	
+    {!! Form::open(['route' => ['updatePhotos', $saleActId], 'method' => 'PUT', 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+	<div id='photos' class="">
+	    <div id="fileContainer" style="margin-bottom: 5px;"></div>
+
+	    {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+	    <button id="add-photo-paths-btn" type="button" class="btn btn-default btn-info" onclick="" style="">Aggiungi campo</button>
+	    <button id="remove-photo-paths-btn" type="button" class="btn btn-default btn-warning" onclick="removeFileInput()" style="">Rimuovi campo</button>
+	</div>
+    
+	<!-- Questo pulsante serve per permettere di riprodurre correttamente l'operazione di submit del form, in modo da consentire di controllare in automatico se i campi input richiesti sono vuoti. -->
+        <button id="save-btn" type="submit" class="btn btn-primary" style="display: none;">Salva</button>
+    {!! Form::close() !!}
+@endsection
+
+@section('footer-javascript')
+    @parent
+    <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
+    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
+    <script src="{{ asset('js/photos.create.floatBtn.js') }}"></script>
+    <script>
+	setHomeRoute("{{ route('home') }}");
+        setSaveButton("Aggiorna", function() {
+            $("#save-btn").click();
+        });
+    </script>
 @endsection

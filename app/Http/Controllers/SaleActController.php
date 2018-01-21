@@ -108,12 +108,13 @@ class SaleActController extends Controller {
 
     public function checkIdNumber($idNumber) {
 	$identityDocument = \Tentazioninoro\IdentityDocument::where("id_number", $idNumber);
-	if($identityDocument === null || $identityDocument->count() <= 0) {
+	if ($identityDocument === null || $identityDocument->count() <= 0) {
 	    return true;
 	} else {
 	    return false;
 	}
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -167,31 +168,7 @@ class SaleActController extends Controller {
 	    $identityDocument->update($identityDocumentData);
 	}
 
-	if (Input::hasFile('path_photo')) {
-//		$file = Input::file('path_photo');
-	    $path = "";
-	    $i = 1;
-	    $salesActs = SaleAct::orderBy('id', 'desc')->get(["id"]);
-	    if (isset($salesActs)) {
-		$saleAct = $salesActs->take(1)->first();
-		if (!isset($saleAct)) {
-		    $saleActId = 1;
-		} else {
-		    $saleActId = ++$saleAct->id;
-		}
-		Debugbar::info($saleActId);
-	    } else {
-		$saleActId = 1;
-	    }
-	    foreach ($request->path_photo as $photo) {
-		$ext = $photo->extension();
-		$path .= $photo->storeAs(\Config::get('constants.folders.SALES_ACTS'), $saleActId . "-" . $request->name . "_" . $request->surname . "-" . date("d.m.Y") . "_n." . $i++ . "." . $ext) . "~";
-	    }
-	    $path = substr($path, 0, strlen($path) - 1);
-	    var_dump($path);
-	} else {
-	    $path = null;
-	}
+	$photoPaths = $this->savePhotos($identityDocument);
 	$saleActData = array(
 	    'id_number' => $request->idNumber,
 	    'user_id' => Auth::id(),
@@ -204,7 +181,7 @@ class SaleActController extends Controller {
 	    'agreed_price' => $request->agreedPrice,
 	    'string_agreed_price' => $request->stringAgreedPrice,
 	    'terms_of_payment' => $request->termsOfPayment,
-	    'path_photo' => $path,
+	    'path_photo' => $photoPaths,
 	);
 
 //	if (!empty($path)) {
@@ -286,6 +263,68 @@ class SaleActController extends Controller {
      */
     public function update(Request $request, $id) {
 	
+    }
+
+    private function savePhotos($identityDocument, $saleActId = -1) {
+	$path = "";
+	if (Input::hasFile('path_photo')) {
+//		$file = Input::file('path_photo');
+	    $path = "";
+	    $i = 1;
+	    $salesActs = SaleAct::orderBy('id', 'desc')->get(["id"]);
+	    if (isset($salesActs)) {
+		$saleAct = $salesActs->take(1)->first();
+		if (!isset($saleAct)) {
+		    $saleActId = 1;
+		} else {
+		    $saleActId = ++$saleAct->id;
+		}
+		Debugbar::info($saleActId);
+	    } else {
+		$saleActId = 1;
+	    }
+	    foreach (Input::file('path_photo') as $photo) {
+		Debugbar::info($photo);
+		$ext = $photo->extension();
+		$name = str_replace(" ", "", $identityDocument->name);
+		$surname = str_replace(" ", "", $identityDocument->surname);
+		$path .= $photo->storeAs(\Config::get('constants.folders.SALES_ACTS'), $saleActId . "-" . $name . "_" . $surname . "-" . date("d.m.Y") . "_n." . $i++ . "." . $ext, 'public') . "~";
+	    }
+	    $path = substr($path, 0, strlen($path) - 1);
+	    Debugbar::info($path);
+	} else {
+	    $path = null;
+	}
+//	    echo $path;
+//	    $path = $request->file('path_photo')->store(Config::get('constants.folders.FIXINGS'));
+	return $path;
+    }
+
+    private function deletePhotos($saleAct) {
+	$photoPaths = explode("~", $saleAct->path_photo);
+	\Storage::delete($photoPaths);
+	$saleAct->path_photo = "";
+    }
+
+    public function updatePhotos(Request $request, $saleActId) {
+	$saleAct = SaleAct::where("id", $saleActId)->first();
+	
+	Debugbar::info($saleAct);
+	$this->deletePhotos($saleAct);
+	Debugbar::info($saleAct);
+	$customer = Customer::find($saleAct->customer_id);
+	Debugbar::info($customer);
+	$identityDocument = $customer->identityDocument()->get(['name', 'surname'])[0];
+	Debugbar::info($identityDocument);
+
+	$photoPaths = $this->savePhotos($identityDocument, $saleAct);
+	if($photoPaths !== null) {
+	    $saleAct->update(['path_photo' => $photoPaths,]);
+	}
+//	var_dump($photoPaths);
+//	return;
+
+	return redirect()->route('showSaleActPhotos', ['saleActId' => $saleActId]);
     }
 
     /**

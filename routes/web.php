@@ -39,6 +39,7 @@ Route::get('/atti-vendita/', ['as' => 'showSaleActList', 'uses' => 'SaleActContr
 Route::get('/atti-vendita/new/', ['as' => 'newSaleAct', 'uses' => 'SaleActController@create']);
 Route::get('/atti-vendita/show/{saleActId}/{toPrint?}', ['as' => 'showSaleAct', 'uses' => 'SaleActController@show']);
 Route::get('/atti-vendita/photos/{saleActId}', ['as' => 'showSaleActPhotos', 'uses' => 'SaleActController@showPhotos']);
+Route::put('/atti-vendita/updatePhotos/{saleActId}', ['as' => 'updatePhotos', 'uses' => 'SaleActController@updatePhotos']);
 Route::post('/atti-vendita/delete', ['as' => 'sale-act.destroyAll', 'uses' => 'SaleActController@destroySalesActs']);
 
 //Route::get('/pdf/', [function () {
