@@ -52,16 +52,22 @@ $user = Auth::user();
                     <?php 
                     Debugbar::info($identityDocumentList[$i]);
                     $date = explode("-", $identityDocumentList[$i]["birth_date"]);
-                    $year = $date[0];
-                    $month = $date[1];
-                    $day = $date[2];
+		    if($date !== null) {
+			$year = $date[0];
+			$month = $date[1];
+			$day = $date[2];
+			$birthDate = $day . "/" . $month . "/" . $year;
+		    } else {
+			$birthDate = "";
+		    }
+		    
                     ?>
                     <tr>
                         <td>{{ $customerList[$i]["id"] }}</td>
                         <td>{{ $identityDocumentList[$i]->name }}</td>
                         <td>{{ $identityDocumentList[$i]->surname }}</td>
                         <td>{{ $customerList[$i]["aka"] }}</td>
-                        <td>{{ $day . "/" . $month . "/" . $year }}</td>
+                        <td>{{ $birthDate }}</td>
                         <td>{{ $customerList[$i]["phone_number"] }}</td>
                         <td>{{ $customerList[$i]["mobile_phone"] }}</td>
                         <td>{{ $customerList[$i]["email"] }}</td>
