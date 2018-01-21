@@ -51,8 +51,9 @@ $user = Auth::user();
                 @for($i = 0; $i < count($customerList); $i++)
                     <?php 
                     Debugbar::info($identityDocumentList[$i]);
-                    $date = explode("-", $identityDocumentList[$i]["birth_date"]);
+                    $date = $identityDocumentList[$i]["birth_date"];
 		    if($date !== null) {
+			$date = explode("-", $identityDocumentList[$i]["birth_date"]);
 			$year = $date[0];
 			$month = $date[1];
 			$day = $date[2];
