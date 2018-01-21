@@ -40,8 +40,8 @@ $user = Auth::user();
                     <th data-column-id="surname" data-identifier="true">Cognome</th>
                     <th data-column-id="aka" data-identifier="true">Soprannome</th>
                     <th data-column-id="birth_date" data-order="desc">Data nascita</th>
-                    <th data-column-id="phone_number">Telefono</th>
-                    <th data-column-id="mobile_phone">Cellulare</th>
+                    <th data-column-id="phone_number_1">Telefono</th>
+                    <th data-column-id="phone_number_2">Cellulare</th>
                     <th data-column-id="email">E-mail</th>
                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Comandi</th>
                     <!--<th data-column-id="delete"></th>-->
@@ -69,8 +69,8 @@ $user = Auth::user();
                         <td>{{ $identityDocumentList[$i]->surname }}</td>
                         <td>{{ $customerList[$i]["aka"] }}</td>
                         <td>{{ $birthDate }}</td>
-                        <td>{{ $customerList[$i]["phone_number"] }}</td>
-                        <td>{{ $customerList[$i]["mobile_phone"] }}</td>
+                        <td>{{ $customerList[$i]["phone_number_1"] }}</td>
+                        <td>{{ $customerList[$i]["phone_number_2"] }}</td>
                         <td>{{ $customerList[$i]["email"] }}</td>
                     </tr>
                 @endfor
