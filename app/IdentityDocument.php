@@ -10,7 +10,7 @@ class IdentityDocument extends Model {
     
     
     protected $fillable = [
-        'customer_id', 'type', 'release_date', 'name', 'surname', 'birth_residence', 'birth_province', 'birth_date', 'residence', 'street', 'street_number',
+        'customer_id', 'type', 'number', 'release_date', 'name', 'surname', 'birth_residence', 'birth_province', 'birth_date', 'residence', 'street', 'street_number',
     ];
 
     public function customer() {

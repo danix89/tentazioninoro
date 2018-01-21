@@ -113,7 +113,7 @@ if(!$canBeUpdated) {
         <div class="form-group">
             {!! Form::label('aka', 'Soprannome:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::text('aka', '', ['class' => 'form-control', 'required' => true]) !!}
+                {!! Form::text('aka', '', ['class' => 'form-control', 'required' => false]) !!}
             </div>
         </div>
         <div class="form-group">
@@ -125,19 +125,19 @@ if(!$canBeUpdated) {
         <div class="form-group">
             {!! Form::label('birthDate', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-4">
-                {!! Form::date('birthDate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+                {!! Form::date('birthDate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('phoneNumber', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('phoneNumber1', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::text('phoneNumber', '', ['class' => 'form-control', 'required' => true]) !!}
+                {!! Form::text('phoneNumber1', '', ['class' => 'form-control', 'required' => true]) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('mobilePhone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
+            {!! Form::label('phoneNumber2', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-5">
-                {!! Form::text('mobilePhone', '', ['class' => 'form-control', 'required' => true]) !!}
+                {!! Form::text('phoneNumber2', '', ['class' => 'form-control', 'required' => false]) !!}
             </div>
         </div>
         <div class="form-group">

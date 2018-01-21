@@ -4,6 +4,12 @@ $canBeUpdated = false;
 $identityDocumentsJson = json_encode($data["identityDocuments"]);
 $newSaleActId = $data["newSaleActId"];
 $saleAct = $data["saleAct"];
+
+$types = [
+    '' => '',
+    'C.I.' => 'Carta d\'identit&agrave;',
+    'P' => 'Patente'
+];
 ?>
 
 {{ Debugbar::info($identityDocumentsJson) }}
@@ -51,8 +57,8 @@ $saleAct = $data["saleAct"];
     @if(!empty($identityDocumentsJson))
         {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
             {!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
-
-            {!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', array_merge([0 => ""], $customerList), 0, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
+	    <p id=''>{!! Form::label('idNumber', 'Numero id.:', ['class' => '']) !!}{!! Form::text('idNumber', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+            {!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', $customerList, 0, ['class' => 'form-control', 'required' => true, 'autofocus' => true]); !!}
             <div id="body" class="" style="">
                 <div style="overflow-x: auto;">
                     <table class='table' style="margin-top: 15px;">
@@ -79,8 +85,9 @@ $saleAct = $data["saleAct"];
                                 <td>{!! Form::label('streetNumber', 'N&#176;.', ['class' => '']) !!}{!! Form::text('streetNumber', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                             </tr>
                             <tr>
-                                <td>{!! Form::label('type', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('type', ['' => '', 'C.I.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], '', ['class' => 'form-control', 'required' => true]); !!}</td>
+                                <td>{!! Form::label('type', 'Doc. Identit&agrave; ', ['class' => '']) !!}{!! Form::select('type', $types, '', ['class' => 'form-control', 'required' => true]); !!}</td>
                                 <td>{!! Form::label('releaseDate', 'Ril. il', ['class' => '']) !!}{!! Form::date('releaseDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('number', 'Numero ', ['class' => '']) !!}{!! Form::text('number', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -110,8 +117,9 @@ $saleAct = $data["saleAct"];
                     <p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '', ['class' => 'form-control', 'required' => true]) !!}</p>
 <!--		    <p id=''>{!! Form::label('weight', 'ARG999', ['class' => '']) !!}{!! Form::text('silver', '2', ['class' => 'form-control', 'required' => true]) !!}</p>-->
                     <p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+                    <p id='' style="">{!! Form::label('stringAgreedPrice', 'Prezzo concordato in lettere', ['class' => '']) !!}{!! Form::text('stringAgreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
                     <div></div>
-                    <p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::select('type', ['' => '', 'Contanti' => 'Contanti', 'Assegno' => 'Assegno', 'C.C.' => 'Carta di credito'], '', ['class' => 'form-control', 'required' => true]); !!}</p>
+                    <p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::select('termsOfPayment', ['' => '', 'Contanti' => 'Contanti', 'Assegno' => 'Assegno', 'C.C.' => 'Carta di credito'], '', ['class' => 'form-control', 'required' => true]); !!}</p>
                 </div>
 	    </div>
             <!-- Questo pulsante serve per permettere di riprodurre correttamente l'operazione di submit del form, in modo da consentire di controllare in automatico se i campi input richiesti sono vuoti. -->
@@ -127,6 +135,7 @@ $saleAct = $data["saleAct"];
 		$("#hour").text(hourAndMinutes);
 		
 		var customerJson = JSON.parse('<?php echo $identityDocumentsJson ?>');
+		console.log(customerJson);
 		fillCustomerInputs(customerJson[$("#customerSelect").val()]);
 		$("#customerSelect").on("change", function () {
 		    var index = $(this).val();
@@ -149,6 +158,7 @@ $saleAct = $data["saleAct"];
 		}
 
 		function fillCustomerInputs(data) {
+//		    console.log(data);
 		    setInputValueAndText("#name", data.name, {"readOnly": "true"});
 		    setInputValueAndText("#surname", data.surname, {"readOnly": "true"});
 		    setInputValueAndText("#birthResidence", data.birth_residence, {"readOnly": "true"});
@@ -160,6 +170,7 @@ $saleAct = $data["saleAct"];
 		    setInputValueAndText("#identityDocument", data.identity_document);
 		    setInputValueAndText("#type", data.type, {}, "select");
 		    setInputValueAndText("#releaseDate", data.release_date);
+		    setInputValueAndText("#number", data.number);
 		    setInputValueAndText("#fiscalCode", data.fiscal_code, {"readOnly": "true"});
 		}
 

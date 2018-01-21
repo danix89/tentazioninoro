@@ -20,8 +20,8 @@ class CreateSalesActsTable extends Migration
             $table->string('objects');
             $table->float('weight');
             $table->float('price');
-            $table->integer('au_quotation');
-            $table->integer('arg_quotation')->nullable();
+            $table->float('au_quotation');
+            $table->float('arg_quotation')->nullable();
             $table->float('agreed_price');
             $table->string('terms_of_payment');
             $table->longText('path_photo')->nullable();

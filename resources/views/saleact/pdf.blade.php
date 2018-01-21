@@ -9,21 +9,28 @@ $surname = $identityDocument->surname;
 $name = $identityDocument->name;
 $birthResidence = $identityDocument->birth_residence;
 $birthProvince = $identityDocument->birth_province;
-$birthDate = $identityDocument->birth_date;
+$birthDate = \Carbon\Carbon::parse($identityDocument->birth_date);
 $residence = $identityDocument->residence;
 $residenceAddress = $identityDocument->street;
 $residenceStreetNumber = $identityDocument->street_number;
-$type = $identityDocument->type;
-$releaseDate = $identityDocument->release_date;
+$types = [
+    '' => '',
+    'C.I.' => 'Carta d\'identit&agrave;',
+    'P' => 'Patente'
+];
+$type = $types[$identityDocument->type];
+$number = $identityDocument->number;
+$releaseDate = \Carbon\Carbon::parse($identityDocument->release_date);
 $fiscalCode = $customer->fiscal_code;
 
-$saleActId = $saleAct->id;
+$saleActId = $saleAct->id_number;
 $objects = $saleAct->objects;
 $weight = $saleAct->weight;
 $price = $saleAct->price;
 $gold = $saleAct->au_quotation;
 $silver = $saleAct->arg_quotation;
 $agreedPrice = $saleAct->agreed_price;
+$stringAgreedPrice = $saleAct->string_agreed_price;
 $termsOfPayment = $saleAct->terms_of_payment;
 $path_photo = $saleAct->path_photo;
 
@@ -52,7 +59,7 @@ $path_photo = $saleAct->path_photo;
 
         <script src="{{ asset('js/manager.memory.js') }}"></script>
         <script src="{{ asset('js/utilities.common.js') }}"></script>
-        <script src="{{ asset('js/functions.home.js') }}"></script>
+        <!--<script src="{{ asset('js/functions.home.js') }}"></script>-->
 
         <style>
             p,span, table {
@@ -62,6 +69,23 @@ $path_photo = $saleAct->path_photo;
                 text-decoration: underline;
             }
             
+	    @media (max-width: 768px ) {
+		body { 
+		    margin-top: 1em;
+		    margin-right: 25px;
+		    margin-bottom: 3em;
+		    margin-left: 25px; 
+		}
+		
+		#signature {
+		    top: 3em !important;
+		}
+		
+		#declaration {
+		    margin-top: 170px !important;
+		}
+	    }
+	    
             @media print {
                 body { 
                     margin-top: 1em;
@@ -106,13 +130,13 @@ $path_photo = $saleAct->path_photo;
 				<td>Cognome <span id="surname">{{ $surname }}</span></td><td>Nome <span id="name">{{ $name }}</span></td><td></td>
 			    </tr>
 			    <tr>
-				<td>Nato/a a <span id="birthResidence">{{ $birthResidence }}</span></td><td>Prov. <span id="birthProvince">{{ $birthProvince }}</span></td><td>il <span id="birthDate">{{ $birthDate }}</span></td>
+				<td>Nato/a a <span id="birthResidence">{{ $birthResidence }}</span></td><td>Prov. <span id="birthProvince">{{ $birthProvince }}</span></td><td>il <span id="birthDate">{{ $birthDate->day . "/" . $birthDate->month . "/" . $birthDate->year }}</span></td>
 			    </tr>
 			    <tr>
 				<td>Residente a <span id="residence">{{ $residence }}</span></td><td>via <span id="residenceAddress">{{ $residenceAddress }}</span></td><td>N&#176;. <span id="residenceStreetNumber">{{ $residenceStreetNumber }}</span></td>
 			    </tr>
 			    <tr>
-				<td>Doc. Identit&agrave; <span id="identityDocumentType">{{ $type }}</span></td><td>Ril. il <span id="releaseDate">{{ $releaseDate }}</span></td><td></td>
+				<td>Doc. Identit&agrave; <span id="identityDocumentType">{{ $type }}</span></td><td>Ril. il <span id="releaseDate">{{ $releaseDate->day . "/" . $releaseDate->month . "/" . $releaseDate->year }}</span></td><td>Numero <span id="number">{{ $number }}</span></td>
 			    </tr>
 			    <tr>
 				<td>Codice Fiscale <span id="fiscalCode">{{ $fiscalCode }}</span></td><td></td><td></td>
@@ -140,7 +164,7 @@ $path_photo = $saleAct->path_photo;
 			<p id=''>Peso materiale AU gr. <span id="weight">{{ $weight }}</span> (750/1000)</p>
 			<p id=''>A Euro <span id="price">{{ $price }}</span></p>
 			<p id=''>Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9 <span id="gold" style="text-decoration: underline;">{{ $gold }}</span> <!-- ARG999 <span id="silver" style="text-decoration: underline;">{{ $silver }}</span> --></p>
-			<p id='' style="">Al prezzo concordato di EURO <span id="agreedPrice">{{ $agreedPrice }}</span> modalit&agrave; di pagamento <span id="termsOfPayment">{{ $termsOfPayment }}</span></p>
+			<p id='' style="">Al prezzo concordato di EURO <span id="agreedPrice">{{ $agreedPrice . " / " . $stringAgreedPrice }}</span> modalit&agrave; di pagamento <span id="termsOfPayment">{{ $termsOfPayment }}</span></p>
 			Destinazione Materiale:
 			<ol type="A">
 			    <li>destinata alla fusione presso Azienda autorizzata nel recupero metalli preziosi.</li>
@@ -148,11 +172,11 @@ $path_photo = $saleAct->path_photo;
 			    <li>destinata alla vendita al dettaglio ed in caso di mancata vendita destinata alla fusione presso azienda autorizzata di recupero metalli preziosi.</li>
 			</ol>
 		    </div>
-		    <div style="position: relative; top: 2em;">
+		    <div id="signature" style="position: relative; top: 2em;">
 			<h4 id='' style="position: absolute; right: 0px;"><b>Firma</b></h4>
 			<hr style="position: absolute; margin-top: 70px; right: 0px; width: 30%; border-style: inset;">
 		    </div>
-		    <div style="margin: 150px 0;">
+		    <div id="declaration" style="margin: 150px 0;">
 			<p>Il/La Sottoscritto/a Nome <span id="name">{{ $name }}</span> Cognome <span id="surname">{{ $surname }}</span></p>
 			<p>Dichiara che tutti gli oggetti sopravenduti non sono di illecita provenienza e di essere in possesso di tutti i diritti atti alla vendita degli stessi.</p>
 			<p>La presente vale anche come ricevuta a saldo per la somma riportata "prezzo complessivo".</p>

@@ -13,6 +13,7 @@ $aka = $customer->aka;
 $id = $customer->id;
 $fiscalCode = $customer->fiscal_code;
 $type = $identityDocument->type;
+$number = $identityDocument->number;
 $releaseDate = $identityDocument->release_date;
 $birthDate = $identityDocument->birth_date;
 $birthResidence = $identityDocument->birth_residence;
@@ -20,8 +21,8 @@ $birthProvince = $identityDocument->birth_province;
 $residence = $identityDocument->residence;
 $street = $identityDocument->street;
 $streetNumber = $identityDocument->street_number;
-$telephone = $customer->phone_number;
-$mobile = $customer->mobile_phone;
+$phone_number_1 = $customer->phone_number_1;
+$phone_number_2 = $customer->phone_number_2;
 $email = $customer->email;
 $description = $customer->description;
 ?>
@@ -85,7 +86,7 @@ $description = $customer->description;
             <div class="form-group">
                 {!! Form::label('birthDate', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::date('birthDate', $birthDate, ['class' => 'form-control', 'required' => true]) !!}
+                    {!! Form::date('birthDate', $birthDate, ['class' => 'form-control', 'required' => $required]) !!}
                 </div>
             </div>
 	    @if($extendFileds)
@@ -120,7 +121,7 @@ $description = $customer->description;
 		    </div>
 		</div>
 		<div class="form-group">
-		    {!! Form::label('type', 'Doc. Identit&agrave;', ['class' => 'control-label col-md-4']) !!}
+		    {!! Form::label('type', 'Doc. Identit&agrave;:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
 			{!! Form::select('type', ['' => '', 'C.I.' => 'Carta d\'identit&agrave;', 'P' => 'Patente'], $type, ['class' => 'form-control', 'required' => $required]); !!}
 		    </div>
@@ -131,23 +132,29 @@ $description = $customer->description;
 			{!! Form::date('releaseDate', $releaseDate, ['class' => 'form-control', 'required' => $required]) !!}
 		    </div>
 		</div>
+		<div class="form-group">
+		    {!! Form::label('number', 'Numero:', ['class' => 'control-label col-md-4']) !!}
+		    <div class="col-md-5">
+			{!! Form::text('number', $number, ['class' => 'form-control', 'required' => $required]); !!}
+		    </div>
+		</div>
 	    @endif
             <div class="form-group">
-                {!! Form::label('phoneNumber', 'Telefono:', ['class' => 'control-label col-md-4']) !!}
+                {!! Form::label('phoneNumber1', 'Telefono 1:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('phoneNumber', $telephone, ['class' => 'form-control', 'required' => true]) !!}
+                    {!! Form::text('phoneNumber1', $phone_number_1, ['class' => 'form-control', 'required' => true]) !!}
                 </div>
             </div>
             <div class="form-group">
-                {!! Form::label('mobilePhone', 'Cellulare:', ['class' => 'control-label col-md-4']) !!}
+                {!! Form::label('phoneNumber2', 'Telefono 2:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('mobilePhone', $mobile, ['class' => 'form-control', 'required' => false]) !!}
+                    {!! Form::text('phoneNumber2', $phone_number_2, ['class' => 'form-control', 'required' => false]) !!}
                 </div>
             </div>
             <div class="form-group">
                 {!! Form::label('email', 'Email:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('email', $email, ['class' => 'form-control', 'required' => true]) !!}
+                    {!! Form::text('email', $email, ['class' => 'form-control', 'required' => false]) !!}
                 </div>
             </div>
             <div class="form-group">

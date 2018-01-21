@@ -54,11 +54,12 @@ $typology = $jewel->typology;
 		}
 
 		body { 
-		    margin: 0.3cm 0.3cm;
+		    margin: 0.5cm 0.5cm;
+		    margin-top: 0.3cm !important;
 		}
 
 		p, span, table, ol {
-		    font-size: 8px !important;
+		    font-size: 14px !important;
 		}
                 
                 table {
@@ -72,20 +73,20 @@ $typology = $jewel->typology;
 	</style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
-    <body style="height: 6.2cm;">
-        <div class="container">
+    <body>
+        <div id="summary" class="container">
 	    <div class="row" style="">
 		<div style="position: relative;">
-		    <div id="date" style="position: absolute; left: -7px;">
+		    <div id="date" style="position: absolute; left: 0px;">
 			<p>Data <span id="today"></span> ora <span id="hour"></span></p>
 		    </div>
-		    <div id="idNumber" style="position: absolute; right: -7px;">
+		    <div id="idNumber" style="position: absolute; right: 0px;">
 			<p>N&#176;. <span id="idNumber">{{ $fixingId }}</span></p>
 		    </div>
 		</div>
 	    </div>
 	    <div class="row">
-		<div id="body" class="row" style="position: relative; top: 15px;">
+		<div id="body" class="row" style="position: relative; top: 30px;">
                     <table class='table' style=" z-index: 9;">
 			<tbody>
 			    <tr>
@@ -100,20 +101,26 @@ $typology = $jewel->typology;
 		    </table>
 		</div>
 	    </div>
-            <div id="hide-logo-div" style="width: 100%; top: -5px; position: relative; background: white; height: 60px;"></div>
-            <img id=logo" style="width: 80px; margin: auto; margin-top: -80px; display: block;" src="{{ asset('images/logo.jpg') }}">
-	    <script>
-		$(document).ready(function () {
-		    var now = getTodayDate().split(" ");
-		    var today = now[0];
-		    var hourAndMinutes = now[1];
-		    $("#today").text(today);
-		    $("#hour").text(hourAndMinutes);
-
-		    window.print();
-		});
-	    </script>
 	</div>
+	
+	<div id="hide-logo-div" style="width: 100%; top: 0px; position: relative; background: white; height: 150px;"></div>
+	<img id="logo" style="width: 200px; margin: auto; margin-top: -160px; display: block;" src="{{ asset('images/logo.jpg') }}">
+	
+	<script>
+	    $(document).ready(function () {
+		var now = getTodayDate().split(" ");
+		var today = now[0];
+		var hourAndMinutes = now[1];
+		$("#today").text(today);
+		$("#hour").text(hourAndMinutes);
+
+		$("#summary").clone().css({
+		    "margin-top": "1.5cm", 
+		}).insertAfter("#summary");
+
+		window.print();
+	    });
+	</script>
     </body>
 
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>

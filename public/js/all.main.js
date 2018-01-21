@@ -123,6 +123,13 @@ function doFileInputClick(e, fileInputId) {
 jQuery(document).ready(function ($) {
     addFileInput();
     
+    $(":required").each(function () {
+	var label = $(this).parent().siblings("label");
+	var text = label.text();
+	text = text.substring(0, text.length - 1);
+	label.text(text + "*:");
+    });
+    
     $('#myCarousel').carousel();
     
     if($(".carousel-inner > .item").length > 0) {

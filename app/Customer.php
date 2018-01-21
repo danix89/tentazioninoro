@@ -18,7 +18,7 @@ class Customer extends Model {
     protected $guarded = ['id'];
     
     protected $fillable = [
-        'fiscal_code', 'name', 'surname', 'aka', 'phone_number', 'mobile_phone', 'email', 'description',
+        'fiscal_code', 'name', 'surname', 'aka', 'phone_number_1', 'phone_number_2', 'email', 'description',
     ];
 
     public function identityDocument() {

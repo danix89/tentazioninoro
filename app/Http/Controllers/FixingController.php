@@ -244,9 +244,11 @@ class FixingController extends Controller {
     public function printTicket($fixingId) {
 //	$userId = Auth::id();
 	$fixing = Fixing::where('id', $fixingId)->get(["id", "customer_id", "jewel_id", "deposit", "estimate"])->first();
-	DebugBar::info($fixing);
+//	DebugBar::info($fixing);
 	$identityDocument = Customer::find($fixing->customer_id)->identityDocument()->get(["name", "surname"])->first();
-	$jewel = Jewel::find($fixing->jewel_id)->get(["typology"])->first();
+	DebugBar::info($fixing->jewel_id);
+	$jewel = Jewel::where("id", $fixing->jewel_id)->get(["typology"])->first();
+//	DebugBar::info($jewel);
 
 	$data = array(
 	    'fixing' => $fixing,

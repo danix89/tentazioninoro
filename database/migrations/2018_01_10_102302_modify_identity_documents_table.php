@@ -15,6 +15,7 @@ class ModifyIdentityDocumentsTable extends Migration
     {
         Schema::table('identity_documents', function (Blueprint $table) {
             $table->date('release_date')->nullable()->change();
+            $table->string('number')->after('release_date')->nullable()->unsigned();
         });
     }
 
@@ -27,6 +28,7 @@ class ModifyIdentityDocumentsTable extends Migration
     {
         Schema::table('identity_documents', function (Blueprint $table) {
             $table->date('release_date')->change();
+            $table->dropColumn('number');
         });
     }
 }

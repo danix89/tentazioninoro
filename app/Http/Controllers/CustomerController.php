@@ -57,8 +57,8 @@ class CustomerController extends Controller {
 	$customerData = array(
             'fiscal_code' => $request->fiscalCode,
             'aka' => $request->aka,
-            'phone_number' => $request->phoneNumber,
-            'mobile_phone' => $request->mobilePhone,
+            'phone_number_1' => $request->phoneNumber1,
+            'phone_number_2' => $request->phoneNumber2,
             'email' => $request->email,
             'description' => $request->description,
         );

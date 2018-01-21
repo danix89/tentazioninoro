@@ -64,15 +64,15 @@ class SaleActController extends Controller {
 	$userId = Auth::id();
 	$users_customers = User::find($userId)->customers()->get(); //->groupBy('customer_id');
 //	Debugbar::info($customersIds);
-	$customerList = array();
-	$identityDocuments = array([]);
+	$customerList = array(0 => "");
+	$identityDocuments = array(0 => "");
 	foreach ($users_customers as $user_customer) {
 //	    Debugbar::info('$user_customer - start', $user_customer, '$user_customer - end');
 	    $customer = Customer::join("identity_documents", "identity_documents.customer_id", "=", "customers.id", "")
 		    ->where("customers.id", $user_customer->customer_id)
 		    ->first(["identity_documents.*", "customers.fiscal_code"]);
-//	    Debugbar::info('$customer - start', $customer, '$customer - end');
-	    $identityDocuments[] = $customer;
+	    Debugbar::info('$customer - start', $customer, '$customer - end');
+	    $identityDocuments[$customer->customer_id] = $customer;
 	    if (!empty($customer->aka)) {
 		$aka = " (" . $customer->aka . ")";
 	    } else {
@@ -106,6 +106,14 @@ class SaleActController extends Controller {
 	return View::make('saleact.toBeFilled')->with("data", $data);
     }
 
+    public function checkIdNumber($idNumber) {
+	$identityDocument = \Tentazioninoro\IdentityDocument::where("id_number", $idNumber);
+	if($identityDocument === null || $identityDocument->count() <= 0) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -117,6 +125,9 @@ class SaleActController extends Controller {
 //	    var_dump($data);
 	\Debugbar::info($data);
 	$customerId = $request->customerSelect;
+//	$customerId = intval($request->customerSelect);
+//	var_dump($customerId);
+//	return;
 	if ($customerId == 0) {
 	    $customerData = array(
 		'fiscal_code' => $request->fiscalCode,
@@ -127,6 +138,7 @@ class SaleActController extends Controller {
 		'customer_id' => $customerId,
 		'type' => $request->type,
 		'release_date' => $request->releaseDate,
+		'number' => $request->number,
 		'name' => $request->name,
 		'surname' => $request->surname,
 		'birth_residence' => $request->birthResidence,
@@ -142,6 +154,17 @@ class SaleActController extends Controller {
 		'user_id' => Auth::id(),
 		'customer_id' => $customer->id,
 	    ));
+	} else {
+	    $identityDocument = \Tentazioninoro\IdentityDocument::where("customer_id", $customerId)->first();
+	    $identityDocumentData = array(
+		'type' => $request->type,
+		'release_date' => $request->releaseDate,
+		'number' => $request->number,
+		'residence' => $request->residence,
+		'street' => $request->street,
+		'street_number' => $request->streetNumber,
+	    );
+	    $identityDocument->update($identityDocumentData);
 	}
 
 	if (Input::hasFile('path_photo')) {
@@ -170,6 +193,7 @@ class SaleActController extends Controller {
 	    $path = null;
 	}
 	$saleActData = array(
+	    'id_number' => $request->idNumber,
 	    'user_id' => Auth::id(),
 	    'customer_id' => $customerId,
 	    'objects' => $request->objects,
@@ -178,6 +202,7 @@ class SaleActController extends Controller {
 	    'au_quotation' => $request->gold,
 	    'arg_quotation' => $request->silver,
 	    'agreed_price' => $request->agreedPrice,
+	    'string_agreed_price' => $request->stringAgreedPrice,
 	    'terms_of_payment' => $request->termsOfPayment,
 	    'path_photo' => $path,
 	);
