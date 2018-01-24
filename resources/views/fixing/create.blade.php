@@ -207,9 +207,11 @@ if(!$canBeUpdated) {
                 if($showCarousel) {
                     $alert = true;
                     $hidden = "";
+		    $deletePhotos = "false";
                 } else {
                     $alert = false;
                     $hidden = "hidden";
+		    $deletePhotos = "true";
                 }
                 ?>
                 <div id="myCarousel" {{ $hidden }} class="carousel" data-ride="carousel" style="margin-bottom: 8px;">
@@ -254,7 +256,7 @@ if(!$canBeUpdated) {
                     
                 <div id="fileContainer" style="margin-bottom: 5px;"></div>
 
-                {!! Form::hidden('deletePhotos', '', ['id' => 'deletePhotos']) !!}
+                {!! Form::hidden('deletePhotos', $deletePhotos, ['id' => 'deletePhotos']) !!}
                 <button id="add-photo-paths-btn" type="button" class="btn btn-default btn-info" onclick="" style="">Aggiungi campo</button>
                 <button id="remove-photo-paths-btn" type="button" class="btn btn-default btn-warning" onclick="removeFileInput()" style="">Rimuovi campo</button>
 	    </div>
