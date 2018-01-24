@@ -23,6 +23,8 @@ $typology = $jewel->typology;
 	<link rel="stylesheet" href="{{ asset('vendor/bootstrap/3.3.7/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.css') }}">
 
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+	
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
 	<link rel="stylesheet" href="{{ asset('css/bubbler.min.css') }}">

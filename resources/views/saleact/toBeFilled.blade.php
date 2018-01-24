@@ -218,7 +218,7 @@ $types = [
 	    }).done(function (data) {
 		if(data.success) {
 		    doSubmit = true;
-		    $("span").remove();
+		    $("#idNumberDiv > span").remove();
 		    $(".alert").hide();
 		    $("#idNumberDiv")
 			    .removeClass("has-error")
@@ -229,6 +229,7 @@ $types = [
 		} else {
 		    doSubmit = false;
 		    $("#idNumberDiv > span").remove();
+		    $(".alert").show();
 		    $("#idNumberDiv")
 			    .removeClass("has-error")
 			    .addClass("has-error")
@@ -236,7 +237,6 @@ $types = [
 				.addClass("glyphicon glyphicon-remove form-control-feedback")
 			    );
 		    $("#idNumberDiv > input").focus();
-		    $(".alert").show();
 		}
 //		console.log(doSubmit);
 	    });
