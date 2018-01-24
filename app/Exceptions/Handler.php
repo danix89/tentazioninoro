@@ -46,10 +46,10 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception) {
-	if ($e instanceof TokenMismatchException || $e instanceof EncryptionServiceProvider) {
-	    // Redirect to a form. Here is an example of how I handle mine
-	    return redirect(route('login'));
-	}
+//	if ($e instanceof TokenMismatchException || $e instanceof EncryptionServiceProvider) {
+//	    // Redirect to a form. Here is an example of how I handle mine
+//	    return redirect(route('login'));
+//	}
 
 	return parent::render($request, $exception);
     }

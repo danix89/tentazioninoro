@@ -29,6 +29,8 @@ class HomeController extends Controller {
 	    return redirect(route('showList'));
 	} else if($user->permissions === \Config::get('constants.permission.SALES_ACTS')) {
 	    return redirect(route('showSaleActList'));
+	} else {
+	    return redirect(route('login'));
 	}
     }
     
