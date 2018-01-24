@@ -5,15 +5,15 @@ namespace Tentazioninoro\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-class Handler extends ExceptionHandler
-{
+class Handler extends ExceptionHandler {
+
     /**
      * A list of the exception types that are not reported.
      *
      * @var array
      */
     protected $dontReport = [
-        //
+	    //
     ];
 
     /**
@@ -22,8 +22,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
-        'password',
-        'password_confirmation',
+	'password',
+	'password_confirmation',
     ];
 
     /**
@@ -34,9 +34,8 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
+    public function report(Exception $exception) {
+	parent::report($exception);
     }
 
     /**
@@ -46,8 +45,13 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
+    public function render($request, Exception $exception) {
+	if ($e instanceof TokenMismatchException || $e instanceof EncryptionServiceProvider) {
+	    // Redirect to a form. Here is an example of how I handle mine
+	    return redirect(route('login'));
+	}
+
+	return parent::render($request, $exception);
     }
+
 }
