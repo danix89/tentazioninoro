@@ -124,7 +124,6 @@ $typology = $jewel->typology;
     </body>
 
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/fixing.print.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");

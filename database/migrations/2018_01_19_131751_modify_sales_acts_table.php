@@ -14,7 +14,7 @@ class ModifySalesActsTable extends Migration
     public function up()
     {
         Schema::table('sales_acts', function (Blueprint $table) {
-            $table->bigInteger('id_number')->after('id')->unsigned()->unique();
+            $table->string('id_number')->after('id')->unique();
 	    $table->string('string_agreed_price')->after('agreed_price')->nullable();
         });
     }

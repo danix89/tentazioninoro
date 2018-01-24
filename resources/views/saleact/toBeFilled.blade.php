@@ -57,7 +57,14 @@ $types = [
     @if(!empty($identityDocumentsJson))
         {!! Form::model($saleAct, ['route' => ['sale-act.store'], 'id' => 'pdf', 'class' => 'form-horizontal', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
             {!! Form::hidden('toPrint', 'false', ['id' => 'toPrint']) !!}
-	    <p id=''>{!! Form::label('idNumber', 'Numero id.:', ['class' => '']) !!}{!! Form::text('idNumber', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+	    <div id='idNumberDiv' class="form-group has-feedback" style="margin: 15px 0px;" >
+		{!! Form::label('idNumber', 'Numero id.:', ['class' => '']) !!}
+		{!! Form::text('idNumber', '', ['class' => 'form-control', 'required' => true]) !!}
+			
+		<div class="alert alert-danger" hidden role="alert">
+		    <strong>Id già presente nel Database!</strong>
+		</div>
+	    </div>
             {!! Form::label('customerSelect', 'Seleziona cliente', ['class' => '']) !!}{!! Form::select('customerSelect', $customerList, 0, ['class' => 'form-control select2', 'required' => false, 'autofocus' => true]); !!}
             <div id="body" class="" style="">
                 <div style="overflow-x: auto;">
@@ -87,7 +94,7 @@ $types = [
                             <tr>
                                 <td>{!! Form::label('type', 'Doc. Identit&agrave;:', ['class' => '']) !!}{!! Form::select('type', $types, '', ['class' => 'form-control', 'required' => true]); !!}</td>
                                 <td>{!! Form::label('releaseDate', 'Ril. il:', ['class' => '']) !!}{!! Form::date('releaseDate', '', ['class' => 'form-control', 'required' => true]) !!}</td>
-                                <td>{!! Form::label('number', 'Numero:', ['class' => '']) !!}{!! Form::text('number', '', ['class' => 'form-control', 'required' => true]) !!}</td>
+                                <td>{!! Form::label('number', 'N. Doc.:', ['class' => '']) !!}{!! Form::text('number', '', ['class' => 'form-control', 'required' => true]) !!}</td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -112,13 +119,12 @@ $types = [
                 </div>
                     
                 <div style="margin-top: 15px;">
-                    <p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::text('weight', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-                    <p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::text('price', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-                    <p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::text('gold', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+                    <p id=''>{!! Form::label('weight', 'Peso materiale AU gr. (750/1000)', ['class' => '']) !!}{!! Form::number('weight', '', ['class' => 'form-control', 'required' => true, 'min' => 0, 'step' => 0.01]) !!}</p>
+                    <p id=''>{!! Form::label('price', 'A Euro', ['class' => '']) !!}{!! Form::number('price', '', ['class' => 'form-control', 'required' => true, 'min' => 0, 'step' => 0.01]) !!}</p>
+                    <p id=''>{!! Form::label('gold', 'Oro nuovo da investimento QUOTAZIONE NON OPERATIVA AU 999,9', ['class' => '']) !!}{!! Form::number('gold', '', ['class' => 'form-control', 'required' => true, 'min' => 0, 'step' => 0.01]) !!}</p>
 <!--		    <p id=''>{!! Form::label('weight', 'ARG999', ['class' => '']) !!}{!! Form::text('silver', '2', ['class' => 'form-control', 'required' => true]) !!}</p>-->
-                    <p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::text('agreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
+                    <p id='' style="">{!! Form::label('agreedPrice', 'Al prezzo concordato di EURO', ['class' => '']) !!}{!! Form::number('agreedPrice', '', ['class' => 'form-control', 'required' => true, 'min' => 0, 'step' => 0.01]) !!}</p>
                     <p id='' style="">{!! Form::label('stringAgreedPrice', 'Prezzo concordato in lettere', ['class' => '']) !!}{!! Form::text('stringAgreedPrice', '', ['class' => 'form-control', 'required' => true]) !!}</p>
-                    <div></div>
                     <p id='' style="">{!! Form::label('termsOfPayment', 'Modalit&agrave; di pagamento', ['class' => '']) !!}{!! Form::select('termsOfPayment', ['' => '', 'Contanti' => 'Contanti', 'Assegno' => 'Assegno', 'C.C.' => 'Carta di credito'], '', ['class' => 'form-control', 'required' => true]); !!}</p>
                 </div>
 	    </div>
@@ -135,7 +141,7 @@ $types = [
 		$("#hour").text(hourAndMinutes);
 		
 		var customerJson = JSON.parse('<?php echo $identityDocumentsJson ?>');
-		console.log(customerJson);
+//		console.log(customerJson);
 		fillCustomerInputs(customerJson[$("#customerSelect").val()]);
 		$("#customerSelect").on("change", function () {
 		    var index = $(this).val();
@@ -191,7 +197,6 @@ $types = [
 @section('footer-javascript')
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/saleact.toBeFilled.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");
@@ -199,5 +204,48 @@ $types = [
         setSaveButton("Salva", function() {
             $("#save-btn").click();
         });
+	
+	var doSubmit = false;
+	$("#idNumber").change(function (e) {
+	    $.ajax({
+		url: "{{ route('checkIdNumber') }}",
+		async: false,
+		type: "post",
+		data: {
+		    _token: $('meta[name=csrf-token]').attr('content'),
+		    idNumber: $("#idNumber").val()
+		}
+	    }).done(function (data) {
+		if(data.success) {
+		    doSubmit = true;
+		    $("span").remove();
+		    $(".alert").hide();
+		    $("#idNumberDiv")
+			    .removeClass("has-error")
+			    .addClass("has-success")
+			    .append($("<span />")
+				.addClass("glyphicon glyphicon-ok form-control-feedback")
+			    );
+		} else {
+		    doSubmit = false;
+		    $("#idNumberDiv > span").remove();
+		    $("#idNumberDiv")
+			    .removeClass("has-error")
+			    .addClass("has-error")
+			    .append($("<span />")
+				.addClass("glyphicon glyphicon-remove form-control-feedback")
+			    );
+		    $("#idNumberDiv > input").focus();
+		    $(".alert").show();
+		}
+//		console.log(doSubmit);
+	    });
+	});
+	
+	$("form").submit(function (e) {
+	    if(!doSubmit) {
+		e.preventDefault();
+	    }
+	});
     </script>
 @endsection

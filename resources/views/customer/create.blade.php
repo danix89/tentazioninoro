@@ -52,13 +52,13 @@ if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.perm
             <div class="form-group">
                 {!! Form::label('aka', 'Soprannome:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('aka', "", ['class' => 'form-control', 'required' => $required]) !!}
+                    {!! Form::text('aka', "", ['class' => 'form-control', 'required' => false]) !!}
                 </div>
             </div>
             <div class="form-group">
                 {!! Form::label('fiscalCode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('fiscalCode', "", ['class' => 'form-control', 'required' => $required]) !!}
+                    {!! Form::text('fiscalCode', "", ['class' => 'form-control', 'required' => $required, 'minlength' => 16, 'maxlength' => 16,]) !!}
                 </div>
             </div>
             <div class="form-group">
@@ -111,9 +111,9 @@ if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.perm
 		    </div>
 		</div>
 		<div class="form-group">
-		    {!! Form::label('number', 'Numero:', ['class' => 'control-label col-md-4']) !!}
+		    {!! Form::label('number', 'N. Doc. Identit&agrave;:', ['class' => 'control-label col-md-4']) !!}
 		    <div class="col-md-5">
-			{!! Form::text('number', $number, ['class' => 'form-control', 'required' => $required]); !!}
+			{!! Form::text('number', "", ['class' => 'form-control', 'required' => $required]); !!}
 		    </div>
 		</div>
 	    @endif
@@ -150,7 +150,6 @@ if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.perm
 @section('footer-javascript')
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/customer.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");

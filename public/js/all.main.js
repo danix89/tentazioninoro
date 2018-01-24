@@ -124,12 +124,14 @@ jQuery(document).ready(function ($) {
     addFileInput();
     
     $(":required").each(function () {
-	var label = $(this).parent().find("label");
+	var label = $(this).parents(".form-group").find("label");
+	if(label.length <= 0) {
+	    label = $(this).parent("").find("label");
+	}
 	var text = label.text();
 	var indexOfSemicolon = text.indexOf(":");
 	var end = indexOfSemicolon > -1 ? indexOfSemicolon : text.length;
 	text = text.substring(0, end);
-	console.log(text);
 	label.text(text + "*:");
     });
     

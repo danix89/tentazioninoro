@@ -35,6 +35,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/access-not-allowed', ['as' => 'accessNotAllowed', 'uses' => 'HomeController@showAccessNotAllowedPage']);
 
+Route::post('/sales-act/checkIdNumber/', ['as' => 'checkIdNumber', 'uses' => 'SaleActController@checkIdNumber']);
+
 Route::get('/atti-vendita/', ['as' => 'showSaleActList', 'uses' => 'SaleActController@index']);
 Route::get('/atti-vendita/new/', ['as' => 'newSaleAct', 'uses' => 'SaleActController@create']);
 Route::get('/atti-vendita/show/{saleActId}/{toPrint?}', ['as' => 'showSaleAct', 'uses' => 'SaleActController@show']);

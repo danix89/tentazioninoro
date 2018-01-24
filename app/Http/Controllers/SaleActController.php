@@ -106,13 +106,18 @@ class SaleActController extends Controller {
 	return View::make('saleact.toBeFilled')->with("data", $data);
     }
 
-    public function checkIdNumber($idNumber) {
-	$identityDocument = \Tentazioninoro\IdentityDocument::where("id_number", $idNumber);
+    public function checkIdNumber(Request $request) {
+	Debugbar::info('$identityDocument - start', $request->idNumber, '$identityDocument - end');
+	$identityDocument = SaleAct::where("id_number", $request->idNumber);
 	if ($identityDocument === null || $identityDocument->count() <= 0) {
-	    return true;
+	    $success = true;
 	} else {
-	    return false;
+	    $success = false;
 	}
+	
+	return response()->json([
+	    'success' => $success,
+	]);
     }
 
     /**
@@ -149,7 +154,7 @@ class SaleActController extends Controller {
 		'street' => $request->street,
 		'street_number' => $request->streetNumber,
 	    );
-	    \Tentazioninoro\IdentityDocument::create($identityDocumentData);
+	    $identityDocument = \Tentazioninoro\IdentityDocument::create($identityDocumentData);
 
 	    UserCustomer::create(array(
 		'user_id' => Auth::id(),

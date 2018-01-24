@@ -47,6 +47,8 @@ $path_photo = $saleAct->path_photo;
 
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap/3.3.7/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/jquery-bootgrid/1.3.1/jquery.bootgrid.min.css') }}">
+	
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
 
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	
@@ -183,7 +185,7 @@ $path_photo = $saleAct->path_photo;
 			<p>Garanzia dati personali: in conformit&agrave; alla legge 196/03 sulla tutela della privacy, la Ditta garantisce la massima riservatezza dei dati da Lei forniti; in ogni momento potr&agrave; richiedere gratuitamente la modifica e/o l'aggiornamento degli stessi.</p>
 			<p>Dichiara inoltre che i proventi di tale operazione non finanzieranno alcuna attivit&agrave; di riciclaggio, finanziamento al terrorismo o attivit&a&agrave; criminose nel rispetto del Dlgs 90 del 24/05/2017 ed il Dlgs 92 del 25/05/2017 e saranno utilizzati a scopo privato.</p>
 		    </div>
-		    <div style="margin: 0em 10em;">
+		    <div style="margin: -3em 10em;">
 			<div style="position: relative;">
 			    <h4 id='' style="position: absolute;"><b>Per Accettazione</b></h4>
 			    <hr style="position: absolute; margin-top: 100px; width: 40%; border-style: inset;">
@@ -214,7 +216,6 @@ $path_photo = $saleAct->path_photo;
     </body>
     
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/saleact.pdf.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");

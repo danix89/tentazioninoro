@@ -117,12 +117,6 @@ if(!$canBeUpdated) {
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('fiscalCode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
-            <div class="col-md-4">
-                {!! Form::text('fiscalCode', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
-            </div>
-        </div>
-        <div class="form-group">
             {!! Form::label('birthDate', 'Data di nascita:', ['class' => 'control-label col-md-4']) !!}
             <div class="col-md-4">
                 {!! Form::date('birthDate', '', ['class' => 'form-control', 'autofocus' => true, 'required' => false]) !!}
@@ -196,7 +190,7 @@ if(!$canBeUpdated) {
 	<div class="form-group">
 	    {!! Form::label('weight', 'Peso:', ['class' => 'control-label col-md-4']) !!}
 	    <div class="col-md-5">
-		{!! Form::text('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+		{!! Form::number('weight', $weight, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'min' => 0]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
@@ -280,13 +274,13 @@ if(!$canBeUpdated) {
 	<div class="form-group">
 	    {!! Form::label('deposit', 'Acconto:', ['class' => 'control-label col-md-4']) !!}
 	    <div class="col-md-5">
-		{!! Form::text('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+		{!! Form::number('deposit', $deposit, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'min' => 0]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
 	    {!! Form::label('estimate', 'Preventivo:', ['class' => 'control-label col-md-4']) !!}
 	    <div class="col-md-5">
-		{!! Form::text('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true]) !!}
+		{!! Form::number('estimate', $estimate, ['class' => 'form-control', 'autofocus' => true, 'required' => true, 'min' => 0]) !!}
 	    </div>
 	</div>
 	<div class="form-group">
@@ -304,7 +298,6 @@ if(!$canBeUpdated) {
 @section('footer-javascript')
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/fixing.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");

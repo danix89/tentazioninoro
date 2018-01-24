@@ -93,7 +93,6 @@ if(empty($photo_paths[$lastIndex])) {
 @section('footer-javascript')
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/photos.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('home') }}");

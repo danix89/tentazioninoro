@@ -45,7 +45,8 @@ $saleActList = json_decode($saleActList, TRUE);
 	    <table id="grid-basic" class="table">
 		<thead>
 		    <tr>
-			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-order="asc">Id</th>
+			<th data-column-id="saleAct_id" data-identifier="true" data-type="numeric" data-visible="false">Id</th>
+			<th data-column-id="saleAct_id_number" data-identifier="true" data-order="asc">Numero</th>
 			<th data-column-id="updated_at" data-order="desc">Data</th>
 			<th data-column-id="customer_id">Cliente</th>
 			<th data-column-id="objects_id">Oggetti</th>
@@ -75,6 +76,7 @@ $saleActList = json_decode($saleActList, TRUE);
 			{{-- Debugbar::info($identityDocument) --}}
 			<tr>
 			    <td>{{ $saleActList[$i]["id"] }}</td>
+			    <td>{{ $saleActList[$i]["id_number"] }}</td>
 			    <td>{{ $day . "/" . $month . "/" . $year }}</td>
 			    <td>{{ $identityDocument->name . " " . $identityDocument->surname }}</td>
 			    <td>{{ $saleActList[$i]["objects"] }}</td>

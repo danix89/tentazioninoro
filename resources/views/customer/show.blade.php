@@ -80,7 +80,7 @@ $description = $customer->description;
             <div class="form-group">
                 {!! Form::label('fiscalCode', 'Codice fiscale:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('fiscalCode', $fiscalCode, ['class' => 'form-control', 'required' => $required]) !!}
+                    {!! Form::text('fiscalCode', $fiscalCode, ['class' => 'form-control', 'required' => $required, 'minlength' => 16, 'maxlength' => 16,]) !!}
                 </div>
             </div>
             <div class="form-group">
@@ -172,7 +172,6 @@ $description = $customer->description;
 @section('footer-javascript')
     @parent
     <script src="{{ asset('vendor/bubbler.min.js') }}"></script>
-    <script src="{{ asset('vendor/use.fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/customer.create.floatBtn.js') }}"></script>
     <script>
 	setHomeRoute("{{ route('showCustomerList') }}");
