@@ -120,7 +120,7 @@ if(preg_match("/" . Auth::user()->permissions . "/", Config::get('constants.perm
             <div class="form-group">
                 {!! Form::label('phoneNumber1', 'Telefono 1:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('phoneNumber1', "", ['class' => 'form-control', 'required' => true]) !!}
+                    {!! Form::text('phoneNumber1', "", ['class' => 'form-control', 'required' => false]) !!}
                 </div>
             </div>
             <div class="form-group">

@@ -142,7 +142,7 @@ $description = $customer->description;
             <div class="form-group">
                 {!! Form::label('phoneNumber1', 'Telefono 1:', ['class' => 'control-label col-md-4']) !!}
                 <div class="col-md-5">
-                    {!! Form::text('phoneNumber1', $phone_number_1, ['class' => 'form-control', 'required' => true]) !!}
+                    {!! Form::text('phoneNumber1', $phone_number_1, ['class' => 'form-control', 'required' => false]) !!}
                 </div>
             </div>
             <div class="form-group">
