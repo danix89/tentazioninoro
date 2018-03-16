@@ -61,7 +61,7 @@ $types = [
 		{!! Form::label('idNumber', 'Numero id.:', ['class' => '']) !!}
 		{!! Form::text('idNumber', '', ['class' => 'form-control', 'required' => true]) !!}
 			
-		<div class="alert alert-danger" hidden role="alert">
+		<div class="alert alert-warning" hidden role="alert">
 		    <strong>Id già presente nel Database!</strong>
 		</div>
 	    </div>
@@ -221,20 +221,21 @@ $types = [
 		    $("#idNumberDiv > span").remove();
 		    $(".alert").hide();
 		    $("#idNumberDiv")
-			    .removeClass("has-error")
+			    .removeClass("has-warning")
 			    .addClass("has-success")
 			    .append($("<span />")
 				.addClass("glyphicon glyphicon-ok form-control-feedback")
 			    );
 		} else {
-		    doSubmit = false;
+//		    doSubmit = false;
+		    doSubmit = true; // Mostra solo un messaggio di alert, ma salva lo stesso l'atto di vendita. 
 		    $("#idNumberDiv > span").remove();
 		    $(".alert").show();
 		    $("#idNumberDiv")
-			    .removeClass("has-error")
-			    .addClass("has-error")
+			    .removeClass("has-success")
+			    .addClass("has-warning")
 			    .append($("<span />")
-				.addClass("glyphicon glyphicon-remove form-control-feedback")
+				.addClass("glyphicon glyphicon-alert form-control-feedback")
 			    );
 		    $("#idNumberDiv > input").focus();
 		}
