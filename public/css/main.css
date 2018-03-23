@@ -1,4 +1,5 @@
-/* Remove the navbar's default rounded borders and increase the bottom margin */ 
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+
 #headerNavbar {
     padding-left: 0px;
 }
@@ -8,7 +9,9 @@
     border-radius: 0;
 }
 
-/* Remove the jumbotron's default bottom margin */ 
+
+/* Remove the jumbotron's default bottom margin */
+
 .jumbotron {
     margin-bottom: 0;
 }
@@ -23,7 +26,7 @@
 }
 
 #grid-basic {
-    width: 100%; 
+    width: 100%;
     font-size: 13px;
 }
 
@@ -35,7 +38,7 @@
 }
 
 .photo.big {
-    width:100%;
+    width: 100%;
     max-width: 600px;
 }
 
@@ -52,15 +55,13 @@
     z-index: 9999;
 }
 
-@media (max-width: 768px ) {
+@media (max-width: 768px) {
     .carousel {
         width: 330px !important;
     }
-
     .bubbler-wrapper {
         margin: 0 1em 1em 0 !important;
     }
-    
     #add-customer-btn-div {
         margin-top: 10px;
     }
@@ -70,21 +71,19 @@
     .bubbler-wrapper {
         display: none !important;
     }
-
-    @page { 
-        margin: 0; 
+    @page {
+        margin: 0;
     }
-
-    body { 
+    body {
         margin: 1.6cm 0cm;
     }
-
-    p, span, table, ol {
-        font-size: 18px !important;
+    p,
+    span,
+    table,
+    ol {
+        font-size: 11px !important;
     }
-
     .fine-print {
-        font-size: 12px !important;
+        font-size: 7px !important;
     }
 }
-

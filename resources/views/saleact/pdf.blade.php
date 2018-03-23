@@ -65,45 +65,45 @@ $path_photo = $saleAct->path_photo;
 
         <style>
             p,span, table {
-                font-size: 14px;
+                font-size: 12px;
             }
             span {
                 text-decoration: underline;
             }
             
 	    @media (max-width: 768px ) {
-		body { 
-		    margin-top: 1em;
-		    margin-right: 25px;
-		    margin-bottom: 3em;
-		    margin-left: 25px; 
-		}
-		
-		#signature {
-		    top: 3em !important;
-		}
-		
-		#declaration {
-		    margin-top: 170px !important;
-		}
+			body { 
+				margin-top: 1em;
+				margin-right: 25px;
+				margin-bottom: 3em;
+				margin-left: 25px; 
+			}
+			
+			#signature {
+				top: 0.5em !important;
+			}
+			
+			#declaration {
+				margin-top: 70px !important;
+			}
 	    }
 	    
-            @media print {
-                body { 
-                    margin-top: 1em;
-                    margin-right: 1.5cm;
-                    margin-bottom: 3em;
-                    margin-left: 1.5cm; 
-                }
-            }
+		@media print {
+			body { 
+				margin-top: 1em;
+				margin-right: 1.5cm;
+				margin-bottom: 3em;
+				margin-left: 1.5cm; 
+			}
+		}
         </style>
     </head>
     <!--<body style="margin: 2em 25em;">-->
     <body>
 	<div class="container">
 	    <div class="row">
-		<div id="header" class="col" style="position: relative; text-align: center; text-decoration: underline;">
-		    <h1>ATTO DI VENDITA</h1> 
+		<div id="header" class="col" style="position: relative; margin-top: -15px; text-align: center; text-decoration: underline;">
+		    <h2>ATTO DI VENDITA</h2> 
 		    <h4>(regolamento di PUBBLICA SICUREZZA, 6 maggio 1940, n635)</h4>
 		    <h4>(decreto legislativo n92 del 25 maggio 2017)</h4>
 		    <br>
@@ -154,8 +154,8 @@ $path_photo = $saleAct->path_photo;
 		    </div>
 		    <div style="/*margin-bottom: 50px;*/">
 			<h3 style="text-align: center; text-decoration: underline;">I SOTTOELENCATI OGGETTI:</h3>
-			<div class="row" style="margin: -15px 0px; margin-bottom: 20px; word-wrap: break-word;">
-			    <p class="col col-lg-8s" style="margin-top: 30px; line-height: 200%; text-decoration: underline;">{{ $objects }}</p>
+			<div class="row" style="margin: 0px 0px; margin-bottom: 0px; word-wrap: break-word;">
+			    <p class="col col-lg-8s" style="margin-top: 5px; line-height: 200%; text-decoration: underline;">{{ $objects }}</p>
 			    <!--<hr style="margin-top: -18px; border-style: inset;">-->
 <!--			    <hr style="margin-top: 27px; border-style: inset;">
 			    <hr style="margin-top: 27px; border-style: inset;">-->
@@ -174,11 +174,11 @@ $path_photo = $saleAct->path_photo;
 			    <li>destinata alla vendita al dettaglio ed in caso di mancata vendita destinata alla fusione presso azienda autorizzata di recupero metalli preziosi.</li>
 			</ol>
 		    </div>
-		    <div id="signature" style="position: relative; top: 2em;">
-			<h4 id='' style="position: absolute; right: 0px;"><b>Firma</b></h4>
-			<hr style="position: absolute; margin-top: 70px; right: 0px; width: 30%; border-style: inset;">
+		    <div id="signature" style="position: relative; top: -15px;">
+				<h5 id='' style="position: absolute; right: 0px; top: 0px;"><b>Firma</b></h5>
+				<hr style="position: absolute; margin-top: 50px; right: 0px; width: 30%; border-style: inset;">
 		    </div>
-		    <div id="declaration" style="margin: 150px 0;">
+		    <div id="declaration" style="margin: 60px 0;">
 			<p>Il/La Sottoscritto/a Nome <span id="name">{{ $name }}</span> Cognome <span id="surname">{{ $surname }}</span></p>
 			<p>Dichiara che tutti gli oggetti sopravenduti non sono di illecita provenienza e di essere in possesso di tutti i diritti atti alla vendita degli stessi.</p>
 			<p>La presente vale anche come ricevuta a saldo per la somma riportata "prezzo complessivo".</p>
@@ -187,12 +187,12 @@ $path_photo = $saleAct->path_photo;
 		    </div>
 		    <div style="margin: -3em 10em;">
 			<div style="position: relative;">
-			    <h4 id='' style="position: absolute;"><b>Per Accettazione</b></h4>
-			    <hr style="position: absolute; margin-top: 100px; width: 40%; border-style: inset;">
-			    <h4 id='' style="position: absolute; right: 0px;"><b>Firma</b></h4>
-			    <hr style="position: absolute; margin-top: 100px; right: 0px; width: 40%; border-style: inset;">
+			    <h5 id='' style="position: absolute;"><b>Per Accettazione</b></h5>
+			    <hr style="position: absolute; margin-top: 50px; width: 40%; border-style: inset;">
+			    <h5 id='' style="position: absolute; right: 0px;"><b>Firma</b></h5>
+			    <hr style="position: absolute; margin-top: 50px; right: 0px; width: 40%; border-style: inset;">
 			</div>
-			<div style="position: relative; top: 110px;">
+			<div style="position: relative; top: 55px;">
 			    <p class="fine-print" style="">Trattasi di vendita da privato fuori campo I.V.A. ai sensi degli ART. 1,2,4 e 5 D.P.R. 26.10.1972, n.633 e successive modificazioni.</p>
 			</div>
 		    </div>
