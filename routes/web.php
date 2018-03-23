@@ -22,7 +22,7 @@ Route::resource('sale-act', 'SaleActController');
 //    return view('welcome');
 //});
 
-app('debugbar')->enable();
+app('debugbar')->disable();
 
 Auth::routes();
 //Route::get('/register', 'HomeController@index')->name('register');
